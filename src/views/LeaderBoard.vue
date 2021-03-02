@@ -23,9 +23,9 @@
 </template>
 
 <script>
-	import ContributionLeaderBoard from '@/components/ContributionLeaderBoard.vue'
-	import LevelLeaderBoard from '@/components/LevelLeaderBoard.vue'
-	import SpecLeaderBoard from '@/components/SpecLeaderBoard.vue'
+	import ContributionLeaderBoard from '../components/ContributionLeaderBoard.vue'
+	import LevelLeaderBoard from '../components/LevelLeaderBoard.vue'
+	import SpecLeaderBoard from '../components/SpecLeaderBoard.vue'
 
 	export default {
 		name: 'LeaderBoard',

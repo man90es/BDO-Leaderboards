@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import LeaderBoardLine from '@/components/LeaderBoardLine.vue'
+	import LeaderBoardLine from './LeaderBoardLine.vue'
 
 	export default {
 		name: 'LevelLeaderBoard',
