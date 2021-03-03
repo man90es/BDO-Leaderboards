@@ -3,19 +3,26 @@ import { createStore } from 'vuex'
 export default createStore({
 	state: {
 		guilds: {},
-		players: {}
+		players: {},
+		loadingStage: null
 	},
 	mutations: {
-		pushGuild(state, payload) {
-			state.guilds[payload.guildName] = payload
+		pushGuild(state, guild) {
+			state.guilds[guild.guildName] = guild
 		},
 
-		pushPlayer(state, payload) {
-			state.players[payload.familyName] = payload
+		pushPlayer(state, player) {
+			state.players[player.familyName] = player
+		},
+
+		setLoadingStage(state, stage) {
+			state.loadingStage = stage
 		}
 	},
 	actions: {
 		requestGuild({ commit, dispatch }, { guildName, region }) {
+			commit('setLoadingStage', 'Gathering guild data')
+
 			fetch(`${process.env.VUE_APP_API_BASE}/v0/guildProfile?guildName=${guildName}&region=${region}`)
 				.then(response => {
 					if (response.ok) {
@@ -25,13 +32,16 @@ export default createStore({
 					}
 				})
 				.then((guildProfile) => {
+					commit('setLoadingStage', null)
 					commit('pushGuild', guildProfile)
-					dispatch('requestMembers', guildProfile.members)
+					dispatch('requestMembers', { members: guildProfile.members, total: guildProfile.members.length })
 				})
 		},
 
-		requestMembers({ commit, dispatch }, members) {
+		requestMembers({ commit, dispatch }, { members, total }) {
 			let member = members.shift()
+
+			commit('setLoadingStage', `Gathering member data ${total - members.length}/${total}`)
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v0/profile?profileTarget=${member.profileTarget}`)
 				.then(response => {
@@ -45,7 +55,9 @@ export default createStore({
 					commit('pushPlayer', playerProfile)
 
 					if (members.length > 0) {
-						dispatch('requestMembers', members)
+						dispatch('requestMembers', { members, total })
+					} else {
+						commit('setLoadingStage', null)
 					}
 				})
 		}
