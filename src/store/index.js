@@ -31,10 +31,18 @@ export default createStore({
 						throw `${response.status}: ${response.statusText}`
 					}
 				})
+				.then((data) => {
+					if ('error' in data) {
+						throw data.error
+					}
+				})
 				.then((guildProfile) => {
 					commit('setLoadingStage', null)
 					commit('pushGuild', guildProfile)
 					dispatch('requestMembers', { members: guildProfile.members, total: guildProfile.members.length })
+				})
+				.catch((err) => {
+					commit('setLoadingStage', err)
 				})
 		},
 
@@ -51,6 +59,11 @@ export default createStore({
 						throw `${response.status}: ${response.statusText}`
 					}
 				})
+				.then((data) => {
+					if ('error' in data) {
+						throw data.error
+					}
+				})
 				.then((playerProfile) => {
 					commit('pushPlayer', playerProfile)
 
@@ -59,6 +72,9 @@ export default createStore({
 					} else {
 						commit('setLoadingStage', null)
 					}
+				})
+				.catch((err) => {
+					commit('setLoadingStage', err)
 				})
 		}
 	},

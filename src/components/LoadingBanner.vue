@@ -28,9 +28,11 @@
 		background-color: #21252b;
 		font-size: 1.5rem;
 		border-radius: 0.5rem;
-		height: 20vh;
-		width: 20vw;
+		height: 30vh;
+		width: 30vw;
+		padding: 1em;
 		display: flex;
+		text-align: center;
 		justify-content: center;
 		align-items: center;
 	}
