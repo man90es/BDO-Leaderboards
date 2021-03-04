@@ -34,6 +34,8 @@ export default createStore({
 				.then((data) => {
 					if ('error' in data) {
 						throw data.error
+					} else {
+						return data
 					}
 				})
 				.then((guildProfile) => {
@@ -62,6 +64,8 @@ export default createStore({
 				.then((data) => {
 					if ('error' in data) {
 						throw data.error
+					} else {
+						return data
 					}
 				})
 				.then((playerProfile) => {
