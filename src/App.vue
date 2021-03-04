@@ -8,14 +8,7 @@
 
 	export default {
 		name: 'App',
-		components: { LoadingBanner },
-		created () {
-			if (sessionStorage.redirect) {
-				const redirect = sessionStorage.redirect
-				delete sessionStorage.redirect
-				this.$router.push(redirect)
-			}
-		}
+		components: { LoadingBanner }
 	}
 </script>
 
