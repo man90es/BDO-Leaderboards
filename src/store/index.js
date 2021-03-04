@@ -34,6 +34,8 @@ export default createStore({
 				.then((data) => {
 					if ('error' in data) {
 						throw data.error
+					} else if(!('members' in data)) {
+						throw `The guild «${guildName}» does not exist on the ${region} server`
 					} else {
 						return data
 					}
