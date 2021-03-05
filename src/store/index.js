@@ -1,5 +1,21 @@
 import { createStore } from 'vuex'
 
+function parseResponse(response) {
+	if (response.ok) {
+		return response.json()
+	} else {
+		throw `${response.status}: ${response.statusText}`
+	}
+}
+
+function findAndThrowError(data) {
+	if ('error' in data) {
+		throw data.error
+	} else {
+		return data
+	}
+}
+
 export default createStore({
 	state: {
 		guilds: {},
@@ -24,20 +40,13 @@ export default createStore({
 			commit('setLoadingStage', 'Gathering guild data')
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v0/guildProfile?guildName=${guildName}&region=${region}`)
-				.then(response => {
-					if (response.ok) {
-						return response.json()
-					} else {
-						throw `${response.status}: ${response.statusText}`
-					}
-				})
+				.then(parseResponse)
+				.then(findAndThrowError)
 				.then((data) => {
-					if ('error' in data) {
-						throw data.error
-					} else if(!('members' in data)) {
-						throw `The guild «${guildName}» does not exist on the ${region} server`
-					} else {
+					if('members' in data) {
 						return data
+					} else {
+						throw `The guild «${guildName}» does not exist on the ${region} server`
 					}
 				})
 				.then((guildProfile) => {
@@ -45,9 +54,7 @@ export default createStore({
 					commit('pushGuild', guildProfile)
 					dispatch('requestMembers', { members: guildProfile.members, total: guildProfile.members.length })
 				})
-				.catch((err) => {
-					commit('setLoadingStage', err)
-				})
+				.catch(err => commit('setLoadingStage', err))
 		},
 
 		requestMembers({ commit, dispatch }, { members, total }) {
@@ -56,31 +63,16 @@ export default createStore({
 			commit('setLoadingStage', `Gathering member data ${total - members.length}/${total}`)
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v0/profile?profileTarget=${member.profileTarget}`)
-				.then(response => {
-					if (response.ok) {
-						return response.json()
-					} else {
-						throw `${response.status}: ${response.statusText}`
-					}
-				})
-				.then((data) => {
-					if ('error' in data) {
-						throw data.error
-					} else {
-						return data
-					}
-				})
-				.then((playerProfile) => {
-					commit('pushPlayer', playerProfile)
-
+				.then(parseResponse)
+				.then(findAndThrowError)
+				.then(playerProfile => commit('pushPlayer', playerProfile))
+				.catch(err => commit('setLoadingStage', err))
+				.finally(() => {
 					if (members.length > 0) {
 						dispatch('requestMembers', { members, total })
 					} else {
 						commit('setLoadingStage', null)
 					}
-				})
-				.catch((err) => {
-					commit('setLoadingStage', err)
 				})
 		}
 	},
