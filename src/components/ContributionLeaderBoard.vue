@@ -4,6 +4,7 @@
 		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
+			:colour="p.colour"
 			:familyName="p.familyName"
 			:score="p.CP"
 		/>
@@ -17,6 +18,7 @@
 		this.familyName = familyName
 		this.CP = contributionPoints
 		this.place = 1
+		this.colour = 0
 		this.groupWPrev = false
 	}
 
@@ -41,11 +43,16 @@
 
 						if (prev === undefined) {
 							participant.place = 1
-						} else if (prev.CP === participant.CP) {
-							participant.place = prev.place
-							participant.groupWPrev = true
+							participant.colour = 1
 						} else {
 							participant.place = prev.place + 1
+
+							if (prev.CP === participant.CP) {
+								participant.groupWPrev = true
+								participant.colour = prev.colour
+							} else {
+								participant.colour = prev.colour + 1
+							}
 						}
 
 						return participant

@@ -4,6 +4,7 @@
 		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
+			:colour="p.colour"
 			:familyName="p.familyName"
 			:characterName="`${p.name} (${p.class})`"
 			:score="p.specLevel"
@@ -21,14 +22,8 @@
 		this.specLevel = specLevel
 		this.numericSpecLevel = numericSpecLevel
 		this.place = 1
+		this.colour = 0
 		this.groupWPrev = false
-	}
-
-	function Rep(characterName, characterClass, specLevel, numericSpecLevel) {
-		this.name = characterName
-		this.class = characterClass
-		this.specLevel = specLevel
-		this.numericSpecLevel = numericSpecLevel
 	}
 
 	function getNumericSpec(specText) {
@@ -58,12 +53,12 @@
 					.map((member) => { // Convert members to participants
 						let memberRep = member.characters
 							.map((character) => { // Convert characters to reps
-								return new Rep(
-									character.name,
-									character.class,
-									character.specLevels[this.specName],
-									getNumericSpec(character.specLevels[this.specName])
-								)
+								return {
+									name: character.name,
+									class: character.class,
+									specLevel: character.specLevels[this.specName],
+									numericSpecLevel: getNumericSpec(character.specLevels[this.specName])
+								}
 							})
 							.sort((repA, repB) => { // Choose member's rep with the highest spec level
 								return repA.numericSpecLevel > repB.numericSpecLevel ? -1 : 1
@@ -79,11 +74,16 @@
 
 						if (prev === undefined) {
 							participant.place = 1
-						} else if (prev.numericSpecLevel === participant.numericSpecLevel) {
-							participant.place = prev.place
-							participant.groupWPrev = true
+							participant.colour = 1
 						} else {
 							participant.place = prev.place + 1
+
+							if (prev.numericSpecLevel === participant.numericSpecLevel) {
+								participant.groupWPrev = true
+								participant.colour = prev.colour
+							} else {
+								participant.colour = prev.colour + 1
+							}
 						}
 
 						return participant

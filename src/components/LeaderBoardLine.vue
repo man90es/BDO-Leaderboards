@@ -1,5 +1,5 @@
 <template>
-	<div class="leader-board-line" :class="{ numbaOne: place == 1, numbaTwo: place == 2, numbaThree: place == 3 }">
+	<div class="leader-board-line" :class="{ numbaOne: colour == 1, numbaTwo: colour == 2, numbaThree: colour == 3 }">
 		<div><span v-if="!hidePlace">#{{ place }}</span></div>
 		<div>{{ familyName }}</div>
 		<div>{{ characterName }}</div>
@@ -10,7 +10,7 @@
 <script>
 	export default {
 		name: 'LeaderBoardLine',
-		props: ['place', 'familyName', 'characterName', 'score', 'hidePlace']
+		props: ['place', 'colour', 'familyName', 'characterName', 'score', 'hidePlace']
 	}
 </script>
 
