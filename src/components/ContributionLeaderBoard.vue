@@ -27,6 +27,9 @@
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.guildName)
+					.filter((member) => { // Filter out members with private CP
+						return member.contributionPoints !== undefined
+					})
 					.map((member) => { // Convert members to participants
 						return new Participant(member.familyName, member.contributionPoints)
 					})

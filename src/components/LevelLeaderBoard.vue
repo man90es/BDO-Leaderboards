@@ -30,6 +30,9 @@
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.guildName)
+					.filter((member) => { // Filter out members with private levels
+						return member.characters[0].level !== undefined
+					})
 					.map((member) => { // Convert members to participants
 						let memberRep = member.characters
 							.sort((characterA, characterB) => { // Choose member's character with the highest level
