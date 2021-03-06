@@ -58,9 +58,8 @@ export default createStore({
 		},
 
 		requestMembers({ commit, dispatch }, { members, total }) {
+			commit('setLoadingStage', `Gathering member data: ${Math.floor((total - members.length) / total * 100)}%`)
 			let member = members.shift()
-
-			commit('setLoadingStage', `Gathering member data ${total - members.length}/${total}`)
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v0/profile?profileTarget=${member.profileTarget}`)
 				.then(parseResponse)
