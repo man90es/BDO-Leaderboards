@@ -1,13 +1,12 @@
 <template>
 	<div class="leader-board">
-		<LeaderBoardLine :familyName="'Family Name'" :characterName="'Character Name'" :score="'Level'" />
+		<LeaderBoardLine :familyName="'Family Name'" :score="'Combat Fame'" />
 		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
 			:colour="p.colour"
 			:familyName="p.familyName"
-			:characterName="`${p.name} (${p.class})`"
-			:score="p.level"
+			:score="p.combatFame"
 		/>
 	</div>
 </template>
@@ -16,18 +15,16 @@
 	import LeaderBoardLine from './LeaderBoardLine.vue'
 	import { sortByAttribute, assignPlaces } from '../helpers'
 
-	function Participant(familyName, characterName, characterClass, characterLevel) {
+	function Participant(familyName, combatFame) {
 		this.familyName = familyName
-		this.name = characterName
-		this.class = characterClass
-		this.level = characterLevel
+		this.combatFame = combatFame
 		this.place = 1
 		this.colour = 0
 		this.groupWPrev = false
 	}
 
 	export default {
-		name: 'LevelLeaderBoard',
+		name: 'ContributionLeaderBoard',
 		props: ['guildName'],
 		components: { LeaderBoardLine },
 		computed: {
@@ -37,15 +34,25 @@
 						return member.characters[0].level !== undefined
 					})
 					.map((member) => { // Convert members to participants
-						let memberRep = member.characters
-							.sort((characterA, characterB) => { // Choose member's character with the highest level
-								return characterA.level > characterB.level ? -1 : 1
-							})[0]
+						let combatFame = member.characters
+							.reduce((fame, character) => {
+								// https://www.blackdesertfoundry.com/family-fame-guide
 
-						return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.level)
+								if (character.level < 15) {
+									return fame
+								} else if (character.level < 56) {
+									return fame + character.level
+								} else if (character.level < 60) {
+									return fame + character.level * 2
+								} else {
+									return fame + character.level * 5
+								}
+							}, 1)
+
+						return new Participant(member.familyName, combatFame)
 					})
-					.sort(sortByAttribute('level'))
-					.map(assignPlaces('level'))
+					.sort(sortByAttribute('combatFame'))
+					.map(assignPlaces('combatFame'))
 			}
 		}
 	}

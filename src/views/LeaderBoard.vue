@@ -15,9 +15,13 @@
 			<li><router-link to="./farming">Farming</router-link></li>
 			<li><router-link to="./sailing">Sailing</router-link></li>
 			<li><router-link to="./barter">Barter</router-link></li>
+			<li><router-link to="./combat">Combat Fame</router-link></li>
+			<li><router-link to="./life">Life Fame</router-link></li>
 		</ul>
 		<ContributionLeaderBoard v-if="$route.params.discipline == 'contribution'"/>
 		<LevelLeaderBoard v-else-if="$route.params.discipline == 'level'"/>
+		<CombatFameLeaderBoard v-else-if="$route.params.discipline == 'combat'"/>
+		<LifeFameLeaderBoard v-else-if="$route.params.discipline == 'life'"/>
 		<SpecLeaderBoard v-else :specName="$route.params.discipline"/>
 	</div>
 </template>
@@ -25,16 +29,26 @@
 <script>
 	import ContributionLeaderBoard from '../components/ContributionLeaderBoard.vue'
 	import LevelLeaderBoard from '../components/LevelLeaderBoard.vue'
+	import CombatFameLeaderBoard from '../components/CombatFameLeaderBoard.vue'
+	import LifeFameLeaderBoard from '../components/LifeFameLeaderBoard.vue'
 	import SpecLeaderBoard from '../components/SpecLeaderBoard.vue'
 
 	export default {
 		name: 'LeaderBoard',
-		components: { ContributionLeaderBoard, LevelLeaderBoard, SpecLeaderBoard },
+		components: {
+			ContributionLeaderBoard,
+			LevelLeaderBoard,
+			SpecLeaderBoard,
+			CombatFameLeaderBoard,
+			LifeFameLeaderBoard
+		},
 		created() {
-			this.$store.dispatch('requestGuild', {
-				guildName: this.$route.params.guildName,
-				region: this.$route.params.region
-			})
+			if (!(this.$route.params.guildName in this.$store.state.guilds)) {
+				this.$store.dispatch('requestGuild', {
+					guildName: this.$route.params.guildName,
+					region: this.$route.params.region
+				})
+			}
 		}
 	}
 </script>

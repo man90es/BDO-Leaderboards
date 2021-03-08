@@ -14,6 +14,7 @@
 
 <script>
 	import LeaderBoardLine from './LeaderBoardLine.vue'
+	import { getNumericSpec, sortByAttribute, assignPlaces } from '../helpers'
 
 	function Participant(familyName, characterName, characterClass, specLevel, numericSpecLevel) {
 		this.familyName = familyName
@@ -24,20 +25,6 @@
 		this.place = 1
 		this.colour = 0
 		this.groupWPrev = false
-	}
-
-	function getNumericSpec(specText) {
-		let offset = {
-			"Beginner": 0,
-			"Apprentice": 10,
-			"Skilled": 20,
-			"Professional": 30,
-			"Artisan": 40,
-			"Master": 50,
-			"Guru": 80
-		}[specText.split(' ')[0]]
-
-		return offset + parseInt(specText.split(' ')[1])
 	}
 
 	export default {
@@ -60,34 +47,12 @@
 									numericSpecLevel: getNumericSpec(character.specLevels[this.specName])
 								}
 							})
-							.sort((repA, repB) => { // Choose member's rep with the highest spec level
-								return repA.numericSpecLevel > repB.numericSpecLevel ? -1 : 1
-							})[0]
+							.sort(sortByAttribute('numericSpecLevel'))[0] // Choose member's rep with the highest spec level
 
 						return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.specLevel, memberRep.numericSpecLevel)
 					})
-					.sort((participantA, participantB) => { // Order by spec level
-						return participantA.numericSpecLevel > participantB.numericSpecLevel ? -1 : 1
-					})
-					.map((participant, index, self) => { // Assign places
-						let prev = self[index - 1]
-
-						if (prev === undefined) {
-							participant.place = 1
-							participant.colour = 1
-						} else {
-							participant.place = prev.place + 1
-
-							if (prev.numericSpecLevel === participant.numericSpecLevel) {
-								participant.groupWPrev = true
-								participant.colour = prev.colour
-							} else {
-								participant.colour = prev.colour + 1
-							}
-						}
-
-						return participant
-					})
+					.sort(sortByAttribute('numericSpecLevel'))
+					.map(assignPlaces('numericSpecLevel'))
 			}
 		}
 	}

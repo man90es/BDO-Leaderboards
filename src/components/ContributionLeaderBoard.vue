@@ -13,6 +13,7 @@
 
 <script>
 	import LeaderBoardLine from './LeaderBoardLine.vue'
+	import { sortByAttribute, assignPlaces } from '../helpers'
 
 	function Participant(familyName, contributionPoints) {
 		this.familyName = familyName
@@ -35,28 +36,8 @@
 					.map((member) => { // Convert members to participants
 						return new Participant(member.familyName, member.contributionPoints)
 					})
-					.sort((participantA, participantB) => { // Order by contribution points
-						return participantA.CP > participantB.CP ? -1 : 1
-					})
-					.map((participant, index, self) => { // Assign places
-						let prev = self[index - 1]
-
-						if (prev === undefined) {
-							participant.place = 1
-							participant.colour = 1
-						} else {
-							participant.place = prev.place + 1
-
-							if (prev.CP === participant.CP) {
-								participant.groupWPrev = true
-								participant.colour = prev.colour
-							} else {
-								participant.colour = prev.colour + 1
-							}
-						}
-
-						return participant
-					})
+					.sort(sortByAttribute('CP'))
+					.map(assignPlaces('CP'))
 			}
 		}
 	}
