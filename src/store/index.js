@@ -77,9 +77,13 @@ export default createStore({
 	},
 	getters: {
 		members: (state) => (guildName) => {
-			return Object.values(state.players).filter((player) => {
-				return player.guild && player.guild.guildName == guildName
-			})
+			if (state.loadingStage !== null) {
+				return []
+			} else {
+				return Object.values(state.players).filter((player) => {
+					return player.guild && player.guild.guildName == guildName
+				})
+			}
 		}
 	}
 })
