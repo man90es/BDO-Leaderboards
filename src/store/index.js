@@ -20,7 +20,8 @@ export default createStore({
 	state: {
 		guilds: {},
 		players: {},
-		loadingStage: null
+		loadingStage: null,
+		mobile: innerWidth < innerHeight
 	},
 	mutations: {
 		pushGuild(state, guild) {

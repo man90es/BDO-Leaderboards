@@ -1,5 +1,5 @@
 <template>
-	<div class="leader-board-page">
+	<div class="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<h1>{{$route.params.guildName}}</h1>
 		<ul>
 			<li><router-link to="./level">Character Level</router-link></li>
@@ -57,6 +57,9 @@
 	.leader-board-page {
 		display: flex;
 		flex-direction: column;
+	}
+
+	.leader-board-page:not(.mobile-layout) {
 		align-items: center;
 	}
 
@@ -74,6 +77,10 @@
 		color: #fff;
 		text-decoration: none;
 		padding-bottom: 0.2em;
+	}
+
+	h1 {
+		text-align: center;
 	}
 
 	.router-link-exact-active {

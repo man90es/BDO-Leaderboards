@@ -1,5 +1,5 @@
 <template>
-	<div class="loading-banner-wrapper">
+	<div class="loading-banner-wrapper" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="banner">
 			{{ $store.state.loadingStage }}
 		</div>
@@ -35,5 +35,10 @@
 		text-align: center;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.mobile-layout .banner {
+		width: 100vw;
+		height: 100vh;
 	}
 </style>

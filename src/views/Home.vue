@@ -1,5 +1,5 @@
 <template>
-	<form class="home-page" :class="{ mobile }">
+	<form class="home-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="radio-box">
 			<input type="radio" value="EU" id="region-EU" v-model="region">
 			<label for="region-EU">EU</label>
@@ -19,8 +19,7 @@
 		data() {
 			return {
 				region: "EU",
-				guildName: "",
-				mobile: window.innerWidth < window.innerHeight
+				guildName: ""
 			}
 		},
 		methods: {
@@ -45,7 +44,7 @@
 		height: 100vh;
 	}
 
-	.home-page.mobile {
+	.home-page.mobile-layout {
 		flex-direction: column;
 	}
 

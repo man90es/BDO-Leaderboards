@@ -1,5 +1,5 @@
 <template>
-	<div class="leader-board-line" :class="{ numbaOne: colour == 1, numbaTwo: colour == 2, numbaThree: colour == 3 }">
+	<div class="leader-board-line" :class="{ numbaOne: colour == 1, numbaTwo: colour == 2, numbaThree: colour == 3}">
 		<div><span v-if="!hidePlace">#{{ place }}</span></div>
 		<div>{{ familyName }}</div>
 		<div><img v-if="characterClass" :src="classIconSrc" class="class-icon" :title="characterClass" />{{ characterName }}</div>
@@ -33,7 +33,7 @@
 	}
 
 	.leader-board-line > div:first-child {
-		width: 3rem;
+		width: 4rem;
 		text-align: right;
 	}
 
@@ -51,23 +51,32 @@
 
 	.leader-board-line.numbaOne {
 		color: #c86783;
-		font-size: 1.6rem;
+		font-size: 1.6em;
 	}
 
 	.leader-board-line.numbaTwo {
 		color: #c1e277;
-		font-size: 1.4rem;
+		font-size: 1.4em;
 	}
 
 	.leader-board-line.numbaThree {
 		color: #448fc8;
-		font-size: 1.2rem;
+		font-size: 1.2em;
+	}
+
+	.mobile-layout .leader-board-line {
+		font-size: 0.9em;
 	}
 
 	.class-icon {
 		height: 1.5rem;
+		width: 1.5rem;
 		vertical-align: middle;
 		border-radius: 50%;
 		margin-right: 0.5rem;
+	}
+
+	.mobile-layout .class-icon {
+		display: none;
 	}
 </style>
