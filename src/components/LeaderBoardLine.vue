@@ -2,7 +2,7 @@
 	<div class="leader-board-line" :class="{ numbaOne: colour == 1, numbaTwo: colour == 2, numbaThree: colour == 3 }">
 		<div><span v-if="!hidePlace">#{{ place }}</span></div>
 		<div>{{ familyName }}</div>
-		<div>{{ characterName }}</div>
+		<div><img v-if="characterClass" :src="classIconSrc" class="class-icon" :title="characterClass" />{{ characterName }}</div>
 		<div>{{ score }}</div>
 	</div>
 </template>
@@ -10,7 +10,13 @@
 <script>
 	export default {
 		name: 'LeaderBoardLine',
-		props: ['place', 'colour', 'familyName', 'characterName', 'score', 'hidePlace']
+		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace'],
+		computed: {
+			classIconSrc() {
+				let images = require.context('../assets/classIcons', false, /\.png$/)
+				return images(`./${this.characterClass.toLowerCase().replace(' ', '_')}.png`)
+			}
+		}
 	}
 </script>
 
@@ -22,7 +28,7 @@
 	}
 
 	.leader-board-line > div {
-		width: 20rem;
+		width: 15rem;
 		text-align: left;
 	}
 
@@ -56,5 +62,12 @@
 	.leader-board-line.numbaThree {
 		color: #448fc8;
 		font-size: 1.2rem;
+	}
+
+	.class-icon {
+		height: 1.5rem;
+		vertical-align: middle;
+		border-radius: 50%;
+		margin-right: 0.5rem;
 	}
 </style>

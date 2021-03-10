@@ -6,7 +6,8 @@
 			:place="p.place"
 			:colour="p.colour"
 			:familyName="p.familyName"
-			:characterName="`${p.name} (${p.class})`"
+			:characterClass="p.class"
+			:characterName="p.name"
 			:score="p.specLevel"
 		/>
 	</div>
