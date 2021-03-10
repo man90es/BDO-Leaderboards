@@ -69,10 +69,8 @@
 	}
 
 	.class-icon {
-		height: 1.5rem;
 		width: 1.5rem;
 		vertical-align: middle;
-		border-radius: 50%;
 		margin-right: 0.5rem;
 	}
 
