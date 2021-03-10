@@ -2,6 +2,7 @@
 	<div class="loading-banner-wrapper" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="banner">
 			{{ $store.state.loadingStage }}
+			<router-link to="../../" class="select-guild">Go back to guild selection</router-link>
 		</div>
 	</div>
 </template>
@@ -18,7 +19,7 @@
 		top: 0;
 		height: 100vh;
 		width: 100vw;
-		background-color: #0002;
+		background-color: #0005;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -35,10 +36,16 @@
 		text-align: center;
 		justify-content: center;
 		align-items: center;
+		flex-direction: column;
 	}
 
 	.mobile-layout .banner {
 		width: 100vw;
 		height: 100vh;
+	}
+
+	.loading-banner-wrapper .select-guild {
+		font-size: 0.7em;
+		margin: 1em;
 	}
 </style>

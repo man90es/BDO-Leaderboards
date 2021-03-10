@@ -1,6 +1,7 @@
 <template>
 	<div class="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<h1>{{$route.params.guildName}}</h1>
+		<router-link to="../../" class="select-guild">Go back to guild selection</router-link>
 		<ul>
 			<li><router-link to="./level">Character Level</router-link></li>
 			<li><router-link to="./contribution">Contribution Points</router-link></li>
@@ -81,9 +82,18 @@
 
 	h1 {
 		text-align: center;
+		margin-bottom: 0;
 	}
 
 	.router-link-exact-active {
-		border-bottom: 0.15em solid #ccc
+		border-bottom: 0.15em solid #bbc
+	}
+
+	.select-guild {
+		color: #bbc;
+		margin-bottom: 1rem;
+		text-decoration: none;
+		border-bottom: 1px solid #bbc;
+		opacity: 0.8;
 	}
 </style>
