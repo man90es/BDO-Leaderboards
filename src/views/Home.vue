@@ -84,8 +84,7 @@
 	}
 
 	button {
-		background-color: #aaf2;
-		color: #fff;
+		background-color: #fff;
 		font-size: 1.5em;
 		display: flex;
 		align-items: center;
@@ -100,11 +99,12 @@
 	}
 
 	label {
-		border-bottom: 0.1em solid transparent
+		border-bottom: 0.1em solid transparent;
+		color: #fff;
 	}
 
 	.radio-box input:checked + label {
-		border-color: #bbc
+		border-color: #fff
 	}
 
 	header {

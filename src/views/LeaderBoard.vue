@@ -64,6 +64,7 @@
 	.leader-board-page {
 		display: flex;
 		flex-direction: column;
+		background-color: #21252b;
 	}
 
 	.leader-board-page:not(.mobile-layout) {

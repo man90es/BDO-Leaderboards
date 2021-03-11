@@ -41,7 +41,7 @@
 		text-align: right;
 	}
 
-	.leader-board-line:nth-child(odd){
+	.leader-board-line:nth-child(odd) {
 		background-color: #0001;
 	}
 

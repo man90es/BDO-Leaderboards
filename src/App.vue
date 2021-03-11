@@ -16,6 +16,12 @@
 		min-height: 100vh;
 		background-color: #21252b;
 		color: #bbc;
+		margin: 0;
+		background-image: url(assets/background.webp);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
 	}
 
 	* {
