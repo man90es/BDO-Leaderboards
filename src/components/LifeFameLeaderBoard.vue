@@ -33,8 +33,6 @@
 						return member.characters[0].specLevels !== undefined
 					})
 					.map((member) => { // Convert members to participants
-						// https://www.blackdesertfoundry.com/family-fame-guide <- this algo is wrong
-
 						let lifeFame = member.characters
 							.reduce((fame, character) => {
 								return fame + Object.values(character.specLevels).reduce((cFame, specLevel) => {

@@ -35,11 +35,7 @@
 					.map((member) => { // Convert members to participants
 						let combatFame = member.characters
 							.reduce((fame, character) => {
-								// https://www.blackdesertfoundry.com/family-fame-guide
-
-								if (character.level < 15) {
-									return fame
-								} else if (character.level < 56) {
+								if (character.level < 56) {
 									return fame + character.level
 								} else if (character.level < 60) {
 									return fame + character.level * 2
