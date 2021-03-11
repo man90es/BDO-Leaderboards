@@ -1,5 +1,12 @@
 <template>
 	<form class="home-page" :class="{ 'mobile-layout': $store.state.mobile }">
+		<header>
+			<h1>
+				BDO Guild Leader Board
+			</h1>
+			<span>Select your region, type in the guild name and press the magic button.</span>
+		</header>
+
 		<div class="radio-box">
 			<input type="radio" value="EU" id="region-EU" v-model="region">
 			<label for="region-EU">EU</label>
@@ -10,6 +17,12 @@
 		<input type="text" placeholder="Guild name" v-model="guildName">
 
 		<button @click="navigateToLeaderBoard">↩</button>
+
+		<footer>
+			<span>deadMNGO#8312</span>
+			<a href="https://gitlab.com/man90/bdo-guild-leader-board" target="_blank">Source</a>
+			<a href="https://gitlab.com/man90/black-desert-social-rest-api" target="_blank">API</a>
+		</footer>
 	</form>
 </template>
 
@@ -56,6 +69,7 @@
 		padding: 1rem;
 		border-radius: 0.5rem;
 		border: 0;
+		height: 3rem;
 	}
 
 	.radio-box {
@@ -72,7 +86,9 @@
 	button {
 		background-color: #aaf2;
 		color: #fff;
-		font-size: 2em;
+		font-size: 1.5em;
+		display: flex;
+		align-items: center;
 	}
 
 	button:active {
@@ -83,7 +99,42 @@
 		display: none;
 	}
 
+	label {
+		border-bottom: 0.1em solid transparent
+	}
+
 	.radio-box input:checked + label {
-		border-bottom: 0.1em solid #ccc
+		border-color: #bbc
+	}
+
+	header {
+		position: fixed;
+		top: 0;
+		text-align: center;
+		margin: 0 1em;
+	}
+
+	header span {
+		opacity: 0.7;
+	}
+
+	footer {
+		position: fixed;
+		bottom: 0;
+		width: 100vw;
+		display: flex;
+		justify-content: flex-end;
+		padding: 2em;
+		gap: 1em;
+	}
+
+	footer a {
+		color: #bbc;
+		text-decoration: none;
+		border-bottom: 1px solid #bbc;
+	}
+
+	.mobile-layout footer {
+		font-size: 0.75em;
 	}
 </style>
