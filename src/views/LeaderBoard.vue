@@ -65,6 +65,7 @@
 		display: flex;
 		flex-direction: column;
 		background-color: #21252b;
+		min-height: 100vh;
 	}
 
 	.leader-board-page:not(.mobile-layout) {
