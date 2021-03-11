@@ -2,7 +2,7 @@
 	<form class="home-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<header>
 			<h1>
-				BDO Guild Leader Board
+				BDO Leader Boards
 			</h1>
 			<span>Select your region, type in the guild name and press the magic button.</span>
 		</header>
@@ -20,7 +20,7 @@
 
 		<footer>
 			<span>deadMNGO#8312</span>
-			<a href="https://gitlab.com/man90/bdo-guild-leader-board" target="_blank">Source</a>
+			<a href="https://gitlab.com/man90/bdo-leader-boards" target="_blank">Source</a>
 			<a href="https://gitlab.com/man90/black-desert-social-rest-api" target="_blank">API</a>
 		</footer>
 	</form>
@@ -46,7 +46,7 @@
 			},
 		},
 		created() {
-			document.title = "BDO Guild Leader Board"
+			document.title = "BDO Leader Boards"
 		}
 	}
 </script>
