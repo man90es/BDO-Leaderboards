@@ -24,6 +24,8 @@
 		<CombatFameLeaderBoard v-else-if="$route.params.discipline == 'combat'"/>
 		<LifeFameLeaderBoard v-else-if="$route.params.discipline == 'life'"/>
 		<SpecLeaderBoard v-else :specName="$route.params.discipline"/>
+
+		<LoadingBanner v-if="$store.state.loadingStage" />
 	</div>
 </template>
 
@@ -33,6 +35,7 @@
 	import CombatFameLeaderBoard from '../components/CombatFameLeaderBoard.vue'
 	import LifeFameLeaderBoard from '../components/LifeFameLeaderBoard.vue'
 	import SpecLeaderBoard from '../components/SpecLeaderBoard.vue'
+	import LoadingBanner from '../components/LoadingBanner.vue'
 
 	export default {
 		name: 'LeaderBoard',
@@ -41,7 +44,8 @@
 			LevelLeaderBoard,
 			SpecLeaderBoard,
 			CombatFameLeaderBoard,
-			LifeFameLeaderBoard
+			LifeFameLeaderBoard,
+			LoadingBanner
 		},
 		created() {
 			if (!(this.$route.params.guildName in this.$store.state.guilds)) {
@@ -92,8 +96,7 @@
 	.select-guild {
 		color: #bbc;
 		margin-bottom: 1rem;
-		text-decoration: none;
-		border-bottom: 1px solid #bbc;
 		opacity: 0.8;
+		text-align: center;
 	}
 </style>

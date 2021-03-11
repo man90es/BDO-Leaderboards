@@ -1,14 +1,10 @@
 <template>
 	<router-view/>
-	<LoadingBanner v-if="$store.state.loadingStage" />
 </template>
 
 <script>
-	import LoadingBanner from './components/LoadingBanner.vue'
-
 	export default {
-		name: 'App',
-		components: { LoadingBanner }
+		name: 'App'
 	}
 </script>
 
