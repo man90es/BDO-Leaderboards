@@ -29,11 +29,10 @@
 
 	export default {
 		name: 'LevelLeaderBoard',
-		props: ['guildName'],
 		components: { LeaderBoardLine },
 		computed: {
 			participants() {
-				return this.$store.getters.members(this.guildName)
+				return this.$store.getters.members(this.$route.params.guildName)
 					.filter((member) => { // Filter out members with private levels
 						return member.characters[0].level !== undefined
 					})

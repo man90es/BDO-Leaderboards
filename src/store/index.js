@@ -82,7 +82,7 @@ export default createStore({
 				return []
 			} else {
 				return Object.values(state.players).filter((player) => {
-					return player.guild && player.guild.guildName == guildName
+					return player.guild && player.guild.name.toLowerCase() === guildName.toLowerCase()
 				})
 			}
 		}

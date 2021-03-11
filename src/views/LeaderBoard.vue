@@ -91,6 +91,7 @@
 	h1 {
 		text-align: center;
 		margin-bottom: 0;
+		color: #fff;
 	}
 
 	.router-link-exact-active {

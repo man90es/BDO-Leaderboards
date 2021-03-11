@@ -25,11 +25,10 @@
 
 	export default {
 		name: 'ContributionLeaderBoard',
-		props: ['guildName'],
 		components: { LeaderBoardLine },
 		computed: {
 			participants() {
-				return this.$store.getters.members(this.guildName)
+				return this.$store.getters.members(this.$route.params.guildName)
 					.filter((member) => { // Filter out members with private spec levels
 						return member.characters[0].specLevels !== undefined
 					})
