@@ -53,6 +53,8 @@
 					guildName: this.$route.params.guildName,
 					region: this.$route.params.region
 				})
+
+				document.title = `${this.$route.params.guildName} Leader Board`
 			}
 		}
 	}

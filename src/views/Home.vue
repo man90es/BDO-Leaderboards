@@ -32,6 +32,9 @@
 				this.guildName = (newValue.charAt(0).toUpperCase() + newValue.slice(1)).replace(' ', '')
 			},
 		},
+		created() {
+			document.title = "BDO Guild Leader Board"
+		}
 	}
 </script>
 
