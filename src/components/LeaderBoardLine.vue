@@ -25,6 +25,7 @@
 		display: flex;
 		gap: 1rem;
 		padding: 0.5rem;
+		line-height: 1.6rem;
 	}
 
 	.leader-board-line > div {
@@ -69,7 +70,7 @@
 	}
 
 	.class-icon {
-		width: 1.5rem;
+		width: 1.3rem;
 		vertical-align: middle;
 		margin-right: 0.5rem;
 	}
