@@ -25,7 +25,7 @@ export default createStore({
 	},
 	mutations: {
 		pushGuild(state, guild) {
-			state.guilds[guild.guildName] = guild
+			state.guilds[guild.name.toLowerCase()] = guild
 		},
 
 		pushPlayer(state, player) {
@@ -57,7 +57,7 @@ export default createStore({
 				.then((guildProfile) => {
 					commit('setLoadingStage', null)
 					commit('pushGuild', guildProfile)
-					dispatch('requestMembers', { members: guildProfile.members, total: guildProfile.members.length })
+					dispatch('requestMembers', { members: [...guildProfile.members], total: guildProfile.members.length })
 				})
 				.catch(err => commit('setLoadingStage', err))
 		},
@@ -86,7 +86,7 @@ export default createStore({
 				return []
 			} else {
 				return Object.values(state.players).filter((player) => {
-					return player.guild && player.guild.name.toLowerCase() === guildName.toLowerCase()
+					return state.guilds[guildName.toLowerCase()].members.map(member => member.familyName).includes(player.familyName)
 				})
 			}
 		}
