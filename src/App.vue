@@ -4,7 +4,19 @@
 
 <script>
 	export default {
-		name: 'App'
+		name: 'App',
+		created() {
+			window.onresize = (event) => {
+				if (this.$store.state.mobile && innerWidth > innerHeight) {
+					this.$store.commit('setMobile', false)
+				} else if (!this.$store.state.mobile && innerWidth < innerHeight) {
+					this.$store.commit('setMobile', true)
+				}
+			}
+		},
+		beforeUnmount() {
+			window.onresize = null
+		}
 	}
 </script>
 

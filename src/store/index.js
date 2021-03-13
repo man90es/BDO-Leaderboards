@@ -34,6 +34,10 @@ export default createStore({
 
 		setLoadingStage(state, stage) {
 			state.loadingStage = stage
+		},
+
+		setMobile(state, value) {
+			state.mobile = value
 		}
 	},
 	actions: {
