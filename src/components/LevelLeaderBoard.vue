@@ -15,9 +15,9 @@
 
 <script>
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { sortByAttribute, assignPlaces } from '../helpers'
+	import { sortByAttribute, assignPlaces, PRIVATE_LEVEL } from '../helpers'
 
-	function Participant(familyName, characterName, characterClass, characterLevel) {
+	function Participant(familyName, characterName, characterClass, characterLevel = 1) {
 		this.familyName = familyName
 		this.name = characterName
 		this.class = characterClass
@@ -33,16 +33,17 @@
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
-					.filter((member) => { // Filter out members with private levels
-						return member.characters[0].level !== undefined
-					})
 					.map((member) => { // Convert members to participants
-						let memberRep = member.characters
-							.sort((characterA, characterB) => { // Choose member's character with the highest level
-								return characterA.level > characterB.level ? -1 : 1
-							})[0]
+						if (member.privacy & PRIVATE_LEVEL) {
+							return new Participant(member.familyName, null, null, 'Private')
+						} else {
+							let memberRep = member.characters
+								.sort((characterA, characterB) => { // Choose member's character with the highest level
+									return characterA.level > characterB.level ? -1 : 1
+								})[0]
 
-						return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.level)
+							return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.level)
+						}
 					})
 					.sort(sortByAttribute('level'))
 					.map(assignPlaces('level'))

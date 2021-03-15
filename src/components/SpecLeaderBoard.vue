@@ -15,7 +15,7 @@
 
 <script>
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { getNumericSpec, sortByAttribute, assignPlaces } from '../helpers'
+	import { getNumericSpec, sortByAttribute, assignPlaces, PRIVATE_SPECS } from '../helpers'
 
 	function Participant(familyName, characterName, characterClass, specLevel, numericSpecLevel) {
 		this.familyName = familyName
@@ -35,22 +35,23 @@
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
-					.filter((member) => { // Filter out members with private spec levels
-						return member.characters[0].specLevels !== undefined
-					})
 					.map((member) => { // Convert members to participants
-						let memberRep = member.characters
-							.map((character) => { // Convert characters to reps
-								return {
-									name: character.name,
-									class: character.class,
-									specLevel: character.specLevels[this.specName],
-									numericSpecLevel: getNumericSpec(character.specLevels[this.specName])
-								}
-							})
-							.sort(sortByAttribute('numericSpecLevel'))[0] // Choose member's rep with the highest spec level
+						if (member.privacy & PRIVATE_SPECS) {
+							return new Participant(member.familyName, null, null, 'Private', -1)
+						} else {
+							let memberRep = member.characters
+								.map((character) => { // Convert characters to reps
+									return {
+										name: character.name,
+										class: character.class,
+										specLevel: character.specLevels[this.specName],
+										numericSpecLevel: getNumericSpec(character.specLevels[this.specName])
+									}
+								})
+								.sort(sortByAttribute('numericSpecLevel'))[0] // Choose member's rep with the highest spec level
 
-						return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.specLevel, memberRep.numericSpecLevel)
+							return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.specLevel, memberRep.numericSpecLevel)
+						}
 					})
 					.sort(sortByAttribute('numericSpecLevel'))
 					.map(assignPlaces('numericSpecLevel'))

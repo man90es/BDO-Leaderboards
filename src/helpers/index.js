@@ -15,7 +15,12 @@ export function getNumericSpec(specText) {
 }
 
 export function sortByAttribute(attribute) {
-	return (a, b) => a[attribute] > b[attribute] ? -1 : 1
+	return (a, b) => {
+		let aValue = a[attribute] == 'Private' ? -1 : a[attribute]
+		let bValue = b[attribute] == 'Private' ? -1 : b[attribute]
+
+		return aValue > bValue ? -1 : 1
+	}
 }
 
 export function assignPlaces(scoreAttribute) {
@@ -39,3 +44,8 @@ export function assignPlaces(scoreAttribute) {
 		return participant
 	}
 }
+
+export const PRIVATE_LEVEL 		= 1
+export const PRIVATE_GUILD 		= 2
+export const PRIVATE_CONTRIB 	= 4
+export const PRIVATE_SPECS 		= 8

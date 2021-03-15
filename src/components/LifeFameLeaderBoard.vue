@@ -13,7 +13,7 @@
 
 <script>
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { getNumericSpec, sortByAttribute, assignPlaces } from '../helpers'
+	import { getNumericSpec, sortByAttribute, assignPlaces, PRIVATE_SPECS } from '../helpers'
 
 	function Participant(familyName, lifeFame) {
 		this.familyName = familyName
@@ -29,20 +29,21 @@
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
-					.filter((member) => { // Filter out members with private spec levels
-						return member.characters[0].specLevels !== undefined
-					})
 					.map((member) => { // Convert members to participants
-						let lifeFame = member.characters
-							.reduce((fame, character) => {
-								return fame + Object.values(character.specLevels).reduce((cFame, specLevel) => {
-									let numericSpec = getNumericSpec(specLevel)
+						if (member.privacy & PRIVATE_SPECS) {
+							return new Participant(member.familyName, 'Private')
+						} else {
+							let lifeFame = member.characters
+								.reduce((fame, character) => {
+									return fame + Object.values(character.specLevels).reduce((cFame, specLevel) => {
+										let numericSpec = getNumericSpec(specLevel)
 
-									return cFame + (numericSpec > 30 ? numericSpec / 2 : 0) + (numericSpec > 80 ? numericSpec : 0)
-								}, 0)
-							}, 1)
+										return cFame + (numericSpec > 30 ? numericSpec / 2 : 0) + (numericSpec > 80 ? numericSpec : 0)
+									}, 0)
+								}, 1)
 
-						return new Participant(member.familyName, Math.floor(lifeFame))
+							return new Participant(member.familyName, Math.floor(lifeFame))
+						}
 					})
 					.sort(sortByAttribute('lifeFame'))
 					.map(assignPlaces('lifeFame'))

@@ -13,7 +13,7 @@
 
 <script>
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { sortByAttribute, assignPlaces } from '../helpers'
+	import { sortByAttribute, assignPlaces, PRIVATE_CONTRIB } from '../helpers'
 
 	function Participant(familyName, contributionPoints) {
 		this.familyName = familyName
@@ -29,11 +29,8 @@
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
-					.filter((member) => { // Filter out members with private CP
-						return member.contributionPoints !== undefined
-					})
 					.map((member) => { // Convert members to participants
-						return new Participant(member.familyName, member.contributionPoints)
+						return new Participant(member.familyName, member.privacy && PRIVATE_CONTRIB ? 'Private' : member.contributionPoints || 0)
 					})
 					.sort(sortByAttribute('CP'))
 					.map(assignPlaces('CP'))
