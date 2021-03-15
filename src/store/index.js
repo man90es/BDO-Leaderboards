@@ -85,9 +85,7 @@ export default createStore({
 			if (state.loadingStage !== null) {
 				return []
 			} else {
-				return Object.values(state.players).filter((player) => {
-					return state.guilds[guildName.toLowerCase()].members.map(member => member.familyName).includes(player.familyName)
-				})
+				return state.guilds[guildName.toLowerCase()].members.map(member => state.players[member.familyName])
 			}
 		}
 	}
