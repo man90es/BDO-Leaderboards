@@ -122,7 +122,7 @@
 	}
 
 	.maehwa::before {
-		background-position: var(--spritesheet-x-offset) -16.7rem !important;
+		background-position: var(--spritesheet-x-offset) -16.6rem !important;
 	}
 
 	.valkyrie::before {
@@ -134,7 +134,7 @@
 	}
 
 	.dark-knight::before {
-		background-position: var(--spritesheet-x-offset) -22.2rem !important;
+		background-position: var(--spritesheet-x-offset) -22.1rem !important;
 	}
 
 	.striker::before {
@@ -167,5 +167,9 @@
 
 	.nova::before {
 		background-position: var(--spritesheet-x-offset) -36.8rem !important;
+	}
+
+	.sage::before {
+		background-position: var(--spritesheet-x-offset) -38.6rem !important;
 	}
 </style>
