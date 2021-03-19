@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { PRIVATE_GUILD } from '../helpers'
 
 function parseResponse(response) {
 	if (response.ok) {
@@ -85,7 +86,25 @@ export default createStore({
 			if (state.loadingStage !== null) {
 				return []
 			} else {
-				return state.guilds[guildName.toLowerCase()].members.map(member => state.players[member.familyName])
+				return state.guilds[guildName.toLowerCase()].members
+					.filter(member => {
+						// The official website does not always update when someone leaves the guild; this should filter some ex-members out
+						// I have no idea how to filter out ex-members with private guild setting though
+
+						let profile = state.players[member.familyName]
+
+						if (profile.guild !== undefined && profile.guild.name.toLowerCase() == guildName.toLowerCase()) {
+							// They are probably in the guild: double checked
+							return true
+						} else if (profile.privacy & PRIVATE_GUILD) {
+							// The guild in the profile is set to private: can't double check
+							return true
+						} else {
+							// Either no guild or other guild
+							return false
+						}
+					})
+					.map(member => state.players[member.familyName])
 			}
 		}
 	}
