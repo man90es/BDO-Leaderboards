@@ -46,7 +46,7 @@
 			},
 		},
 		created() {
-			document.title = "BDO Leader Boards"
+			document.title = "BDO Leaderboards"
 		}
 	}
 </script>

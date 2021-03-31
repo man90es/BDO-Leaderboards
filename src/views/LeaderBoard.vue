@@ -54,7 +54,7 @@
 					region: this.$route.params.region
 				})
 
-				document.title = `${this.$route.params.guildName} Leader Board`
+				document.title = `${this.$route.params.guildName} Leaderboard`
 			}
 		}
 	}
