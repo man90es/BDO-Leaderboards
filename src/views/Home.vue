@@ -1,13 +1,13 @@
 <template>
 	<form class="home-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<header>
-			<h1>
-				BDO Leader Boards
+			<h1 data-nosnippet>
+				BDO Leaderboards
 			</h1>
-			<span>Select your region, type in the guild name and press the magic button.</span>
+			<span>Search for Black Desert Online leaderboards.</span>
 		</header>
 
-		<div class="radio-box">
+		<div class="radio-box" data-nosnippet>
 			<input type="radio" value="EU" id="region-EU" v-model="region">
 			<label for="region-EU">EU</label>
 			<input type="radio" value="NA" id="region-NA" v-model="region">
@@ -16,10 +16,10 @@
 
 		<input type="text" placeholder="Guild name" v-model="guildName">
 
-		<button @click="navigateToLeaderBoard">↩</button>
+		<button @click="navigateToLeaderBoard" data-nosnippet>↩</button>
 
-		<footer>
-			<span>deadMNGO#8312</span>
+		<footer data-nosnippet>
+			<span>Made by deadMNGO#8312</span>
 			<a href="https://gitlab.com/man90/bdo-leader-boards" target="_blank">Source</a>
 			<a href="https://gitlab.com/man90/black-desert-social-rest-api" target="_blank">API</a>
 		</footer>
