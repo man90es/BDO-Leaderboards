@@ -19,7 +19,7 @@
 		display: flex;
 		gap: 1rem;
 		padding: 0.5rem;
-		line-height: 1.6rem;
+		line-height: 1.7rem;
 	}
 
 	.leader-board-line > div {
