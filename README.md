@@ -1,8 +1,6 @@
-# BDO guild leader board
-[![vue](https://vuejs.org/images/icons/favicon-32x32.png "Vue.js")](https://vuejs.org/)
+# BDO Leaderboards
+BDO Leaderboards is a web-based application that allows you to see and compare various achievements of guild members in [Black Desert Online](https://www.naeu.playblackdesert.com).
+All data is retrieved from BDO servers in (almost) real time via [Black Desert social REST API](https://gitlab.com/man90/black-desert-social-rest-api).
 
-BDO guild leader board is a web-based application that allows you to see and compare various achievements of guild members in [Black Desert Online](www.naeu.playblackdesert.com) (only EU and NA servers are currently supported).
-All data is gathered from BDO servers in real time via [BDO social REST API](https://gitlab.com/man90/black-desert-social-rest-api).
-
-## It can be accessed at:
+## Try it out:
 [https://man90.gitlab.io/BDO-leader-boards](https://man90.gitlab.io/bdo-leader-boards/)
