@@ -27,6 +27,8 @@
 </template>
 
 <script>
+	import { capitalise } from '../helpers'
+
 	export default {
 		name: 'Home',
 		data() {
@@ -42,7 +44,10 @@
 		},
 		watch: {
 			guildName: function(newValue) {
-				this.guildName = (newValue.charAt(0).toUpperCase() + newValue.slice(1)).replace(' ', '')
+				// Capitalise guild name and remove spaces, as it is done in the game
+				if (newValue.length > 0) {
+					this.guildName = capitalise(newValue).replace(' ', '')
+				}
 			},
 		},
 		created() {

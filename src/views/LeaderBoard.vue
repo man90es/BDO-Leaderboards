@@ -36,6 +36,7 @@
 	import LifeFameLeaderBoard from '../components/LifeFameLeaderBoard.vue'
 	import SpecLeaderBoard from '../components/SpecLeaderBoard.vue'
 	import LoadingBanner from '../components/LoadingBanner.vue'
+	import { capitalise } from '../helpers'
 
 	export default {
 		name: 'LeaderBoard',
@@ -47,14 +48,48 @@
 			LifeFameLeaderBoard,
 			LoadingBanner
 		},
+
+		methods: {
+			switchTitle: function (discipline) {
+				// Convert internal names to conventional
+				switch (discipline) {
+					case "contribution":
+						discipline = "CP"
+						break
+
+					case "combat":
+						discipline = "Combat Fame"
+						break
+
+					case "life":
+						discipline = "Life Fame"
+						break
+				}
+
+				// Set a new title
+				document.title = `${this.$route.params.guildName} ${capitalise(discipline)} Leaderboard`
+			}
+		},
+
 		created() {
+			// Request guild data if it wasn't requested before
 			if (!(this.$route.params.guildName in this.$store.state.guilds)) {
 				this.$store.dispatch('requestGuild', {
 					guildName: this.$route.params.guildName,
 					region: this.$route.params.region
 				})
+			}
 
-				document.title = `${this.$route.params.guildName} Leaderboard`
+			// Set a new title on load
+			this.switchTitle(this.$route.params.discipline)
+		},
+
+		watch: {
+			// Set a new title when navigating between categories
+			'$route.params.discipline': function(newValue) {
+				if (newValue) {
+					this.switchTitle(newValue)
+				}
 			}
 		}
 	}

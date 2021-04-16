@@ -49,3 +49,7 @@ export const PRIVATE_LEVEL 		= 1
 export const PRIVATE_GUILD 		= 2
 export const PRIVATE_CONTRIB 	= 4
 export const PRIVATE_SPECS 		= 8
+
+export function capitalise(string) {
+    return string[0].toUpperCase() + string.slice(1)
+}
