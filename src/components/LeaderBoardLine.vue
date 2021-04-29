@@ -1,76 +1,57 @@
 <template>
-	<div class="leader-board-line" :class="{ 'numba-one': colour == 1, 'numba-two': colour == 2, 'numba-three': colour == 3 }">
-		<div><span v-if="!hidePlace">#{{ place }}</span></div>
-		<div>{{ familyName }}</div>
-		<div :title="characterClass" :class="{ [(characterClass || '').toLowerCase().replace(' ', '-')]: true }">{{ characterName }}</div>
-		<div>{{ score }}</div>
-	</div>
+	<div :style="cssVars" class="position" :class="{ header }"><span v-if="!hidePlace">#{{ place }}</span></div>
+	<div :style="cssVars" class="family-name" :class="{ header }">{{ familyName }}</div>
+	<div :style="cssVars" class="character-name" :class="{ header, [(characterClass || '').toLowerCase().replace(' ', '-')]: true }" :title="characterClass">{{ characterName }}</div>
+	<div :style="cssVars" class="score" :class="{ header }">{{ score }}</div>
 </template>
 
 <script>
 	export default {
 		name: 'LeaderBoardLine',
-		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace']
+		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace', 'header'],
+		computed: {
+			cssVars() {
+				switch (this.colour) {
+					case 1:
+						return {
+							'color': '#c86783',
+							'font-size': '1.6em'
+						}
+
+					case 2:
+						return {
+							'color': '#c1e277',
+							'font-size': '1.4em',
+							'background-color': '#0001'
+						}
+
+					case 3:
+						return {
+							'color': '#448fc8',
+							'font-size': '1.2em'
+						}
+
+					default:
+						return {
+							'background-color': this.place % 2 ? 'transparent' : '#0001'
+						}
+				}
+			}
+		}
 	}
 </script>
 
 <style>
-	.leader-board-line {
-		display: flex;
-		gap: 1rem;
-		padding: 0.5rem;
-		line-height: 1.7rem;
-	}
-
-	.leader-board-line > div {
-		width: 15rem;
-		text-align: left;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.leader-board-line > div:first-child {
-		width: 4rem;
+	.position,
+	.score {
 		text-align: right;
 	}
 
-	.leader-board-line > div:last-child {
-		text-align: right;
-		width: 15.5rem
-	}
-
-	.leader-board-line:nth-child(odd) {
-		background-color: #0001;
-	}
-
-	.leader-board-line:nth-child(1) {
+	.header {
 		font-weight: bold;
 	}
 
-	.leader-board-line.numba-one {
-		color: #c86783;
-		font-size: 1.6em;
-	}
-
-	.leader-board-line.numba-two {
-		color: #c1e277;
-		font-size: 1.4em;
-	}
-
-	.leader-board-line.numba-three {
-		color: #448fc8;
-		font-size: 1.2em;
-	}
-
-	.mobile-layout .leader-board-line {
-		font-size: 0.9em;
-	}
-
-	.leader-board-line > div:nth-child(3) {
-		margin-left: 0.75rem;
-	}
-
-	.leader-board-line > div:nth-child(3)::before {
+	.character-name:not(.header)::before {
 		content: '';
 		width: 1.5rem;
 		height: 1.5rem;

@@ -139,4 +139,26 @@
 		opacity: 0.8;
 		text-align: center;
 	}
+
+	.leader-board-page.mobile-layout .leader-board {
+		width: 100vw;
+	}
+
+	.leader-board-page:not(.mobile-layout) .leader-board {
+		width: 50vw;
+	}
+
+	.leader-board {
+		width: 100vw;
+		display: grid;
+		grid-template-columns: 3rem 1fr 1fr 1fr;
+	}
+
+	.leader-board > * {
+		padding: 0.5rem;
+	}
+
+	.mobile-layout .leader-board > * {
+		font-size: 0.9em !important;
+	}
 </style>

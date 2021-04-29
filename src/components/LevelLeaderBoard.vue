@@ -1,6 +1,6 @@
 <template>
 	<div class="leader-board">
-		<LeaderBoardLine :familyName="'Family Name'" :characterName="'Character'" :score="'Level'" />
+		<LeaderBoardLine familyName="Family Name" characterName="Character" score="Level" :header="true" />
 		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
