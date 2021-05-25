@@ -19,9 +19,9 @@
 		<button @click="navigateToLeaderBoard" data-nosnippet>↩</button>
 
 		<footer data-nosnippet>
-			<span>Made by deadMNGO#8312</span>
-			<a href="https://gitlab.com/man90/bdo-leader-boards" target="_blank">Source</a>
-			<a href="https://gitlab.com/man90/black-desert-social-rest-api" target="_blank">API</a>
+			<a href="https://github.com/octoman90/BDO-Leaderboards/issues" target="_blank">Contact</a>
+			<a href="https://github.com/octoman90/BDO-Leaderboards" target="_blank">GitHub</a>
+			<a href="https://github.com/octoman90/BDO-REST-API" target="_blank">API</a>
 		</footer>
 	</form>
 </template>
