@@ -11,31 +11,34 @@
 		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace', 'header'],
 		computed: {
 			cssVars() {
+				let vars = {
+					'background-color': this.place % 2 ? 'transparent' : '#0001'
+				}
+
 				switch (this.colour) {
 					case 1:
 						return {
+							...vars,
 							'color': '#c86783',
-							'font-size': '1.6em'
+							'font-size': '1.6em',
 						}
 
 					case 2:
 						return {
+							...vars,
 							'color': '#c1e277',
 							'font-size': '1.4em',
-							'background-color': '#0001'
 						}
 
 					case 3:
 						return {
+							...vars,
 							'color': '#448fc8',
-							'font-size': '1.2em'
-						}
-
-					default:
-						return {
-							'background-color': this.place % 2 ? 'transparent' : '#0001'
+							'font-size': '1.2em',
 						}
 				}
+
+				return vars
 			}
 		}
 	}
