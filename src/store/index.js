@@ -9,14 +9,6 @@ function parseResponse(response) {
 	}
 }
 
-function findAndThrowError(data) {
-	if ('error' in data) {
-		throw data.error
-	} else {
-		return data
-	}
-}
-
 export default createStore({
 	state: {
 		guilds: {},
@@ -45,31 +37,22 @@ export default createStore({
 		requestGuild({ commit, dispatch }, { guildName, region }) {
 			commit('setLoadingStage', 'Gathering guild data')
 
-			fetch(`${process.env.VUE_APP_API_BASE}/v0/guildProfile?guildName=${guildName}&region=${region}`)
+			fetch(`${process.env.VUE_APP_API_BASE}/v1/guild?guildName=${guildName}&region=${region}`)
 				.then(parseResponse)
-				.then(findAndThrowError)
-				.then((data) => {
-					if('members' in data) {
-						return data
-					} else {
-						throw `The guild «${guildName}» does not exist on the ${region} server`
-					}
-				})
 				.then((guildProfile) => {
 					commit('setLoadingStage', null)
 					commit('pushGuild', guildProfile)
-					dispatch('requestMembers', { members: [...guildProfile.members], total: guildProfile.members.length })
+					dispatch('requestMembers', { members: [...guildProfile.members], total: guildProfile.population })
 				})
 				.catch(err => commit('setLoadingStage', err))
 		},
 
 		requestMembers({ commit, dispatch }, { members, total }) {
-			commit('setLoadingStage', `Gathering member data: ${Math.floor((total - members.length) / total * 100)}%`)
+			commit('setLoadingStage', `Gathering intel: ${Math.floor((total - members.length) / total * 100)}%`)
 			let member = members.shift()
 
-			fetch(`${process.env.VUE_APP_API_BASE}/v0/profile?profileTarget=${member.profileTarget}`)
+			fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer?profileTarget=${member.profileTarget}`)
 				.then(parseResponse)
-				.then(findAndThrowError)
 				.then(playerProfile => commit('pushPlayer', playerProfile))
 				.catch(err => commit('setLoadingStage', err))
 				.finally(() => {
