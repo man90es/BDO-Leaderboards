@@ -156,4 +156,8 @@
 	.sage::before {
 		background-position: var(--spritesheet-x-offset) -38.6rem !important;
 	}
+
+	.corsair::before {
+		background-position: var(--spritesheet-x-offset) -40.5rem !important;
+	}
 </style>
