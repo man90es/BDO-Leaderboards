@@ -56,17 +56,17 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.home-page {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		gap: 2rem;
 		height: 100vh;
-	}
 
-	.home-page.mobile-layout {
-		flex-direction: column;
+		&.mobile-layout {
+			flex-direction: column;
+		}
 	}
 
 	select, input, button {
@@ -93,14 +93,18 @@
 		font-size: 1.5em;
 		display: flex;
 		align-items: center;
-	}
 
-	button:active {
-		background-color: #aaf1;
+		&:active {
+			background-color: #aaf1;
+		}
 	}
 
 	.radio-box input {
 		display: none;
+
+		&:checked + label {
+			border-color: #fff
+		}
 	}
 
 	label {
@@ -108,19 +112,15 @@
 		color: #fff;
 	}
 
-	.radio-box input:checked + label {
-		border-color: #fff
-	}
-
 	header {
 		position: fixed;
 		top: 0;
 		text-align: center;
 		margin: 0 1em;
-	}
 
-	header span {
-		opacity: 0.7;
+		span {
+			opacity: 0.7;
+		}
 	}
 
 	footer {
@@ -131,12 +131,12 @@
 		justify-content: flex-end;
 		padding: 2em;
 		gap: 1em;
-	}
 
-	footer a {
-		color: #bbc;
-		text-decoration: none;
-		border-bottom: 1px solid #bbc;
+		a {
+			color: #bbc;
+			text-decoration: none;
+			border-bottom: 1px solid #bbc;
+		}
 	}
 
 	.mobile-layout footer {

@@ -51,29 +51,13 @@
 	}
 </script>
 
-<style>
-	.position,
-	.score {
+<style lang="scss">
+	.position, .score {
 		text-align: right;
 	}
 
 	.header {
 		font-weight: bold;
-	}
-
-	.character-name:not(.header)::before {
-		content: '';
-		width: 1.5rem;
-		height: 1.5rem;
-		background-image: url(https://s1.pearlcdn.com/NAEU/contents/img/common/character/icn_class_symbol_spr.svg);
-		background-position: 10em 10em;
-		background-repeat: no-repeat;
-		background-size: 5.5rem auto;
-		transform: translate(-1.5rem, 0);
-		position: absolute;
-		opacity: 0.8;
-
-		--spritesheet-x-offset: -2.1rem;
 	}
 
 	.profile-link {
@@ -82,95 +66,112 @@
 		opacity: 0.75;
 	}
 
-	.warrior::before {
-		background-position: var(--spritesheet-x-offset) -0.3rem !important;
-	}
+	.character-name:not(.header) {
+		$spritesheet-x-offset: -2.1rem;
 
-	.ranger::before {
-		background-position: var(--spritesheet-x-offset) -2.0rem !important;
-	}
+		&::before {
+			content: '';
+			width: 1.5rem;
+			height: 1.5rem;
+			background-image: url(https://s1.pearlcdn.com/NAEU/contents/img/common/character/icn_class_symbol_spr.svg);
+			background-position: 10em 10em;
+			background-repeat: no-repeat;
+			background-size: 5.5rem auto;
+			transform: translate(-1.5rem, 0);
+			position: absolute;
+			opacity: 0.8;
+		}
 
-	.sorceress::before {
-		background-position: var(--spritesheet-x-offset) -3.8rem !important;
-	}
+		&.warrior::before {
+			background-position: $spritesheet-x-offset -0.3rem !important;
+		}
 
-	.berserker::before {
-		background-position: var(--spritesheet-x-offset) -5.6rem !important;
-	}
+		&.ranger::before {
+			background-position: $spritesheet-x-offset -2.0rem !important;
+		}
 
-	.tamer::before {
-		background-position: var(--spritesheet-x-offset) -7.6rem !important;
-	}
+		&.sorceress::before {
+			background-position: $spritesheet-x-offset -3.8rem !important;
+		}
 
-	.ninja::before {
-		background-position: var(--spritesheet-x-offset) -9.3rem !important;
-	}
+		&.berserker::before {
+			background-position: $spritesheet-x-offset -5.6rem !important;
+		}
 
-	.kunoichi::before {
-		background-position: var(--spritesheet-x-offset) -11.2rem !important;
-	}
+		&.tamer::before {
+			background-position: $spritesheet-x-offset -7.6rem !important;
+		}
 
-	.witch::before {
-		background-position: var(--spritesheet-x-offset) -13.0rem !important;
-	}
+		&.ninja::before {
+			background-position: $spritesheet-x-offset -9.3rem !important;
+		}
 
-	.wizard::before {
-		background-position: var(--spritesheet-x-offset) -14.9rem !important;
-	}
+		&.kunoichi::before {
+			background-position: $spritesheet-x-offset -11.2rem !important;
+		}
 
-	.maehwa::before {
-		background-position: var(--spritesheet-x-offset) -16.6rem !important;
-	}
+		&.witch::before {
+			background-position: $spritesheet-x-offset -13.0rem !important;
+		}
 
-	.valkyrie::before {
-		background-position: var(--spritesheet-x-offset) -18.5rem !important;
-	}
+		&.wizard::before {
+			background-position: $spritesheet-x-offset -14.9rem !important;
+		}
 
-	.musa::before {
-		background-position: var(--spritesheet-x-offset) -20.4rem !important;
-	}
+		&.maehwa::before {
+			background-position: $spritesheet-x-offset -16.6rem !important;
+		}
 
-	.dark-knight::before {
-		background-position: var(--spritesheet-x-offset) -22.1rem !important;
-	}
+		&.valkyrie::before {
+			background-position: $spritesheet-x-offset -18.5rem !important;
+		}
 
-	.striker::before {
-		background-position: var(--spritesheet-x-offset) -24.0rem !important;
-	}
+		&.musa::before {
+			background-position: $spritesheet-x-offset -20.4rem !important;
+		}
 
-	.mystic::before {
-		background-position: var(--spritesheet-x-offset) -25.8rem !important;
-	}
+		&.dark-knight::before {
+			background-position: $spritesheet-x-offset -22.1rem !important;
+		}
 
-	.lahn::before {
-		background-position: var(--spritesheet-x-offset) -27.8rem !important;
-	}
+		&.striker::before {
+			background-position: $spritesheet-x-offset -24.0rem !important;
+		}
 
-	.archer::before {
-		background-position: var(--spritesheet-x-offset) -29.6rem !important;
-	}
+		&.mystic::before {
+			background-position: $spritesheet-x-offset -25.8rem !important;
+		}
 
-	.shai::before {
-		background-position: var(--spritesheet-x-offset) -31.3rem !important;
-	}
+		&.lahn::before {
+			background-position: $spritesheet-x-offset -27.8rem !important;
+		}
 
-	.guardian::before {
-		background-position: var(--spritesheet-x-offset) -33.1rem !important;
-	}
+		&.archer::before {
+			background-position: $spritesheet-x-offset -29.6rem !important;
+		}
 
-	.hashashin::before {
-		background-position: var(--spritesheet-x-offset) -35.0rem !important;
-	}
+		&.shai::before {
+			background-position: $spritesheet-x-offset -31.3rem !important;
+		}
 
-	.nova::before {
-		background-position: var(--spritesheet-x-offset) -36.8rem !important;
-	}
+		&.guardian::before {
+			background-position: $spritesheet-x-offset -33.1rem !important;
+		}
 
-	.sage::before {
-		background-position: var(--spritesheet-x-offset) -38.6rem !important;
-	}
+		&.hashashin::before {
+			background-position: $spritesheet-x-offset -35.0rem !important;
+		}
 
-	.corsair::before {
-		background-position: var(--spritesheet-x-offset) -40.5rem !important;
+		&.nova::before {
+			background-position: $spritesheet-x-offset -36.8rem !important;
+		}
+
+		&.sage::before {
+			background-position: $spritesheet-x-offset -38.6rem !important;
+		}
+
+		&.corsair::before {
+			background-position: $spritesheet-x-offset -40.5rem !important;
+		}
 	}
 </style>

@@ -104,16 +104,16 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.leader-board-page {
 		display: flex;
 		flex-direction: column;
 		background-color: #21252b;
 		min-height: 100vh;
-	}
 
-	.leader-board-page:not(.mobile-layout) {
-		align-items: center;
+		&:not(.mobile-layout) {
+			align-items: center;
+		}
 	}
 
 	ul {
@@ -124,12 +124,12 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
 		grid-gap: 1em;
-	}
 
-	ul a {
-		color: #fff;
-		text-decoration: none;
-		padding-bottom: 0.2em;
+		a {
+			color: #fff;
+			text-decoration: none;
+			padding-bottom: 0.2em;
+		}
 	}
 
 	h1 {
@@ -155,6 +155,10 @@
 
 	.leader-board-page.mobile-layout .leader-board {
 		width: 100vw;
+
+		& > * {
+			font-size: 0.9em !important;
+		}
 	}
 
 	.leader-board-page:not(.mobile-layout) .leader-board {
@@ -165,13 +169,9 @@
 		width: 100vw;
 		display: grid;
 		grid-template-columns: 3rem 1fr 1fr 1fr;
-	}
 
-	.leader-board > * {
-		padding: 0.5rem;
-	}
-
-	.mobile-layout .leader-board > * {
-		font-size: 0.9em !important;
+		& > * {
+			padding: 0.5rem;
+		}
 	}
 </style>

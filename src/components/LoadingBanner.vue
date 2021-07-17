@@ -13,7 +13,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.loading-banner-wrapper {
 		position: fixed;
 		top: 0;
@@ -23,6 +23,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		.select-guild {
+			font-size: 0.7em;
+			margin: 1em;
+		}
 	}
 
 	.banner {
@@ -42,10 +47,5 @@
 	.mobile-layout .banner {
 		width: 100vw;
 		height: 100vh;
-	}
-
-	.loading-banner-wrapper .select-guild {
-		font-size: 0.7em;
-		margin: 1em;
 	}
 </style>
