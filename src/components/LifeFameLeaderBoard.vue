@@ -5,6 +5,7 @@
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
 			:colour="p.colour"
+			:profileTarget="p.profileTarget"
 			:familyName="p.familyName"
 			:score="p.lifeFame"
 		/>
@@ -15,7 +16,8 @@
 	import LeaderBoardLine from './LeaderBoardLine.vue'
 	import { getNumericSpec, sortByAttribute, assignPlaces, PRIVATE_SPECS } from '../helpers'
 
-	function Participant(familyName, lifeFame) {
+	function Participant(profileTarget, familyName, lifeFame) {
+		this.profileTarget = profileTarget
 		this.familyName = familyName
 		this.lifeFame = lifeFame
 		this.place = 1
@@ -31,7 +33,7 @@
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
 						if (member.privacy & PRIVATE_SPECS) {
-							return new Participant(member.familyName, 'Private')
+							return new Participant(member.profileTarget, member.familyName, 'Private')
 						} else {
 							let lifeFame = member.characters
 								.reduce((fame, character) => {
@@ -42,7 +44,7 @@
 									}, 0)
 								}, 1)
 
-							return new Participant(member.familyName, Math.floor(lifeFame))
+							return new Participant(member.profileTarget, member.familyName, Math.floor(lifeFame))
 						}
 					})
 					.sort(sortByAttribute('lifeFame'))

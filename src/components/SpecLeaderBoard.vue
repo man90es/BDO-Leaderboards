@@ -5,6 +5,7 @@
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
 			:colour="p.colour"
+			:profileTarget="p.profileTarget"
 			:familyName="p.familyName"
 			:characterClass="p.class"
 			:characterName="p.name"
@@ -17,7 +18,8 @@
 	import LeaderBoardLine from './LeaderBoardLine.vue'
 	import { getNumericSpec, sortByAttribute, assignPlaces, PRIVATE_SPECS } from '../helpers'
 
-	function Participant(familyName, characterName, characterClass, specLevel, numericSpecLevel) {
+	function Participant(profileTarget, familyName, characterName, characterClass, specLevel, numericSpecLevel) {
+		this.profileTarget = profileTarget
 		this.familyName = familyName
 		this.name = characterName
 		this.class = characterClass
@@ -37,7 +39,7 @@
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
 						if (member.privacy & PRIVATE_SPECS) {
-							return new Participant(member.familyName, null, null, 'Private', -1)
+							return new Participant(member.profileTarget, member.familyName, null, null, 'Private', -1)
 						} else {
 							let memberRep = member.characters
 								.map((character) => { // Convert characters to reps
@@ -50,7 +52,7 @@
 								})
 								.sort(sortByAttribute('numericSpecLevel'))[0] // Choose member's rep with the highest spec level
 
-							return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.specLevel, memberRep.numericSpecLevel)
+							return new Participant(member.profileTarget, member.familyName, memberRep.name, memberRep.class, memberRep.specLevel, memberRep.numericSpecLevel)
 						}
 					})
 					.sort(sortByAttribute('numericSpecLevel'))

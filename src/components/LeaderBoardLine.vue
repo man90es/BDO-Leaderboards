@@ -1,6 +1,9 @@
 <template>
 	<div :style="cssVars" class="position" :class="{ header }"><span v-if="!hidePlace">#{{ place }}</span></div>
-	<div :style="cssVars" class="family-name" :class="{ header }">{{ familyName }}</div>
+	<div :style="cssVars" class="family-name" :class="{ header }">
+		{{ familyName }}
+		<a :href="profileLink" target="_blank"><img class="profile-link" v-if="!header" src="../assets/open_in_new_white_24dp.svg" /></a>
+	</div>
 	<div :style="cssVars" class="character-name" :class="{ header, [(characterClass || '').toLowerCase().replace(' ', '-')]: true }" :title="characterClass">{{ characterName }}</div>
 	<div :style="cssVars" class="score" :class="{ header }">{{ score }}</div>
 </template>
@@ -8,7 +11,7 @@
 <script>
 	export default {
 		name: 'LeaderBoardLine',
-		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace', 'header'],
+		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace', 'header', 'profileTarget'],
 		computed: {
 			cssVars() {
 				let vars = {
@@ -39,6 +42,10 @@
 				}
 
 				return vars
+			},
+
+			profileLink() {
+				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${this.profileTarget}`
 			}
 		}
 	}
@@ -67,6 +74,12 @@
 		opacity: 0.8;
 
 		--spritesheet-x-offset: -2.1rem;
+	}
+
+	.profile-link {
+		vertical-align: middle;
+		height: 1rem;
+		opacity: 0.75;
 	}
 
 	.warrior::before {

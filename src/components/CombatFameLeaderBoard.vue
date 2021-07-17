@@ -5,6 +5,7 @@
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
 			:colour="p.colour"
+			:profileTarget="p.profileTarget"
 			:familyName="p.familyName"
 			:score="p.combatFame"
 		/>
@@ -15,7 +16,8 @@
 	import LeaderBoardLine from './LeaderBoardLine.vue'
 	import { sortByAttribute, assignPlaces, PRIVATE_LEVEL } from '../helpers'
 
-	function Participant(familyName, combatFame) {
+	function Participant(profileTarget, familyName, combatFame) {
+		this.profileTarget = profileTarget
 		this.familyName = familyName
 		this.combatFame = combatFame
 		this.place = 1
@@ -31,7 +33,7 @@
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
 						if (member.privacy & PRIVATE_LEVEL) {
-							return new Participant(member.familyName, 'Private')
+							return new Participant(member.profileTarget, member.familyName, 'Private')
 						} else {
 							let combatFame = member.characters
 								.reduce((fame, character) => {
@@ -44,7 +46,7 @@
 									}
 								}, 1)
 
-							return new Participant(member.familyName, combatFame)
+							return new Participant(member.profileTarget, member.familyName, combatFame)
 						}
 					})
 					.sort(sortByAttribute('combatFame'))

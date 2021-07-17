@@ -5,6 +5,7 @@
 			:hidePlace="p.groupWPrev"
 			:place="p.place"
 			:colour="p.colour"
+			:profileTarget="p.profileTarget"
 			:familyName="p.familyName"
 			:characterClass="p.class"
 			:characterName="p.name"
@@ -17,7 +18,8 @@
 	import LeaderBoardLine from './LeaderBoardLine.vue'
 	import { sortByAttribute, assignPlaces, PRIVATE_LEVEL } from '../helpers'
 
-	function Participant(familyName, characterName, characterClass, characterLevel = 1) {
+	function Participant(profileTarget, familyName, characterName, characterClass, characterLevel = 1) {
+		this.profileTarget = profileTarget
 		this.familyName = familyName
 		this.name = characterName
 		this.class = characterClass
@@ -35,14 +37,14 @@
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
 						if (member.privacy & PRIVATE_LEVEL) {
-							return new Participant(member.familyName, null, null, 'Private')
+							return new Participant(member.profileTarget, member.familyName, null, null, 'Private')
 						} else {
 							let memberRep = member.characters
 								.sort((characterA, characterB) => { // Choose member's character with the highest level
 									return characterA.level > characterB.level ? -1 : 1
 								})[0]
 
-							return new Participant(member.familyName, memberRep.name, memberRep.class, memberRep.level)
+							return new Participant(member.profileTarget, member.familyName, memberRep.name, memberRep.class, memberRep.level)
 						}
 					})
 					.sort(sortByAttribute('level'))

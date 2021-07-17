@@ -1,6 +1,9 @@
 <template>
 	<div class="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
-		<h1>{{$route.params.guildName}}</h1>
+		<h1>
+			{{$route.params.guildName}}
+			<a :href="guildLink" target="_blank"><img class="guild-link" v-if="!header" src="../assets/open_in_new_white_24dp.svg" /></a>
+		</h1>
 		<router-link to="../../" class="select-guild">Go back to guild selection</router-link>
 		<ul>
 			<li><router-link to="./level">Character Level</router-link></li>
@@ -71,6 +74,12 @@
 			}
 		},
 
+		computed: {
+			guildLink() {
+				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${this.$route.params.guildName}&region=${this.$route.params.region}`
+			}
+		},
+
 		created() {
 			// Request guild data if it wasn't requested before
 			if (!(this.$route.params.guildName in this.$store.state.guilds)) {
@@ -127,6 +136,10 @@
 		text-align: center;
 		margin-bottom: 0;
 		color: #fff;
+	}
+
+	.guild-link {
+		vertical-align: middle;
 	}
 
 	.router-link-exact-active {
