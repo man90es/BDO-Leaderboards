@@ -1,54 +1,39 @@
 <template>
 	<div class="leader-board">
-		<LeaderBoardLine familyName="Family Name" characterName="Character" score="Level" :header="true" />
-		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
-			:hidePlace="p.groupWPrev"
-			:place="p.place"
-			:colour="p.colour"
-			:profileTarget="p.profileTarget"
-			:familyName="p.familyName"
-			:characterClass="p.class"
-			:characterName="p.name"
-			:score="p.level"
-		/>
+		<LeaderBoardHeaderLine :headers="['#', 'Family Name', 'Character', 'Level']" />
+		<LeaderBoardLine v-for="p in participants" :key="p.profile.familyName" v-bind="p" />
 	</div>
 </template>
 
 <script>
+	import LeaderBoardHeaderLine from './LeaderBoardHeaderLine.vue'
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { sortByAttribute, assignPlaces, PRIVATE_LEVEL } from '../helpers'
-
-	function Participant(profileTarget, familyName, characterName, characterClass, characterLevel = 1) {
-		this.profileTarget = profileTarget
-		this.familyName = familyName
-		this.name = characterName
-		this.class = characterClass
-		this.level = characterLevel
-		this.place = 1
-		this.colour = 0
-		this.groupWPrev = false
-	}
+	import { sortByScore, assignPlaces, PRIVATE_LEVEL } from '../helpers'
+	import { Participant } from '../models'
 
 	export default {
 		name: 'LevelLeaderBoard',
-		components: { LeaderBoardLine },
+		components: {
+			LeaderBoardHeaderLine,
+			LeaderBoardLine,
+		},
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
 						if (member.privacy & PRIVATE_LEVEL) {
-							return new Participant(member.profileTarget, member.familyName, null, null, 'Private')
+							return new Participant(member, null, -1, 'Private')
 						} else {
 							let memberRep = member.characters
 								.sort((characterA, characterB) => { // Choose member's character with the highest level
 									return characterA.level > characterB.level ? -1 : 1
 								})[0]
 
-							return new Participant(member.profileTarget, member.familyName, memberRep.name, memberRep.class, memberRep.level)
+							return new Participant(member, memberRep, memberRep.level)
 						}
 					})
-					.sort(sortByAttribute('level'))
-					.map(assignPlaces('level'))
+					.sort(sortByScore)
+					.map(assignPlaces)
 			}
 		}
 	}

@@ -2,7 +2,7 @@
 	<div class="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<h1>
 			{{$route.params.guildName}}
-			<a :href="guildLink" target="_blank"><img class="guild-link" v-if="!header" src="../assets/open_in_new_white_24dp.svg" /></a>
+			<a :href="guildLink" target="_blank"><img class="guild-link" src="../assets/open_in_new_white_24dp.svg" /></a>
 		</h1>
 		<router-link to="../../" class="select-guild">Go back to guild selection</router-link>
 		<ul>

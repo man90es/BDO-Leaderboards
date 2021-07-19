@@ -1,17 +1,26 @@
 <template>
-	<div :style="cssVars" class="position" :class="{ header }"><span v-if="!hidePlace">#{{ place }}</span></div>
-	<div :style="cssVars" class="family-name" :class="{ header }">
-		{{ familyName }}
-		<a :href="profileLink" target="_blank"><img class="profile-link" v-if="!header" src="../assets/open_in_new_white_24dp.svg" /></a>
+	<div :style="cssVars" class="position"><span v-if="!groupWPrev">#{{ place }}</span></div>
+	<div :style="cssVars" class="family-name">
+		{{ profile.familyName }}
+		<a :href="profileLink" target="_blank"><img class="profile-link" src="../assets/open_in_new_white_24dp.svg" /></a>
 	</div>
-	<div :style="cssVars" class="character-name" :class="{ header, [(characterClass || '').toLowerCase().replace(' ', '-')]: true }" :title="characterClass">{{ characterName }}</div>
-	<div :style="cssVars" class="score" :class="{ header }">{{ score }}</div>
+	<div :style="cssVars" class="character-name" :class="{ [(featuredCharacter?.class || '').toLowerCase().replace(' ', '-')]: true }" :title="featuredCharacter?.class">{{ featuredCharacter?.name }}</div>
+	<div :style="cssVars" class="score">{{ displayScore || score }}</div>
 </template>
 
 <script>
 	export default {
 		name: 'LeaderBoardLine',
-		props: ['place', 'colour', 'familyName', 'characterClass', 'characterName', 'score', 'hidePlace', 'header', 'profileTarget'],
+		inheritAttrs: false,
+		props: [
+			'profile',
+			'featuredCharacter',
+			'score',
+			'displayScore',
+			'place',
+			'colour',
+			'groupWPrev',
+		],
 		computed: {
 			cssVars() {
 				let vars = {
@@ -45,7 +54,7 @@
 			},
 
 			profileLink() {
-				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${this.profileTarget}`
+				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${this.profile.profileTarget}`
 			}
 		}
 	}
@@ -56,17 +65,13 @@
 		text-align: right;
 	}
 
-	.header {
-		font-weight: bold;
-	}
-
 	.profile-link {
 		vertical-align: middle;
 		height: 1rem;
 		opacity: 0.75;
 	}
 
-	.character-name:not(.header) {
+	.character-name {
 		$spritesheet-x-offset: -2.1rem;
 
 		&::before {

@@ -1,41 +1,30 @@
 <template>
 	<div class="leader-board">
-		<LeaderBoardLine familyName="Family Name" score="CP" :header="true" />
-		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
-			:hidePlace="p.groupWPrev"
-			:place="p.place"
-			:colour="p.colour"
-			:profileTarget="p.profileTarget"
-			:familyName="p.familyName"
-			:score="p.CP"
-		/>
+		<LeaderBoardHeaderLine :headers="['#', 'Family Name', null, 'CP']" />
+		<LeaderBoardLine v-for="p in participants" :key="p.profile.familyName" v-bind="p" />
 	</div>
 </template>
 
 <script>
+	import LeaderBoardHeaderLine from './LeaderBoardHeaderLine.vue'
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { sortByAttribute, assignPlaces, PRIVATE_CONTRIB } from '../helpers'
-
-	function Participant(profileTarget, familyName, contributionPoints) {
-		this.profileTarget = profileTarget
-		this.familyName = familyName
-		this.CP = contributionPoints
-		this.place = 1
-		this.colour = 0
-		this.groupWPrev = false
-	}
+	import { sortByScore, assignPlaces, PRIVATE_CONTRIB } from '../helpers'
+	import { Participant } from '../models'
 
 	export default {
 		name: 'ContributionLeaderBoard',
-		components: { LeaderBoardLine },
+		components: {
+			LeaderBoardHeaderLine,
+			LeaderBoardLine,
+		},
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
-						return new Participant(member.profileTarget, member.familyName, member.privacy && PRIVATE_CONTRIB ? 'Private' : member.contributionPoints || 0)
+						return new Participant(member, null, member.contributionPoints || -1, member.privacy && PRIVATE_CONTRIB ? 'Private' : undefined)
 					})
-					.sort(sortByAttribute('CP'))
-					.map(assignPlaces('CP'))
+					.sort(sortByScore)
+					.map(assignPlaces)
 			}
 		}
 	}

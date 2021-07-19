@@ -1,39 +1,28 @@
 <template>
 	<div class="leader-board">
-		<LeaderBoardLine familyName="Family Name" score="Life Fame" :header="true" />
-		<LeaderBoardLine v-for="p in participants" :key="p.familyName"
-			:hidePlace="p.groupWPrev"
-			:place="p.place"
-			:colour="p.colour"
-			:profileTarget="p.profileTarget"
-			:familyName="p.familyName"
-			:score="p.lifeFame"
-		/>
+		<LeaderBoardHeaderLine :headers="['#', 'Family Name', null, 'Rank']" />
+		<LeaderBoardLine v-for="p in participants" :key="p.profile.familyName" v-bind="p" />
 	</div>
 </template>
 
 <script>
+	import LeaderBoardHeaderLine from './LeaderBoardHeaderLine.vue'
 	import LeaderBoardLine from './LeaderBoardLine.vue'
-	import { getNumericSpec, sortByAttribute, assignPlaces, PRIVATE_SPECS } from '../helpers'
-
-	function Participant(profileTarget, familyName, lifeFame) {
-		this.profileTarget = profileTarget
-		this.familyName = familyName
-		this.lifeFame = lifeFame
-		this.place = 1
-		this.colour = 0
-		this.groupWPrev = false
-	}
+	import { getNumericSpec, sortByScore, assignPlaces, PRIVATE_SPECS } from '../helpers'
+	import { Participant } from '../models'
 
 	export default {
 		name: 'ContributionLeaderBoard',
-		components: { LeaderBoardLine },
+		components: {
+			LeaderBoardHeaderLine,
+			LeaderBoardLine,
+		},
 		computed: {
 			participants() {
 				return this.$store.getters.members(this.$route.params.guildName)
 					.map((member) => { // Convert members to participants
 						if (member.privacy & PRIVATE_SPECS) {
-							return new Participant(member.profileTarget, member.familyName, 'Private')
+							return new Participant(member, null, -1, 'Private')
 						} else {
 							let lifeFame = member.characters
 								.reduce((fame, character) => {
@@ -44,11 +33,11 @@
 									}, 0)
 								}, 1)
 
-							return new Participant(member.profileTarget, member.familyName, Math.floor(lifeFame))
+							return new Participant(member, null, Math.floor(lifeFame))
 						}
 					})
-					.sort(sortByAttribute('lifeFame'))
-					.map(assignPlaces('lifeFame'))
+					.sort(sortByScore)
+					.map(assignPlaces)
 			}
 		}
 	}
