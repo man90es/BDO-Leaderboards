@@ -3,7 +3,7 @@ BDO Leaderboards is a web-based application that allows you to see and compare v
 All data is retrieved from BDO servers in (almost) real time via [Black Desert social REST API](https://gitlab.com/man90/black-desert-social-rest-api).
 
 ## Try it out:
-[https://man90.gitlab.io/BDO-leader-boards](https://man90.gitlab.io/bdo-leader-boards/)
+[bdo.hemlo.cc/leaderboards](https://bdo.hemlo.cc/leaderboards/)
 
 ## Self-hosting
 
