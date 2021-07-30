@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import { PRIVATE_GUILD } from '../helpers'
 
 function parseResponse(response) {
 	if (response.ok) {
@@ -79,7 +78,7 @@ export default createStore({
 						if (profile.guild !== undefined && profile.guild.name.toLowerCase() == guildName.toLowerCase()) {
 							// They are probably in the guild: double checked
 							return true
-						} else if (profile.privacy & PRIVATE_GUILD) {
+						} else if (profile.privacy & 0b10) {
 							// The guild in the profile is set to private: can't double check
 							return true
 						} else {

@@ -4,7 +4,7 @@
 			{{$route.params.guildName}}
 			<a :href="guildLink" target="_blank"><img class="guild-link" src="../assets/open_in_new_white_24dp.svg" /></a>
 		</h1>
-		<router-link to="../../" class="select-guild">Go back to guild selection</router-link>
+		<router-link to="/" class="select-guild">Go back to guild selection</router-link>
 		<ul>
 			<li><router-link to="./level">Character Level</router-link></li>
 			<li><router-link to="./contribution">Contribution Points</router-link></li>
@@ -22,34 +22,29 @@
 			<li><router-link to="./combat">Combat Fame</router-link></li>
 			<li><router-link to="./life">Life Fame</router-link></li>
 		</ul>
-		<ContributionLeaderBoard v-if="$route.params.discipline == 'contribution'"/>
-		<LevelLeaderBoard v-else-if="$route.params.discipline == 'level'"/>
-		<CombatFameLeaderBoard v-else-if="$route.params.discipline == 'combat'"/>
-		<LifeFameLeaderBoard v-else-if="$route.params.discipline == 'life'"/>
-		<SpecLeaderBoard v-else :specName="$route.params.discipline"/>
+
+		<div class="leader-board">
+			<LeaderBoardHeaderLine :headers="leaderboardHeaders" />
+			<LeaderBoardLine v-for="p in leaderboardEntries" :key="p.profile.familyName" v-bind="p" />
+		</div>
 
 		<LoadingBanner v-if="$store.state.loadingStage" />
 	</div>
 </template>
 
 <script>
-	import ContributionLeaderBoard from '../components/ContributionLeaderBoard.vue'
-	import LevelLeaderBoard from '../components/LevelLeaderBoard.vue'
-	import CombatFameLeaderBoard from '../components/CombatFameLeaderBoard.vue'
-	import LifeFameLeaderBoard from '../components/LifeFameLeaderBoard.vue'
-	import SpecLeaderBoard from '../components/SpecLeaderBoard.vue'
-	import LoadingBanner from '../components/LoadingBanner.vue'
-	import { capitalise } from '../helpers'
+	import LeaderBoardHeaderLine from "../components/LeaderBoardHeaderLine.vue"
+	import LeaderBoardLine from "../components/LeaderBoardLine.vue"
+	import LoadingBanner from "../components/LoadingBanner.vue"
+	import { generateLeaderboardHeaders, generateLeaderboard } from "../core"
+	import { capitalise } from "../core/utils"
 
 	export default {
-		name: 'LeaderBoard',
+		name: "LeaderBoard",
 		components: {
-			ContributionLeaderBoard,
-			LevelLeaderBoard,
-			SpecLeaderBoard,
-			CombatFameLeaderBoard,
-			LifeFameLeaderBoard,
-			LoadingBanner
+			LeaderBoardHeaderLine,
+			LeaderBoardLine,
+			LoadingBanner,
 		},
 
 		methods: {
@@ -77,13 +72,21 @@
 		computed: {
 			guildLink() {
 				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${this.$route.params.guildName}&region=${this.$route.params.region}`
+			},
+
+			leaderboardHeaders() {
+				return generateLeaderboardHeaders(this.$route.params.discipline)
+			},
+
+			leaderboardEntries() {
+				return generateLeaderboard(this.$store.getters.members(this.$route.params.guildName), this.$route.params.discipline)
 			}
 		},
 
 		created() {
 			// Request guild data if it wasn't requested before
 			if (!(this.$route.params.guildName in this.$store.state.guilds)) {
-				this.$store.dispatch('requestGuild', {
+				this.$store.dispatch("requestGuild", {
 					guildName: this.$route.params.guildName,
 					region: this.$route.params.region
 				})
@@ -95,7 +98,7 @@
 
 		watch: {
 			// Set a new title when navigating between categories
-			'$route.params.discipline': function(newValue) {
+			"$route.params.discipline": function(newValue) {
 				if (newValue) {
 					this.switchTitle(newValue)
 				}

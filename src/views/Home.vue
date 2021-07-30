@@ -27,10 +27,10 @@
 </template>
 
 <script>
-	import { capitalise } from '../helpers'
+	import { capitalise } from "../core/utils"
 
 	export default {
-		name: 'Home',
+		name: "Home",
 		data() {
 			return {
 				region: "EU",
@@ -39,14 +39,14 @@
 		},
 		methods: {
 			navigateToLeaderBoard() {
-				this.$router.push({ name: 'LeaderBoard', params: { region: this.region, guildName: this.guildName, discipline: 'level' } })
+				this.$router.push({ name: "LeaderBoard", params: { region: this.region, guildName: this.guildName, discipline: "level" } })
 			}
 		},
 		watch: {
 			guildName: function(newValue) {
 				// Capitalise guild name and remove spaces, as it is done in the game
 				if (newValue.length > 0) {
-					this.guildName = capitalise(newValue).replace(' ', '')
+					this.guildName = capitalise(newValue).replace(" ", "")
 				}
 			},
 		},
