@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import Memento from "memento-vuex"
 
 function parseResponse(response) {
 	if (response.ok) {
@@ -12,16 +13,26 @@ export default createStore({
 	state: {
 		guilds: {},
 		players: {},
+		customList: [],
 		loadingStage: null,
 		mobile: innerWidth < innerHeight
 	},
+	plugins: [
+		Memento(
+			{
+				addToCustomList: "customList",
+				removeFromCustomList: "customList",
+			},
+			"leaderboards-vuex"
+		)
+	],
 	mutations: {
 		pushGuild(state, guild) {
 			state.guilds[guild.name.toLowerCase()] = guild
 		},
 
 		pushPlayer(state, player) {
-			state.players[player.familyName] = player
+			state.players[player.profileTarget] = player
 		},
 
 		setLoadingStage(state, stage) {
@@ -30,7 +41,21 @@ export default createStore({
 
 		setMobile(state, value) {
 			state.mobile = value
-		}
+		},
+
+		addToCustomList(state, profileTarget) {
+			if (!state.customList.includes(profileTarget)) {
+				state.customList.push(profileTarget)
+			}
+		},
+
+		removeFromCustomList(state, profileTarget) {
+			state.customList = state.customList.filter(p => p !== profileTarget)
+		},
+
+		import(state, backup) {
+			Object.assign(state, backup)
+		},
 	},
 	actions: {
 		requestGuild({ commit, dispatch }, { guildName, region }) {
@@ -44,6 +69,13 @@ export default createStore({
 					dispatch('requestMembers', { members: [...guildProfile.members], total: guildProfile.population })
 				})
 				.catch(err => commit('setLoadingStage', err))
+		},
+
+		requestCustomList({dispatch, state}) {
+			dispatch('requestMembers', {
+				members: state.customList.map(profileTarget => { return { profileTarget } }),
+				total: state.customList.length,
+			})
 		},
 
 		requestMembers({ commit, dispatch }, { members, total }) {
@@ -73,7 +105,7 @@ export default createStore({
 						// The official website does not always update when someone leaves the guild; this should filter some ex-members out
 						// I have no idea how to filter out ex-members with private guild setting though
 
-						let profile = state.players[member.familyName]
+						let profile = state.players[member.profileTarget]
 
 						if (profile.guild !== undefined && profile.guild.name.toLowerCase() == guildName.toLowerCase()) {
 							// They are probably in the guild: double checked
@@ -86,7 +118,16 @@ export default createStore({
 							return false
 						}
 					})
-					.map(member => state.players[member.familyName])
+					.map(member => state.players[member.profileTarget])
+			}
+		},
+
+		customMembers: (state) => {
+			if (state.loadingStage !== null) {
+				return []
+			} else {
+				return state.customList
+					.map(profileTarget => state.players[profileTarget])
 			}
 		}
 	}

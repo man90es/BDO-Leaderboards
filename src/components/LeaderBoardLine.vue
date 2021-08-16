@@ -2,7 +2,8 @@
 	<div :style="cssVars" class="position"><span v-if="!groupWPrev">#{{ place }}</span></div>
 	<div :style="cssVars" class="family-name">
 		{{ profile.familyName }}
-		<a :href="profileLink" target="_blank"><img class="profile-link" src="../assets/open_in_new_white_24dp.svg" /></a>
+		<a :href="profileLink" target="_blank"><img src="../assets/open_in_new_white_24dp.svg" /></a>
+		<button v-if="$route.name == 'customLeaderboard'" @click="removeFromCustom"><img src="../assets/remove_white_24dp.svg"/></button>
 	</div>
 	<div :style="cssVars" class="character-name" :class="{ [(featuredCharacter?.class || '').toLowerCase().replace(' ', '-')]: true }" :title="featuredCharacter?.class">{{ featuredCharacter?.name }}</div>
 	<div :style="cssVars" class="score">{{ displayScore || score }}</div>
@@ -56,6 +57,12 @@
 			profileLink() {
 				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${this.profile.profileTarget}`
 			}
+		},
+
+		methods: {
+			removeFromCustom() {
+				this.$store.commit('removeFromCustomList', this.profile.profileTarget)
+			}
 		}
 	}
 </script>
@@ -65,10 +72,20 @@
 		text-align: right;
 	}
 
-	.profile-link {
-		vertical-align: middle;
-		height: 1rem;
-		opacity: 0.75;
+
+	.family-name {
+		img {
+			vertical-align: middle;
+			height: 1rem;
+			opacity: 0.75;
+		}
+
+		button {
+			background: none;
+			padding: 0;
+			height: auto;
+			font-size: 1rem;
+		}
 	}
 
 	.character-name {

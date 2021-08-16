@@ -1,12 +1,10 @@
 <template>
-	<form class="home-page" :class="{ 'mobile-layout': $store.state.mobile }">
-		<header>
-			<h1 data-nosnippet>
-				BDO Leaderboards
-			</h1>
-			<span>Search for Black Desert Online leaderboards.</span>
-		</header>
+	<header>
+		<h1>BDO Leaderboards</h1>
+		<span>Search for Black Desert Online leaderboards.</span>
+	</header>
 
+	<form class="home-page-form" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="radio-box" data-nosnippet>
 			<input type="radio" value="EU" id="region-EU" v-model="region">
 			<label for="region-EU">EU</label>
@@ -17,13 +15,15 @@
 		<input type="text" placeholder="Guild name" v-model="guildName">
 
 		<button @click="navigateToLeaderBoard" data-nosnippet>↩</button>
-
-		<footer data-nosnippet>
-			<a href="https://github.com/octoman90/BDO-Leaderboards/issues" target="_blank">Contact</a>
-			<a href="https://github.com/octoman90/BDO-Leaderboards" target="_blank">GitHub</a>
-			<a href="https://github.com/octoman90/BDO-REST-API" target="_blank">API</a>
-		</footer>
 	</form>
+
+	<router-link to="/custom/level" id="custom-leaderboard-link">Custom leaderboard<span>New!</span></router-link>
+
+	<footer data-nosnippet>
+		<a href="https://github.com/octoman90/BDO-Leaderboards/issues" target="_blank">Contact</a>
+		<a href="https://github.com/octoman90/BDO-Leaderboards" target="_blank">GitHub</a>
+		<a href="https://github.com/octoman90/BDO-REST-API" target="_blank">API</a>
+	</footer>
 </template>
 
 <script>
@@ -34,12 +34,12 @@
 		data() {
 			return {
 				region: "EU",
-				guildName: ""
+				guildName: "",
 			}
 		},
 		methods: {
 			navigateToLeaderBoard() {
-				this.$router.push({ name: "LeaderBoard", params: { region: this.region, guildName: this.guildName, discipline: "level" } })
+				this.$router.push({ name: "leaderboard", params: { region: this.region, guildName: this.guildName, discipline: "level" } })
 			}
 		},
 		watch: {
@@ -56,16 +56,35 @@
 	}
 </script>
 
-<style scoped lang="scss">
-	.home-page {
+<style lang="scss">
+	#app {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		min-height: 100vh;
+		gap: 1em;
+	}
+
+	.home-page-form {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		gap: 2rem;
-		height: 100vh;
 
 		&.mobile-layout {
 			flex-direction: column;
+		}
+
+		button {
+			background-color: #fff;
+			font-size: 1.5em;
+			display: flex;
+			align-items: center;
+
+			&:active {
+				background-color: #aaf1;
+			}
 		}
 	}
 
@@ -81,6 +100,7 @@
 		font-size: 2rem;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 1em;
 	}
 
@@ -88,14 +108,20 @@
 		cursor: pointer;
 	}
 
-	button {
-		background-color: #fff;
-		font-size: 1.5em;
-		display: flex;
-		align-items: center;
+	#custom-leaderboard-link {
+		color: inherit;
+		font-size: 1.2em;
+		text-decoration: none;
 
-		&:active {
-			background-color: #aaf1;
+		&:hover {
+			text-decoration: underline;
+		}
+
+		span {
+			margin-left: 0.5em;
+			color: red;
+			vertical-align: super;
+			font-size: 0.8em;
 		}
 	}
 
@@ -112,8 +138,11 @@
 		color: #fff;
 	}
 
-	header {
+	header, footer {
 		position: fixed;
+	}
+
+	header {
 		top: 0;
 		text-align: center;
 		margin: 0 1em;
@@ -124,7 +153,6 @@
 	}
 
 	footer {
-		position: fixed;
 		bottom: 0;
 		width: 100vw;
 		display: flex;

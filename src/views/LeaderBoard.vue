@@ -1,8 +1,8 @@
 <template>
-	<div class="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
+	<div id="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<h1>
-			{{$route.params.guildName}}
-			<a :href="guildLink" target="_blank"><img class="guild-link" src="../assets/open_in_new_white_24dp.svg" /></a>
+			{{ $route.params.guildName || 'Custom Leaderboard' }}
+			<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank"><img class="guild-link" src="../assets/open_in_new_white_24dp.svg" /></a>
 		</h1>
 		<router-link to="/" class="select-guild">Go back to guild selection</router-link>
 		<ul>
@@ -23,10 +23,12 @@
 			<li><router-link to="./life">Life Fame</router-link></li>
 		</ul>
 
-		<div class="leader-board">
+		<div id="leaderboard">
 			<LeaderBoardHeaderLine :headers="leaderboardHeaders" />
 			<LeaderBoardLine v-for="p in leaderboardEntries" :key="p.profile.familyName" v-bind="p" />
 		</div>
+
+		<AddToCustom v-if="$route.name === 'customLeaderboard'" />
 
 		<LoadingBanner v-if="$store.state.loadingStage" />
 	</div>
@@ -36,6 +38,7 @@
 	import LeaderBoardHeaderLine from "../components/LeaderBoardHeaderLine.vue"
 	import LeaderBoardLine from "../components/LeaderBoardLine.vue"
 	import LoadingBanner from "../components/LoadingBanner.vue"
+	import AddToCustom from "../components/AddToCustom.vue"
 	import { generateLeaderboardHeaders, generateLeaderboard } from "../core"
 	import { capitalise } from "../core/utils"
 
@@ -45,6 +48,7 @@
 			LeaderBoardHeaderLine,
 			LeaderBoardLine,
 			LoadingBanner,
+			AddToCustom,
 		},
 
 		methods: {
@@ -65,7 +69,7 @@
 				}
 
 				// Set a new title
-				document.title = `${this.$route.params.guildName} ${capitalise(discipline)} Leaderboard`
+				document.title = `${this.$route.params.guildName || 'Custom'} ${capitalise(discipline)} Leaderboard`
 			}
 		},
 
@@ -79,17 +83,28 @@
 			},
 
 			leaderboardEntries() {
-				return generateLeaderboard(this.$store.getters.members(this.$route.params.guildName), this.$route.params.discipline)
+				return generateLeaderboard(
+					this.$route.name === 'customLeaderboard'
+						? this.$store.getters.customMembers
+						: this.$store.getters.members(this.$route.params.guildName),
+					this.$route.params.discipline
+				)
 			}
 		},
 
 		created() {
 			// Request guild data if it wasn't requested before
-			if (!(this.$route.params.guildName in this.$store.state.guilds)) {
-				this.$store.dispatch("requestGuild", {
-					guildName: this.$route.params.guildName,
-					region: this.$route.params.region
-				})
+			if (this.$route.name === 'customLeaderboard') {
+				if (this.$store.getters.customMembers.includes()) {
+					this.$store.dispatch('requestCustomList')
+				}
+			} else {
+				if (!(this.$route.params.guildName in this.$store.state.guilds)) {
+					this.$store.dispatch('requestGuild', {
+						guildName: this.$route.params.guildName,
+						region:    this.$route.params.region,
+					})
+				}
 			}
 
 			// Set a new title on load
@@ -108,14 +123,36 @@
 </script>
 
 <style lang="scss">
-	.leader-board-page {
+	#leader-board-page {
 		display: flex;
 		flex-direction: column;
 		background-color: #21252b;
 		min-height: 100vh;
+		width: 100vw;
+
+		#leaderboard {
+			display: grid;
+			grid-template-columns: 3rem 1fr 1fr 1fr;
+
+			& > * {
+				padding: 0.5rem;
+			}
+		}
+
+		&.mobile-layout #leaderboard {
+			width: 100vw;
+
+			& > * {
+				font-size: 0.9em !important;
+			}
+		}
 
 		&:not(.mobile-layout) {
 			align-items: center;
+
+			#leaderboard {
+				width: 50vw;
+			}
 		}
 	}
 
@@ -154,27 +191,5 @@
 		margin-bottom: 1rem;
 		opacity: 0.8;
 		text-align: center;
-	}
-
-	.leader-board-page.mobile-layout .leader-board {
-		width: 100vw;
-
-		& > * {
-			font-size: 0.9em !important;
-		}
-	}
-
-	.leader-board-page:not(.mobile-layout) .leader-board {
-		width: 50vw;
-	}
-
-	.leader-board {
-		width: 100vw;
-		display: grid;
-		grid-template-columns: 3rem 1fr 1fr 1fr;
-
-		& > * {
-			padding: 0.5rem;
-		}
 	}
 </style>

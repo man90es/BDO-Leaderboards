@@ -5,14 +5,19 @@ import LeaderBoard from '../views/LeaderBoard.vue'
 const routes = [
 	{
 		path: '/',
-		name: 'Home',
+		name: 'home',
 		component: Home
 	},
 	{
-		path: '/:region/:guildName/:discipline',
-		name: 'LeaderBoard',
+		path: '/custom/:discipline',
+		name: 'customLeaderboard',
 		component: LeaderBoard
-	}
+	},
+	{
+		path: '/:region/:guildName/:discipline',
+		name: 'leaderboard',
+		component: LeaderBoard
+	},
 ]
 
 const router = createRouter({
