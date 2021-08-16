@@ -5,15 +5,8 @@
 	</header>
 
 	<form class="home-page-form" :class="{ 'mobile-layout': $store.state.mobile }">
-		<div class="radio-box" data-nosnippet>
-			<input type="radio" value="EU" id="region-EU" v-model="region">
-			<label for="region-EU">EU</label>
-			<input type="radio" value="NA" id="region-NA" v-model="region">
-			<label for="region-NA">NA</label>
-		</div>
-
+		<RegionSelect v-model="region" />
 		<input type="text" placeholder="Guild name" v-model="guildName">
-
 		<button @click="navigateToLeaderBoard" data-nosnippet>↩</button>
 	</form>
 
@@ -27,6 +20,7 @@
 </template>
 
 <script>
+	import RegionSelect from "../components/RegionSelect.vue"
 	import { capitalise } from "../core/utils"
 
 	export default {
@@ -36,6 +30,9 @@
 				region: "EU",
 				guildName: "",
 			}
+		},
+		components: {
+			RegionSelect,
 		},
 		methods: {
 			navigateToLeaderBoard() {
@@ -88,7 +85,7 @@
 		}
 	}
 
-	select, input, button {
+	input, button {
 		font-size: 1.25rem;
 		padding: 1rem;
 		border-radius: 0.5rem;
@@ -96,15 +93,7 @@
 		height: 3rem;
 	}
 
-	.radio-box {
-		font-size: 2rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 1em;
-	}
-
-	label, button {
+	button {
 		cursor: pointer;
 	}
 
@@ -123,19 +112,6 @@
 			vertical-align: super;
 			font-size: 0.8em;
 		}
-	}
-
-	.radio-box input {
-		display: none;
-
-		&:checked + label {
-			border-color: #fff
-		}
-	}
-
-	label {
-		border-bottom: 0.1em solid transparent;
-		color: #fff;
 	}
 
 	header, footer {

@@ -1,12 +1,7 @@
 <template>
 	<form id="add-to-custom" @submit="okHandler" :class="{ 'mobile-layout': $store.state.mobile }">
 		<label>Enter the family name of someone you want to add here:</label>
-		<div class="radio-box">
-			<input type="radio" value="EU" id="region-EU" v-model="region">
-			<label for="region-EU">EU</label>
-			<input type="radio" value="NA" id="region-NA" v-model="region">
-			<label for="region-NA">NA</label>
-		</div>
+		<RegionSelect v-model="region" />
 		<input type="text" placeholder="Family name" v-model="familyName">
 		<button>↩</button>
 		<div v-if="status" id="status">{{ status }}</div>
@@ -14,11 +9,11 @@
 </template>
 
 <script>
+	import RegionSelect from "../components/RegionSelect.vue"
 	import { capitalise } from "../core/utils"
 
 	export default {
 		name: "AddToCustom",
-
 		data() {
 			return {
 				region: "EU",
@@ -26,7 +21,9 @@
 				status: "",
 			}
 		},
-
+		components: {
+			RegionSelect,
+		},
 		methods: {
 			okHandler(event) {
 				event.preventDefault()
@@ -63,7 +60,6 @@
 					})
 			}
 		},
-
 		watch: {
 			familyName: function(newValue) {
 				// Capitalise family name and remove spaces, as it is done in the game
