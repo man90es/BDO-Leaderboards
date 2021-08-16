@@ -6,7 +6,7 @@
 
 	<form class="home-page-form" :class="{ 'mobile-layout': $store.state.mobile }">
 		<RegionSelect v-model="region" />
-		<input type="text" placeholder="Guild name" v-model="guildName">
+		<FormattedInput placeholder="Guild name" v-model="guildName" />
 		<button @click="navigateToLeaderBoard" data-nosnippet>↩</button>
 	</form>
 
@@ -21,7 +21,7 @@
 
 <script>
 	import RegionSelect from "../components/RegionSelect.vue"
-	import { capitalise } from "../core/utils"
+	import FormattedInput from "../components/FormattedInput.vue"
 
 	export default {
 		name: "Home",
@@ -33,19 +33,12 @@
 		},
 		components: {
 			RegionSelect,
+			FormattedInput,
 		},
 		methods: {
 			navigateToLeaderBoard() {
 				this.$router.push({ name: "leaderboard", params: { region: this.region, guildName: this.guildName, discipline: "level" } })
 			}
-		},
-		watch: {
-			guildName: function(newValue) {
-				// Capitalise guild name and remove spaces, as it is done in the game
-				if (newValue.length > 0) {
-					this.guildName = capitalise(newValue).replace(" ", "")
-				}
-			},
 		},
 		created() {
 			document.title = "BDO Leaderboards"
@@ -85,7 +78,7 @@
 		}
 	}
 
-	input, button {
+	button {
 		font-size: 1.25rem;
 		padding: 1rem;
 		border-radius: 0.5rem;

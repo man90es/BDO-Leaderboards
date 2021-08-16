@@ -2,15 +2,15 @@
 	<form id="add-to-custom" @submit="okHandler" :class="{ 'mobile-layout': $store.state.mobile }">
 		<label>Enter the family name of someone you want to add here:</label>
 		<RegionSelect v-model="region" />
-		<input type="text" placeholder="Family name" v-model="familyName">
+		<FormattedInput placeholder="Family name" v-model="familyName" />
 		<button>↩</button>
 		<div v-if="status" id="status">{{ status }}</div>
 	</form>
 </template>
 
 <script>
-	import RegionSelect from "../components/RegionSelect.vue"
-	import { capitalise } from "../core/utils"
+	import RegionSelect from "./RegionSelect.vue"
+	import FormattedInput from "./FormattedInput.vue"
 
 	export default {
 		name: "AddToCustom",
@@ -23,6 +23,7 @@
 		},
 		components: {
 			RegionSelect,
+			FormattedInput,
 		},
 		methods: {
 			okHandler(event) {
@@ -59,14 +60,6 @@
 						this.status = `Failed to add ${this.familyName}: ${err}`
 					})
 			}
-		},
-		watch: {
-			familyName: function(newValue) {
-				// Capitalise family name and remove spaces, as it is done in the game
-				if (newValue.length > 0) {
-					this.familyName = capitalise(newValue).replace(" ", "")
-				}
-			},
 		}
 	}
 </script>
