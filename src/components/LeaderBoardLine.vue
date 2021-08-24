@@ -11,7 +11,6 @@
 
 <script>
 	export default {
-		name: 'LeaderBoardLine',
 		inheritAttrs: false,
 		props: [
 			'profile',

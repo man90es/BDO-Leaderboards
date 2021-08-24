@@ -1,8 +1,10 @@
 <template>
 	<div id="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
 		<h1>
-			{{ $route.params.guildName || 'Custom Leaderboard' }}
-			<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank"><img class="guild-link" src="../assets/open_in_new_white_24dp.svg" /></a>
+			{{ $route.params.guildName || "Custom Leaderboard" }}
+			<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
+				<img class="guild-link" src="../assets/open_in_new_white_24dp.svg" />
+			</a>
 		</h1>
 		<router-link to="/" class="select-guild">Go back to guild selection</router-link>
 		<ul>
@@ -24,102 +26,48 @@
 		</ul>
 
 		<div id="leaderboard">
-			<LeaderBoardHeaderLine :headers="leaderboardHeaders" />
-			<LeaderBoardLine v-for="p in leaderboardEntries" :key="p.profile.familyName" v-bind="p" />
+			<LeaderBoardHeaderLine />
+			<LeaderBoardLine v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" />
 		</div>
 
 		<AddToCustom v-if="$route.name === 'customLeaderboard'" />
-
 		<LoadingBanner v-if="$store.state.loadingStage" />
 	</div>
 </template>
 
-<script>
+<script setup>
+	import { computed } from "vue"
+	import { useStore } from "vuex"
+	import { useRoute } from "vue-router"
+
 	import LeaderBoardHeaderLine from "../components/LeaderBoardHeaderLine.vue"
 	import LeaderBoardLine from "../components/LeaderBoardLine.vue"
-	import LoadingBanner from "../components/LoadingBanner.vue"
 	import AddToCustom from "../components/AddToCustom.vue"
-	import { generateLeaderboardHeaders, generateLeaderboard } from "../core"
-	import { capitalise } from "../core/utils"
+	import LoadingBanner from "../components/LoadingBanner.vue"
 
-	export default {
-		name: "LeaderBoard",
-		components: {
-			LeaderBoardHeaderLine,
-			LeaderBoardLine,
-			LoadingBanner,
-			AddToCustom,
-		},
+	import useGenerateLeaderboardItems from "../hooks/generateLeaderboardItems.js"
 
-		methods: {
-			switchTitle: function (discipline) {
-				// Convert internal names to conventional
-				switch (discipline) {
-					case "contribution":
-						discipline = "CP"
-						break
+	const store = useStore()
+	const route = useRoute()
 
-					case "combat":
-						discipline = "Combat Fame"
-						break
-
-					case "life":
-						discipline = "Life Fame"
-						break
-				}
-
-				// Set a new title
-				document.title = `${this.$route.params.guildName || 'Custom'} ${capitalise(discipline)} Leaderboard`
-			}
-		},
-
-		computed: {
-			guildLink() {
-				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${this.$route.params.guildName}&region=${this.$route.params.region}`
-			},
-
-			leaderboardHeaders() {
-				return generateLeaderboardHeaders(this.$route.params.discipline)
-			},
-
-			leaderboardEntries() {
-				return generateLeaderboard(
-					this.$route.name === 'customLeaderboard'
-						? this.$store.getters.customMembers
-						: this.$store.getters.members(this.$route.params.guildName),
-					this.$route.params.discipline
-				)
-			}
-		},
-
-		created() {
-			// Request guild data if it wasn't requested before
-			if (this.$route.name === 'customLeaderboard') {
-				if (this.$store.getters.customMembers.includes()) {
-					this.$store.dispatch('requestCustomList')
-				}
-			} else {
-				if (!(this.$route.params.guildName in this.$store.state.guilds)) {
-					this.$store.dispatch('requestGuild', {
-						guildName: this.$route.params.guildName,
-						region:    this.$route.params.region,
-					})
-				}
-			}
-
-			// Set a new title on load
-			this.switchTitle(this.$route.params.discipline)
-		},
-
-		watch: {
-			// Set a new title when navigating between categories
-			"$route.params.discipline": function(newValue) {
-				if (newValue) {
-					this.switchTitle(newValue)
-				}
-			}
+	// Request guild data if it wasn't requested before
+	if (route.name === "customLeaderboard") {
+		if (store.getters.customMembers.includes()) {
+			store.dispatch("requestCustomList")
+		}
+	} else {
+		if (!(route.params.guildName in store.state.guilds)) {
+			store.dispatch("requestGuild", {
+				guildName: route.params.guildName,
+				region:    route.params.region,
+			})
 		}
 	}
+
+	const guildLink = computed(() => {
+		return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${route.params.guildName}&region=${route.params.region}`
+	})
+	const { leaderboardItems } = useGenerateLeaderboardItems()
 </script>
 
 <style lang="scss">
@@ -128,7 +76,7 @@
 		flex-direction: column;
 		background-color: #21252b;
 		min-height: 100vh;
-		width: 100vw;
+		width: 100%;
 
 		#leaderboard {
 			display: grid;

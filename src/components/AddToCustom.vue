@@ -8,59 +8,52 @@
 	</form>
 </template>
 
-<script>
+<script setup>
+	import { ref } from "vue"
+	import { useStore } from "vuex"
+
 	import RegionSelect from "./RegionSelect.vue"
 	import FormattedInput from "./FormattedInput.vue"
 
-	export default {
-		name: "AddToCustom",
-		data() {
-			return {
-				region: "EU",
-				familyName: "",
-				status: "",
-			}
-		},
-		components: {
-			RegionSelect,
-			FormattedInput,
-		},
-		methods: {
-			okHandler(event) {
-				event.preventDefault()
+	const store = useStore()
+	const maxProfiles = 100
 
-				const maxProfiles = 100
-				if (this.$store.state.customList.length >= maxProfiles) {
-					this.status = `Failed to add ${this.familyName}: You can't add more than ${maxProfiles} custom profiles`
-					return
-				}
+	const region = ref("EU")
+	const familyName = ref("")
+	const status = ref("")
 
-				fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?region=${this.region}&query=${this.familyName}&searchType=familyName`)
-					.then((response) => {
-						if (response.ok) {
-							return response.json()
-						} else {
-							throw response.statusText
-						}
-					})
-					.then(profiles => {
-						this.$store.dispatch('requestMembers', {
-							members: [{ profileTarget: profiles[0].profileTarget }],
-							total:   1,
-						})
+	function okHandler(event) {
+		event.preventDefault()
 
-						return profiles[0]
-					})
-					.then(profile => {
-						this.$store.commit('addToCustomList', profile.profileTarget)
-						this.status = `Added ${profile.familyName}`
-					})
-					.catch((err) => {
-						console.log(err)
-						this.status = `Failed to add ${this.familyName}: ${err}`
-					})
-			}
+		if (store.state.customList.length >= maxProfiles) {
+			status.value = `Failed to add ${familyName.value}: You can't add more than ${maxProfiles} custom profiles`
+			return
 		}
+
+		fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?region=${region.value}&query=${familyName.value}&searchType=familyName`)
+			.then((response) => {
+				if (response.ok) {
+					return response.json()
+				} else {
+					throw response.statusText
+				}
+			})
+			.then(profiles => {
+				store.dispatch("requestMembers", {
+					members: [{ profileTarget: profiles[0].profileTarget }],
+					total:   1,
+				})
+
+				return profiles[0]
+			})
+			.then(profile => {
+				store.commit("addToCustomList", profile.profileTarget)
+				status.value = `Added ${profile.familyName}`
+			})
+			.catch((err) => {
+				console.log(err)
+				status.value = `Failed to add ${familyName.value}: ${err}`
+			})
 	}
 </script>
 

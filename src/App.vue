@@ -2,22 +2,12 @@
 	<router-view/>
 </template>
 
-<script>
-	export default {
-		name: 'App',
-		created() {
-			window.onresize = (event) => {
-				if (this.$store.state.mobile && innerWidth > innerHeight) {
-					this.$store.commit('setMobile', false)
-				} else if (!this.$store.state.mobile && innerWidth < innerHeight) {
-					this.$store.commit('setMobile', true)
-				}
-			}
-		},
-		beforeUnmount() {
-			window.onresize = null
-		}
-	}
+<script setup>
+	import useUpdateTitle from "./hooks/updateTitle.js"
+	import useUpdateMobile from "./hooks/updateMobile.js"
+
+	useUpdateMobile()
+	useUpdateTitle()
 </script>
 
 <style>
@@ -34,6 +24,15 @@
 		background-position: center;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
+	}
+
+	#app {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		min-height: 100vh;
+		gap: 1em;
 	}
 
 	* {

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import { capitalise } from "../core/utils"
+	import { capitalise } from "../utils"
 
 	export default {
 		props: ["modelValue"],

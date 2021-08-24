@@ -2,16 +2,10 @@
 	<div class="loading-banner-wrapper" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="banner">
 			{{ $store.state.loadingStage }}
-			<router-link to="../../" class="select-guild">Go back to guild selection</router-link>
+			<router-link to="/" class="select-guild">Go back to guild selection</router-link>
 		</div>
 	</div>
 </template>
-
-<script>
-	export default {
-		name: 'LoadingBanner'
-	}
-</script>
 
 <style lang="scss">
 	.loading-banner-wrapper {

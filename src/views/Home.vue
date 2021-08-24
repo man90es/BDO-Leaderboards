@@ -4,10 +4,10 @@
 		<span>Search for Black Desert Online leaderboards.</span>
 	</header>
 
-	<form class="home-page-form" :class="{ 'mobile-layout': $store.state.mobile }">
+	<form class="home-page-form" :class="{ 'mobile-layout': $store.state.mobile }" @submit="navigateToLeaderboard">
 		<RegionSelect v-model="region" />
 		<FormattedInput placeholder="Guild name" v-model="guildName" />
-		<button @click="navigateToLeaderBoard" data-nosnippet>↩</button>
+		<button data-nosnippet>↩</button>
 	</form>
 
 	<router-link to="/custom/level" id="custom-leaderboard-link">Custom leaderboard<span>New!</span></router-link>
@@ -19,43 +19,25 @@
 	</footer>
 </template>
 
-<script>
+<script setup>
+	import { ref } from "vue"
+	import { useRouter } from "vue-router"
+
 	import RegionSelect from "../components/RegionSelect.vue"
 	import FormattedInput from "../components/FormattedInput.vue"
 
-	export default {
-		name: "Home",
-		data() {
-			return {
-				region: "EU",
-				guildName: "",
-			}
-		},
-		components: {
-			RegionSelect,
-			FormattedInput,
-		},
-		methods: {
-			navigateToLeaderBoard() {
-				this.$router.push({ name: "leaderboard", params: { region: this.region, guildName: this.guildName, discipline: "level" } })
-			}
-		},
-		created() {
-			document.title = "BDO Leaderboards"
-		}
+	const router = useRouter()
+
+	const region = ref("EU")
+	const guildName = ref("")
+
+	function navigateToLeaderboard(event) {
+		event.preventDefault()
+		router.push({ name: "leaderboard", params: { region: region.value, guildName: guildName.value, discipline: "level" } })
 	}
 </script>
 
 <style lang="scss">
-	#app {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		min-height: 100vh;
-		gap: 1em;
-	}
-
 	.home-page-form {
 		display: flex;
 		justify-content: center;
