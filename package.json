@@ -25,7 +25,7 @@
 		"babel-eslint": "^10.1.0",
 		"eslint": "^6.7.2",
 		"eslint-plugin-vue": "^7.18.0",
-		"sass": "^1.42.1",
+		"sass": "^1.43.5",
 		"sass-loader": "^10"
 	},
 	"eslintConfig": {
