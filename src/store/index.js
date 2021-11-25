@@ -107,10 +107,10 @@ export default createStore({
 
 						let profile = state.players[member.profileTarget]
 
-						if (profile.guild !== undefined && profile.guild.name.toLowerCase() == guildName.toLowerCase()) {
+						if (profile?.guild !== undefined && profile?.guild.name.toLowerCase() == guildName.toLowerCase()) {
 							// They are probably in the guild: double checked
 							return true
-						} else if (profile.privacy & 0b10) {
+						} else if (profile?.privacy & 0b10) {
 							// The guild in the profile is set to private: can't double check
 							return true
 						} else {
