@@ -14,7 +14,7 @@ export default createStore({
 		guilds: {},
 		players: {},
 		customList: [],
-		loadingStage: null,
+		loading: { stage: -1 },
 		mobile: innerWidth < innerHeight
 	},
 	plugins: [
@@ -35,8 +35,8 @@ export default createStore({
 			state.players[player.profileTarget] = player
 		},
 
-		setLoadingStage(state, stage) {
-			state.loadingStage = stage
+		updateLoading(state, stage) {
+			state.loading = {...state.loading, ...stage}
 		},
 
 		setMobile(state, value) {
@@ -59,47 +59,44 @@ export default createStore({
 	},
 	actions: {
 		requestGuild({ commit, dispatch }, { guildName, region }) {
-			commit('setLoadingStage', 'Gathering guild data')
+			commit("updateLoading", { stage: 0, msg: "Requesting guild members list", progress: 1, total: 100 })
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v1/guild?guildName=${guildName}&region=${region}`)
 				.then(parseResponse)
+				.catch(err => commit("updateLoading", { stage: 3, msg: err }))
 				.then((guildProfile) => {
-					commit('setLoadingStage', null)
-					commit('pushGuild', guildProfile)
-					dispatch('requestMembers', { members: [...guildProfile.members], total: guildProfile.population })
+					commit("pushGuild", guildProfile)
+					dispatch("requestMembers", { members: [...guildProfile.members], total: guildProfile.population })
 				})
-				.catch(err => commit('setLoadingStage', err))
 		},
 
 		requestCustomList({dispatch, state}) {
-			dispatch('requestMembers', {
+			dispatch("requestMembers", {
 				members: state.customList.map(profileTarget => { return { profileTarget } }),
 				total: state.customList.length,
 			})
 		},
 
 		requestMembers({ commit, dispatch }, { members, total }) {
-			commit('setLoadingStage', `Gathering intel: ${Math.floor((total - members.length) / total * 100)}%`)
-			let member = members.shift()
+			commit("updateLoading", { stage: 1, msg: "Requesting members' data", progress: total - members.length + 1, total: total + 1 })
+			const member = members.shift()
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer?profileTarget=${member.profileTarget}`)
 				.then(parseResponse)
-				.then(playerProfile => commit('pushPlayer', playerProfile))
-				.catch(err => commit('setLoadingStage', err))
+				.then(playerProfile => commit("pushPlayer", playerProfile))
+				.catch(err => commit("updateLoading", { stage: 3, msg: err }))
 				.finally(() => {
 					if (members.length > 0) {
-						dispatch('requestMembers', { members, total })
+						dispatch("requestMembers", { members, total })
 					} else {
-						commit('setLoadingStage', null)
+						commit("updateLoading", { stage: 2, msg: "Complete" })
 					}
 				})
 		}
 	},
 	getters: {
-		members: (state) => (guildName) => {
-			if (state.loadingStage !== null) {
-				return []
-			} else {
+		members: state => guildName => {
+			if (state.loading.stage === 2) {
 				return state.guilds[guildName.toLowerCase()].members
 					.filter(member => {
 						// The official website does not always update when someone leaves the guild; this should filter some ex-members out
@@ -119,15 +116,17 @@ export default createStore({
 						}
 					})
 					.map(member => state.players[member.profileTarget])
+			} else {
+				return []
 			}
 		},
 
 		customMembers: (state) => {
-			if (state.loadingStage !== null) {
-				return []
-			} else {
+			if (state.loading.stage < 0 || state.loading.stage === 2) {
 				return state.customList
 					.map(profileTarget => state.players[profileTarget])
+			} else {
+				return []
 			}
 		}
 	}

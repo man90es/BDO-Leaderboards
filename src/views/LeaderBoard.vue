@@ -31,7 +31,7 @@
 		</div>
 
 		<AddToCustom v-if="$route.name === 'customLeaderboard'" />
-		<LoadingBanner v-if="$store.state.loadingStage" />
+		<LoadingBanner v-if="shouldShowLoading" />
 	</div>
 </template>
 
@@ -66,6 +66,9 @@
 
 	const guildLink = computed(() => {
 		return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${route.params.guildName}&region=${route.params.region}`
+	})
+	const shouldShowLoading = computed(() => {
+		return store.state.loading.stage !== 2
 	})
 	const { leaderboardItems } = useGenerateLeaderboardItems()
 </script>

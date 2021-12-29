@@ -1,11 +1,17 @@
 <template>
 	<div class="loading-banner-wrapper" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="banner">
-			{{ $store.state.loadingStage }}
+			<RadialProgress :diameter="200" :completed-steps="$store.state.loading.progress" :total-steps="$store.state.loading.total">
+				{{ $store.state.loading.msg }}
+			</RadialProgress>
 			<router-link to="/" class="select-guild">Go back to guild selection</router-link>
 		</div>
 	</div>
 </template>
+
+<script setup>
+	import RadialProgress from "vue3-radial-progress"
+</script>
 
 <style lang="scss">
 	.loading-banner-wrapper {
