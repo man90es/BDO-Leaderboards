@@ -1,0 +1,36 @@
+:root {
+	--colour-black: #282c34;
+	--colour-red: #e06c75;
+	--colour-green: #98c379;
+	--colour-orange: #e5c07b;
+	--colour-blue: #61afef;
+	--colour-purple: #c678dd;
+	--colour-teal: #56b6c2;
+	--colour-grey: #abb2bf;
+	--colour-white: #f0f0f0;
+}
+
+body {
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: #111;
+	color: #111;
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+button {
+	font-weight: bold;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+input, button {
+	border: none;
+}

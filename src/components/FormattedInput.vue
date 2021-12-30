@@ -23,11 +23,11 @@
 </script>
 
 <style scoped>
-	input {
+	/* input {
 		font-size: 1.25rem;
 		padding: 1rem;
 		border-radius: 0.5rem;
 		border: 0;
 		height: 3rem;
-	}
+	} */
 </style>

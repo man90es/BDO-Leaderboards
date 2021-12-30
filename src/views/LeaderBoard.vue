@@ -80,6 +80,7 @@
 		background-color: #21252b;
 		min-height: 100vh;
 		width: 100%;
+		color: #bbc;
 
 		#leaderboard {
 			display: grid;
