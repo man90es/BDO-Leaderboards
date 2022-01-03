@@ -1,13 +1,18 @@
 <template>
 	<div :style="cssVars" class="position"><span v-if="!groupWPrev">#{{ place }}</span></div>
 	<div :style="cssVars" class="family-name">
-		{{ profile.familyName }}
-		<a :href="profileLink" target="_blank"><img src="../assets/open_in_new_white_24dp.svg" /></a>
-		<button v-if="$route.name == 'customLeaderboard'" @click="removeFromCustom"><img src="../assets/remove_white_24dp.svg"/></button>
+		<a :href="profileLink" target="_blank">{{ profile.familyName }}</a>
+		<button v-if="$route.name == 'customLeaderboard'" @click="removeFromCustom"><img :src="assets.remove" /></button>
 	</div>
 	<div :style="cssVars" class="character-name" :class="{ [(featuredCharacter?.class || '').toLowerCase().replace(' ', '-')]: true }" :title="featuredCharacter?.class">{{ featuredCharacter?.name }}</div>
 	<div :style="cssVars" class="score">{{ displayScore || score }}</div>
 </template>
+
+<script setup>
+	const assets = {
+		remove: `${process.env.BASE_URL}assets/highlight_off_black_24dp.svg`,
+	}
+</script>
 
 <script>
 	export default {
@@ -24,29 +29,29 @@
 		computed: {
 			cssVars() {
 				let vars = {
-					'background-color': this.place % 2 ? 'transparent' : '#0001'
+					"background-color": this.place % 2 ? "transparent" : "#0001"
 				}
 
 				switch (this.colour) {
 					case 1:
 						return {
 							...vars,
-							'color': '#c86783',
-							'font-size': '1.6em',
+							"color":     "#e06c75",
+							"font-size": "1.3em",
 						}
 
 					case 2:
 						return {
 							...vars,
-							'color': '#c1e277',
-							'font-size': '1.4em',
+							"color":     "#e5c07b",
+							"font-size": "1.2em",
 						}
 
 					case 3:
 						return {
 							...vars,
-							'color': '#448fc8',
-							'font-size': '1.2em',
+							"color":     "#61afef",
+							"font-size": "1.1em",
 						}
 				}
 
@@ -66,29 +71,39 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	#leaderboard > * {
+		padding: 0.5rem;
+	}
+
 	.position, .score {
 		text-align: right;
 	}
 
-
 	.family-name {
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
 		img {
-			vertical-align: middle;
 			height: 1rem;
 			opacity: 0.75;
 		}
 
 		button {
 			background: none;
-			padding: 0;
-			height: auto;
+			box-shadow: none;
 			font-size: 1rem;
+			margin-left: 0.25rem;
+			padding: 0;
 		}
 	}
 
 	.character-name {
-		$spritesheet-x-offset: -2.1rem;
+		$spritesheet-x-offset: -0.3rem;
+
+		padding-left: 2rem !important;
 
 		&::before {
 			content: '';
@@ -193,6 +208,13 @@
 
 		&.corsair::before {
 			background-position: $spritesheet-x-offset -40.5rem !important;
+		}
+	}
+
+	.mobile-layout {
+		.character-name::before {
+			zoom: 0.7;;
+			// background-size: 5.5rem auto;
 		}
 	}
 </style>

@@ -22,6 +22,10 @@
 </script>
 
 <style scoped>
+	#leaderboard > * {
+		padding: 0.5rem;
+	}
+
 	div {
 		font-weight: bold;
 	}

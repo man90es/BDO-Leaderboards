@@ -1,36 +1,33 @@
 <template>
-	<form id="add-to-custom" @submit="okHandler" :class="{ 'mobile-layout': $store.state.mobile }">
-		<label>Enter the family name of someone you want to add here:</label>
-		<RegionSelect v-model="region" />
-		<FormattedInput placeholder="Family name" v-model="familyName" />
-		<button>↩</button>
-		<div v-if="status" id="status">{{ status }}</div>
-	</form>
+	<content-card>
+		<label>Add a player to the leaderboard:</label>
+		<formatted-input placeholder="Enter his or her family name here" v-model="familyName" />
+		<button class="eu-colour" @click="() => okHandler('EU')">From Europe</button>
+		<button class="na-colour" @click="() => okHandler('NA')">From North America</button>
+		<span v-if="status" id="status">{{ status }}</span>
+	</content-card>
 </template>
 
 <script setup>
 	import { ref } from "vue"
 	import { useStore } from "vuex"
 
-	import RegionSelect from "./RegionSelect.vue"
+	import ContentCard from "@/components/ContentCard.vue"
 	import FormattedInput from "./FormattedInput.vue"
 
 	const store = useStore()
 	const maxProfiles = 100
 
-	const region = ref("EU")
 	const familyName = ref("")
 	const status = ref("")
 
-	function okHandler(event) {
-		event.preventDefault()
-
+	function okHandler(region) {
 		if (store.state.customList.length >= maxProfiles) {
 			status.value = `Failed to add ${familyName.value}: You can't add more than ${maxProfiles} custom profiles`
 			return
 		}
 
-		fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?region=${region.value}&query=${familyName.value}&searchType=familyName`)
+		fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?region=${region}&query=${familyName.value}&searchType=familyName`)
 			.then((response) => {
 				if (response.ok) {
 					return response.json()
@@ -57,22 +54,13 @@
 	}
 </script>
 
-<style lang="scss">
-	#add-to-custom {
-		margin-top: 3em;
-		display: grid;
-		gap: 1em;
+<style lang="scss" scoped>
+	span, label, input {
+		grid-column: 1/3;
+		text-align: center;
+	}
 
-		label, #status {
-			text-align: center;
-		}
-
-		&:not(.mobile-layout) {
-			grid-template-columns: repeat(3, auto);
-
-			label, #status {
-				grid-column: 1/4;
-			}
-		}
+	.content-card {
+		margin-bottom: 0.5em;
 	}
 </style>

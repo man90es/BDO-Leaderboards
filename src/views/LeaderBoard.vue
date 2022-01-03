@@ -1,38 +1,30 @@
 <template>
-	<div id="leader-board-page" :class="{ 'mobile-layout': $store.state.mobile }">
-		<h1>
-			{{ $route.params.guildName || "Custom Leaderboard" }}
-			<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
-				<img class="guild-link" src="../assets/open_in_new_white_24dp.svg" />
-			</a>
-		</h1>
-		<router-link to="/" class="select-guild">Go back to guild selection</router-link>
-		<ul>
-			<li><router-link to="./level">Character Level</router-link></li>
-			<li><router-link to="./contribution">Contribution Points</router-link></li>
-			<li><router-link to="./gathering">Gathering</router-link></li>
-			<li><router-link to="./fishing">Fishing</router-link></li>
-			<li><router-link to="./hunting">Hunting</router-link></li>
-			<li><router-link to="./cooking">Cooking</router-link></li>
-			<li><router-link to="./alchemy">Alchemy</router-link></li>
-			<li><router-link to="./processing">Processing</router-link></li>
-			<li><router-link to="./training">Training</router-link></li>
-			<li><router-link to="./trading">Trading</router-link></li>
-			<li><router-link to="./farming">Farming</router-link></li>
-			<li><router-link to="./sailing">Sailing</router-link></li>
-			<li><router-link to="./barter">Barter</router-link></li>
-			<li><router-link to="./combat">Combat Fame</router-link></li>
-			<li><router-link to="./life">Life Fame</router-link></li>
-		</ul>
+	<div id="leaderboard-page" :class="{ 'mobile-layout': $store.state.mobile }">
+		<header-card />
 
-		<div id="leaderboard">
-			<LeaderBoardHeaderLine />
-			<LeaderBoardLine v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" />
-		</div>
+		<content-card>
+			<h2 id="guild-link">
+				<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
+					Guild: {{ $route.params.guildName }}
+				</a>
+				<span v-else>Custom Leaderboard</span>
+			</h2>
+			<router-link to="/" class="select-guild-link">Select another</router-link>
 
-		<AddToCustom v-if="$route.name === 'customLeaderboard'" />
-		<LoadingBanner v-if="shouldShowLoading" />
+			<category-links />
+		</content-card>
+
+		<footer-card id="footer" />
+
+		<content-card id="leaderboard">
+			<leader-board-header-line />
+			<leader-board-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" />
+		</content-card>
+
+		<add-to-custom-card v-if="$route.name === 'customLeaderboard'" id="add-to-custom" />
 	</div>
+
+	<loading-banner v-if="shouldShowLoading" />
 </template>
 
 <script setup>
@@ -40,10 +32,14 @@
 	import { useStore } from "vuex"
 	import { useRoute } from "vue-router"
 
-	import LeaderBoardHeaderLine from "../components/LeaderBoardHeaderLine.vue"
-	import LeaderBoardLine from "../components/LeaderBoardLine.vue"
-	import AddToCustom from "../components/AddToCustom.vue"
-	import LoadingBanner from "../components/LoadingBanner.vue"
+	import AddToCustomCard from "@/components/AddToCustomCard.vue"
+	import CategoryLinks from "@/components/CategoryLinks.vue"
+	import ContentCard from "@/components/ContentCard.vue"
+	import FooterCard from "@/components/FooterCard.vue"
+	import HeaderCard from "@/components/HeaderCard.vue"
+	import LeaderBoardHeaderLine from "@/components/LeaderBoardHeaderLine.vue"
+	import LeaderBoardLine from "@/components/LeaderBoardLine.vue"
+	import LoadingBanner from "@/components/LoadingBanner.vue"
 
 	import useGenerateLeaderboardItems from "../hooks/generateLeaderboardItems.js"
 
@@ -73,75 +69,72 @@
 	const { leaderboardItems } = useGenerateLeaderboardItems()
 </script>
 
-<style lang="scss">
-	#leader-board-page {
-		display: flex;
-		flex-direction: column;
-		background-color: #21252b;
-		min-height: 100vh;
-		width: 100%;
-		color: #bbc;
-
-		#leaderboard {
-			display: grid;
-			grid-template-columns: 3rem 1fr 1fr 1fr;
-
-			& > * {
-				padding: 0.5rem;
-			}
-		}
-
-		&.mobile-layout #leaderboard {
-			width: 100vw;
-
-			& > * {
-				font-size: 0.9em !important;
-			}
-		}
+<style lang="scss" scoped>
+	#leaderboard-page {
+		margin: 0.5em 0.5em;
+		display: grid;
+		gap: 0.5em;
 
 		&:not(.mobile-layout) {
-			align-items: center;
+			grid-template-columns: 1fr 2fr 1fr;
+
+			.content-card:not(#leaderboard):not(#add-to-custom) {
+				grid-column: 1;
+			}
+
+			#add-to-custom {
+				grid-column: 2;
+			}
 
 			#leaderboard {
-				width: 50vw;
+				grid-row: 1/5;
+				grid-column: 2;
+			}
+		}
+
+		&.mobile-layout {
+			grid-template-columns: 1fr;
+
+			#leaderboard {
+				font-size: 0.7em;
+			}
+
+			#footer {
+				margin-top: -0.5em;
+				grid-row: 5;
 			}
 		}
 	}
-
-	ul {
-		padding-left: 0;
-		text-align: center;
-		list-style: none;
-		width: 100%;
+	#leaderboard {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
-		grid-gap: 1em;
+		gap: 0;
+		grid-template-columns: 2.5rem 1fr 1fr 1fr;
+		grid-template-rows: repeat(auto-fit, 2.5em);
+		padding: 1em 0;
+		height: fit-content;
+	}
+
+	#guild-link {
+		margin: 0;
+		text-align: center;
+		grid-column: 1/3;
 
 		a {
-			color: #fff;
 			text-decoration: none;
-			padding-bottom: 0.2em;
+			color: inherit;
 		}
 	}
 
-	h1 {
+	.select-guild-link {
+		text-decoration: none;
+		color: inherit;
 		text-align: center;
-		margin-bottom: 0;
-		color: #fff;
-	}
+		grid-column: 1/3;
+		opacity: 0.7;
+		margin-bottom: 1em;
 
-	.guild-link {
-		vertical-align: middle;
-	}
-
-	.router-link-exact-active {
-		border-bottom: 0.15em solid #bbc
-	}
-
-	.select-guild {
-		color: #bbc;
-		margin-bottom: 1rem;
-		opacity: 0.8;
-		text-align: center;
+		&:hover {
+			opacity: 1;
+		}
 	}
 </style>

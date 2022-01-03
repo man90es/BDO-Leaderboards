@@ -1,19 +1,22 @@
 <template>
 	<div class="loading-banner-wrapper" :class="{ 'mobile-layout': $store.state.mobile }">
 		<div class="banner">
-			<RadialProgress :diameter="200" :completed-steps="$store.state.loading.progress" :total-steps="$store.state.loading.total">
+			<radial-progress :diameter="200" :completed-steps="$store.state.loading.progress" :total-steps="$store.state.loading.total" :innerStrokeColor="innerColour" :stopColor="injectColour" :startColor="injectColour">
 				{{ $store.state.loading.msg }}
-			</RadialProgress>
-			<router-link to="/" class="select-guild">Go back to guild selection</router-link>
+			</radial-progress>
+			<router-link to="/" class="select-guild" v-if="$store.state.loading.stage > 1">Go back to guild selection</router-link>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	import RadialProgress from "vue3-radial-progress"
+
+	const innerColour = getComputedStyle(document.documentElement).getPropertyValue("--colour-grey")
+	const injectColour = getComputedStyle(document.documentElement).getPropertyValue("--colour-green")
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.loading-banner-wrapper {
 		position: fixed;
 		top: 0;
@@ -31,9 +34,9 @@
 	}
 
 	.banner {
-		background-color: #21252b;
+		background-color: var(--colour-white);
 		font-size: 1.5rem;
-		border-radius: 0.5rem;
+		border-radius: 0.1rem;
 		height: 30vh;
 		width: 30vw;
 		padding: 1em;
@@ -47,5 +50,15 @@
 	.mobile-layout .banner {
 		width: 100vw;
 		height: 100vh;
+	}
+
+	a {
+		color: inherit;
+		opacity: 0.7;
+		text-decoration: none;
+
+		&:hover {
+			opacity: 1;
+		}
 	}
 </style>
