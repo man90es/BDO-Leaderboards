@@ -3,7 +3,7 @@
 		<header-card />
 
 		<content-card>
-			<formatted-input :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" />
+			<formatted-input :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard()" />
 			<button class="eu-colour" @click="() => navigateToLeaderboard('EU')">Look it up in Europe</button>
 			<button class="na-colour" @click="() => navigateToLeaderboard('NA')">Look it up in North America</button>
 			<div class="separator">OR</div>
@@ -17,6 +17,7 @@
 <script setup>
 	import { ref } from "vue"
 	import { useRouter } from "vue-router"
+	import { useStore } from "vuex"
 
 	import ContentCard from "@/components/ContentCard.vue"
 	import FooterCard from "@/components/FooterCard.vue"
@@ -24,31 +25,51 @@
 	import HeaderCard from "@/components/HeaderCard.vue"
 
 	const router = useRouter()
+	const store =  useStore()
 
 	const guildName = ref("")
 	const shouldHightlightNameInput = ref(false)
 
+	const defaultDiscipline = "level"
+
+	if (store.state.lastGuild.name !== null) {
+		guildName.value = store.state.lastGuild.name
+	}
+
 	function navigateToCustomLeaderboard() {
 		router.push({
-			name: "customLeaderboard",
-			params: {
-				discipline: "level",
-			}
+			name:   "customLeaderboard",
+			params: { discipline: defaultDiscipline }
 		})
 	}
 
 	function navigateToLeaderboard(region) {
-		if (guildName.value.length < 3) {
+		// If guild name input is empty, highlight it and exit
+		if (guildName.value.length < 1) {
 			shouldHightlightNameInput.value = true
 			return
 		}
 
+		// If the region is not provided, fall back to the last one if possible
+		// Or exit if not
+		if (region === undefined) {
+			if (store.state.lastGuild.region !== null) {
+				region = store.state.lastGuild.region
+			} else {
+				return
+			}
+		}
+
+		// Memorise the last guild
+		store.commit("setLastGuild", { name: guildName.value, region })
+
+		// Navigate to the leaderboard
 		router.push({
 			name: "leaderboard",
 			params: {
 				region,
-				guildName: guildName.value,
-				discipline: "level",
+				guildName:  guildName.value,
+				discipline: defaultDiscipline,
 			}
 		})
 	}

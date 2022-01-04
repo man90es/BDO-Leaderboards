@@ -15,13 +15,18 @@ export default createStore({
 		players: {},
 		customList: [],
 		loading: { stage: -1 },
-		mobile: innerWidth < innerHeight
+		mobile: innerWidth < innerHeight,
+		lastGuild: {
+			name:   null,
+			region: null,
+		}
 	},
 	plugins: [
 		Memento(
 			{
-				addToCustomList: "customList",
+				addToCustomList:      "customList",
 				removeFromCustomList: "customList",
+				setLastGuild:         "lastGuild",
 			},
 			"leaderboards-vuex"
 		)
@@ -41,6 +46,10 @@ export default createStore({
 
 		setMobile(state, value) {
 			state.mobile = value
+		},
+
+		setLastGuild(state, value) {
+			state.lastGuild = value
 		},
 
 		addToCustomList(state, profileTarget) {
