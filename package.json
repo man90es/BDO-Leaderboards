@@ -1,7 +1,4 @@
 {
-	"name": "bdo-leader-boards",
-	"version": "0.1.0",
-	"private": true,
 	"scripts": {
 		"build": "vue-cli-service build",
 		"create-config": "cp -nv .env.template .env",
