@@ -13,7 +13,7 @@
 		"memento-vuex": "^0.1.0",
 		"vue": "^3.2.26",
 		"vue-router": "^4.0.0-0",
-		"vue3-radial-progress": "1.0.6",
+		"vue3-radial-progress": "1.0.7",
 		"vuex": "^4.0.0-0"
 	},
 	"devDependencies": {
