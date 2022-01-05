@@ -25,7 +25,7 @@ While not a recommended approach for consumer experience, use these instructions
 
 ### Running
 
-Run `yarn start` from within the main directory of this repository.
+Run `yarn serve` from within the main directory of this repository.
 
 ## Contributing
 
