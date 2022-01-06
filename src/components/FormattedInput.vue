@@ -2,32 +2,20 @@
 	<input type="text" v-model="content">
 </template>
 
-<script>
+<script setup>
+	import { ref, defineProps, defineEmits, watch } from "vue"
+
 	import { capitalise } from "../utils"
 
-	export default {
-		props: ["modelValue"],
-		data() {
-			return { content: this.modelValue }
-		},
-		watch: {
-			content: function(newValue) {
-				if (newValue.length > 0) {
-					this.content = capitalise(newValue).replace(" ", "")
-				}
+	const props = defineProps(["modelValue"])
+	const emit = defineEmits(["update:modelValue"])
+	const content = ref(props.modelValue)
 
-				this.$emit("update:modelValue", this.content)
-			}
+	watch(content, (newValue) => {
+		if (newValue.length > 0) {
+			content.value = capitalise(newValue).replace(" ", "")
 		}
-	}
-</script>
 
-<style scoped>
-	/* input {
-		font-size: 1.25rem;
-		padding: 1rem;
-		border-radius: 0.5rem;
-		border: 0;
-		height: 3rem;
-	} */
-</style>
+		emit("update:modelValue", content.value)
+	})
+</script>
