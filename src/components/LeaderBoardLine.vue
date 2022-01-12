@@ -15,6 +15,8 @@
 </script>
 
 <script>
+	const documentStyle = getComputedStyle(document.documentElement)
+
 	export default {
 		inheritAttrs: false,
 		props: [
@@ -36,21 +38,21 @@
 					case 1:
 						return {
 							...vars,
-							"color":     "#e06c75",
+							"color":     documentStyle.getPropertyValue("--colour-red"),
 							"font-size": "1.3em",
 						}
 
 					case 2:
 						return {
 							...vars,
-							"color":     "#e5c07b",
+							"color":     documentStyle.getPropertyValue("--colour-orange"),
 							"font-size": "1.2em",
 						}
 
 					case 3:
 						return {
 							...vars,
-							"color":     "#61afef",
+							"color":     documentStyle.getPropertyValue("--colour-blue"),
 							"font-size": "1.1em",
 						}
 				}
