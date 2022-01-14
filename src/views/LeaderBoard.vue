@@ -16,15 +16,14 @@
 
 		<footer-card id="footer" />
 
-		<content-card id="leaderboard">
+		<content-card v-if="contentReady" id="leaderboard">
 			<leader-board-header-line />
 			<leader-board-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" />
 		</content-card>
+		<loading-card v-else id="leaderboard"/>
 
 		<add-to-custom-card v-if="$route.name === 'customLeaderboard'" id="add-to-custom" />
 	</div>
-
-	<loading-banner v-if="shouldShowLoading" />
 </template>
 
 <script setup>
@@ -39,7 +38,7 @@
 	import HeaderCard from "@/components/HeaderCard.vue"
 	import LeaderBoardHeaderLine from "@/components/LeaderBoardHeaderLine.vue"
 	import LeaderBoardLine from "@/components/LeaderBoardLine.vue"
-	import LoadingBanner from "@/components/LoadingBanner.vue"
+	import LoadingCard from "@/components/LoadingCard.vue"
 
 	import useGenerateLeaderboardItems from "../hooks/generateLeaderboardItems.js"
 
@@ -63,9 +62,7 @@
 	const guildLink = computed(() => {
 		return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${route.params.guildName}&region=${route.params.region}`
 	})
-	const shouldShowLoading = computed(() => {
-		return store.state.loading.stage !== 2
-	})
+	const contentReady = computed(() => store.state.loading.stage === 2)
 	const { leaderboardItems } = useGenerateLeaderboardItems()
 </script>
 
