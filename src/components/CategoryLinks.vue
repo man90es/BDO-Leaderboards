@@ -15,6 +15,7 @@
 	<router-link to="./combat">Combat Fame</router-link>
 	<router-link to="./life">Life Fame</router-link>
 	<router-link to="./characters">Number of Characters</router-link>
+	<router-link to="./age">Account Age</router-link>
 </template>
 
 <style scoped>

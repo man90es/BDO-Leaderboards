@@ -39,7 +39,7 @@ export default function() {
 				if (
 					(member.privacy & PRIVATE_CONTRIB && ["contribution"].includes(discipline.value)) ||
 					(member.privacy & PRIVATE_LEVEL && ["level", "combat"].includes(discipline.value)) ||
-					(member.privacy & PRIVATE_SPECS && !["contribution", "level", "combat", "characters"].includes(discipline.value))
+					(member.privacy & PRIVATE_SPECS && !["contribution", "level", "combat", "characters", "age"].includes(discipline.value))
 				) {
 					return new Participant(member, null, -1, "Private")
 				}
@@ -51,6 +51,22 @@ export default function() {
 
 					case "characters": {
 						return new Participant(member, null, member.characters.length)
+					}
+
+					case "age": {
+						const age = (+new Date() - +new Date(member.createdOn))
+						const months = Math.floor(age / 2.628e9)
+						let shouldPluralise = true
+
+						if (months === 0) {
+							return new Participant(member, null, months, `<1 month`)
+						}
+
+						if (`${months}`.at(-1) === "1" && months !== 11) {
+							shouldPluralise = false
+						}
+
+						return new Participant(member, null, months, `${months} month${shouldPluralise ? "s" : ""}`)
 					}
 
 					case "level": {

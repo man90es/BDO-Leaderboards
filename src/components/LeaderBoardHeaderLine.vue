@@ -16,6 +16,8 @@
 			case "level":        return [...firstCols, "Character", "Level"]
 			case "combat":       return [...firstCols, null, "Combat Fame"]
 			case "life":         return [...firstCols, null, "Life Fame"]
+			case "characters":   return [...firstCols, null, "Characters"]
+			case "age":          return [...firstCols, null, "Age"]
 			default:             return [...firstCols, "Character", "Rank"]
 		}
 	})
