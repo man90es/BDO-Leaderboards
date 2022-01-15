@@ -39,7 +39,7 @@ export default function() {
 				if (
 					(member.privacy & PRIVATE_CONTRIB && ["contribution"].includes(discipline.value)) ||
 					(member.privacy & PRIVATE_LEVEL && ["level", "combat"].includes(discipline.value)) ||
-					(member.privacy & PRIVATE_SPECS && !["contribution", "level", "combat"].includes(discipline.value))
+					(member.privacy & PRIVATE_SPECS && !["contribution", "level", "combat", "characters"].includes(discipline.value))
 				) {
 					return new Participant(member, null, -1, "Private")
 				}
@@ -47,6 +47,10 @@ export default function() {
 				switch (discipline.value) {
 					case "contribution": {
 						return new Participant(member, null, member.contributionPoints)
+					}
+
+					case "characters": {
+						return new Participant(member, null, member.characters.length)
 					}
 
 					case "level": {

@@ -14,6 +14,7 @@
 	<router-link to="./barter">Barter</router-link>
 	<router-link to="./combat">Combat Fame</router-link>
 	<router-link to="./life">Life Fame</router-link>
+	<router-link to="./characters">Number of Characters</router-link>
 </template>
 
 <style scoped>
