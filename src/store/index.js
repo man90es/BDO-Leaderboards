@@ -5,7 +5,16 @@ function parseResponse(response) {
 	if (response.ok) {
 		return response.json()
 	} else {
-		throw `${response.status}: ${response.statusText}`
+		switch (response.status) {
+			case 400:
+				throw "A guild with this name doesn't exist"
+			case 404:
+				throw "Couldn't find a guild with this name"
+			case 503:
+				throw "BDO servers are currently under maintenance"
+			default:
+				throw response.statusText
+		}
 	}
 }
 
