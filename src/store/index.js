@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex"
 import Memento from "memento-vuex"
 
 function parseResponse(response) {
@@ -28,7 +28,8 @@ export default createStore({
 		lastGuild: {
 			name:   null,
 			region: null,
-		}
+		},
+		shouldStopRequests: false,
 	},
 	plugins: [
 		Memento(
@@ -71,21 +72,27 @@ export default createStore({
 			state.customList = state.customList.filter(p => p !== profileTarget)
 		},
 
+		setShouldStopRequests(state, value) {
+			state.shouldStopRequests = value
+		},
+
 		import(state, backup) {
 			Object.assign(state, backup)
 		},
 	},
 	actions: {
-		requestGuild({ commit, dispatch }, { guildName, region }) {
+		requestGuild({ state, commit, dispatch }, { guildName, region }) {
 			commit("updateLoading", { stage: 0, msg: "Requesting guild members list", progress: 1, total: 100 })
 
 			fetch(`${process.env.VUE_APP_API_BASE}/v1/guild?guildName=${guildName}&region=${region}`)
 				.then(parseResponse)
-				.catch(err => commit("updateLoading", { stage: 3, msg: err }))
 				.then((guildProfile) => {
 					commit("pushGuild", guildProfile)
-					dispatch("requestMembers", { members: [...guildProfile.members], total: guildProfile.population })
+					if (!state.shouldStopRequests) {
+						dispatch("requestMembers", { members: [...guildProfile.members], total: guildProfile.population })
+					}
 				})
+				.catch(err => commit("updateLoading", { stage: 3, msg: err }))
 		},
 
 		requestCustomList({dispatch, state}) {
@@ -95,7 +102,7 @@ export default createStore({
 			})
 		},
 
-		requestMembers({ commit, dispatch }, { members, total }) {
+		requestMembers({ state, commit, dispatch }, { members, total }) {
 			commit("updateLoading", { stage: 1, msg: "Requesting members' data", progress: total - members.length + 1, total: total + 1 })
 			const member = members.shift()
 
@@ -104,7 +111,7 @@ export default createStore({
 				.then(playerProfile => commit("pushPlayer", playerProfile))
 				.catch(err => commit("updateLoading", { stage: 3, msg: err }))
 				.finally(() => {
-					if (members.length > 0) {
+					if (members.length > 0 && !state.shouldStopRequests) {
 						dispatch("requestMembers", { members, total })
 					} else {
 						commit("updateLoading", { stage: 2, msg: "Complete" })
