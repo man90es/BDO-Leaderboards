@@ -46,7 +46,7 @@ export default function() {
 
 				switch (discipline.value) {
 					case "contribution": {
-						return new Participant(member, null, member.contributionPoints)
+						return new Participant(member, null, member.contributionPoints || 0)
 					}
 
 					case "characters": {
