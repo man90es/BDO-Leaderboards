@@ -30,7 +30,7 @@ export default function() {
 	const discipline = computed(() => route.params.discipline)
 	const members = computed(() => route.name === "customLeaderboard"
 		? store.getters.customMembers
-		: store.getters.members(route.params.guildName)
+		: store.getters.members(route.params.region, route.params.guildName)
 	)
 
 	const leaderboardItems = computed(() => {

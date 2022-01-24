@@ -43,7 +43,7 @@ export default createStore({
 	],
 	mutations: {
 		pushGuild(state, guild) {
-			state.guilds[guild.name.toLowerCase()] = guild
+			state.guilds[`${guild.region}/${guild.name}`.toLowerCase()] = guild
 		},
 
 		pushPlayer(state, player) {
@@ -120,30 +120,26 @@ export default createStore({
 		}
 	},
 	getters: {
-		members: state => guildName => {
-			if (state.loading.stage === 2) {
-				return state.guilds[guildName.toLowerCase()].members
-					.filter(member => {
-						// The official website does not always update when someone leaves the guild; this should filter some ex-members out
-						// I have no idea how to filter out ex-members with private guild setting though
+		members: state => (region, guildName) => {
+			return state.guilds[`${region}/${guildName}`.toLowerCase()].members
+				.filter(member => {
+					// The official website does not always update when someone leaves the guild; this should filter some ex-members out
+					// I have no idea how to filter out ex-members with private guild setting though
 
-						let profile = state.players[member.profileTarget]
+					let profile = state.players[member.profileTarget]
 
-						if (profile?.guild !== undefined && profile?.guild.name.toLowerCase() == guildName.toLowerCase()) {
-							// They are probably in the guild: double checked
-							return true
-						} else if (profile?.privacy & 0b10) {
-							// The guild in the profile is set to private: can't double check
-							return true
-						} else {
-							// Either no guild or other guild
-							return false
-						}
-					})
-					.map(member => state.players[member.profileTarget])
-			} else {
-				return []
-			}
+					if (profile?.guild !== undefined && profile?.guild.name.toLowerCase() == guildName.toLowerCase()) {
+						// They are probably in the guild: double checked
+						return true
+					} else if (profile?.privacy & 0b10) {
+						// The guild in the profile is set to private: can't double check
+						return true
+					} else {
+						// Either no guild or other guild
+						return false
+					}
+				})
+				.map(member => state.players[member.profileTarget])
 		},
 
 		customMembers: (state) => {
