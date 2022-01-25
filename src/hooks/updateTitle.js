@@ -5,6 +5,7 @@ import { capitalise } from "../utils"
 
 export default function() {
 	const route = useRoute()
+	const siteTitle = "Black Desert Online Leaderboards"
 
 	function switchTitle(guildName, discipline) {
 		// Convert internal names to conventional
@@ -14,20 +15,28 @@ export default function() {
 				break
 
 			case "combat":
-				discipline = "Combat Fame"
+				discipline = "Combat fame"
 				break
 
 			case "life":
-				discipline = "Life Fame"
+				discipline = "Life fame"
+				break
+
+			case "age":
+				discipline = "Account age"
+				break
+
+			case "characters":
+				discipline = "Number of characters"
 				break
 
 			case undefined:
-				document.title = "BDO Leaderboards"
+				document.title = siteTitle
 				return
 		}
 
 		// Set a new title
-		document.title = `${guildName || "Custom"} ${capitalise(discipline)} Leaderboard`
+		document.title = `${guildName || "Custom"} ranking: ${capitalise(discipline)} — ${siteTitle}`
 	}
 
 	watch(() => route.params, ({ guildName, discipline }) => {
