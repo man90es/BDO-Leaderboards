@@ -6,7 +6,7 @@
 			<formatted-input :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard()" />
 			<button class="eu-colour" @click="() => navigateToLeaderboard('EU')">Look it up in Europe</button>
 			<button class="na-colour" @click="() => navigateToLeaderboard('NA')">Look it up in North America</button>
-			<div class="separator">OR</div>
+			<separator-line>OR</separator-line>
 			<button class="custom-colour wide-button" @click="() => navigateToCustomLeaderboard()">Create a leaderboard from scratch</button>
 		</content-card>
 
@@ -23,6 +23,7 @@
 	import FooterCard from "@/components/FooterCard.vue"
 	import FormattedInput from "@/components/FormattedInput.vue"
 	import HeaderCard from "@/components/HeaderCard.vue"
+	import SeparatorLine from "@/components/SeparatorLine.vue"
 
 	const router = useRouter()
 	const store =  useStore()
@@ -116,42 +117,7 @@
 		}
 	}
 
-	button {
-		color: var(--colour-white);
-	}
-
 	input.highlighted {
 		box-shadow: 0 0 0.5em var(--colour-red) !important;
-	}
-
-	.separator {
-		--or-margin: 2em;
-
-		background-color: var(--colour-white);
-		font-size: 0.8em;
-		font-weight: bold;
-		grid-column: 1/3;
-		margin: 1rem 0;
-		opacity: 0.5;
-		text-align: center;
-		user-select: none;
-
-		&::before, &::after {
-			content: "";
-			display: block;
-
-			background-color: var(--colour-black);
-			height: 1px;
-			width: calc(50% - var(--or-margin));
-		}
-
-		&::before {
-			transform: translate(0, 0.6em);
-		}
-
-		&::after {
-			margin-left: calc(50% + var(--or-margin));
-			transform: translate(0, -0.6em);
-		}
 	}
 </style>

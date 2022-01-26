@@ -11,8 +11,8 @@
 
 	import ContentCard from "@/components/ContentCard.vue"
 
-	const innerColour = getComputedStyle(document.documentElement).getPropertyValue("--colour-grey")
-	const injectColour = getComputedStyle(document.documentElement).getPropertyValue("--colour-green")
+	const innerColour = getComputedStyle(document.body).getPropertyValue("--colour-grey")
+	const injectColour = getComputedStyle(document.body).getPropertyValue("--colour-green")
 </script>
 
 <style scoped>

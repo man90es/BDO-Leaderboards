@@ -21,7 +21,7 @@
 <style scoped>
 	a {
 		text-decoration: none;
-		color: var(--colour-black);
+		color: inherit;
 
 		opacity: 0.7;
 	}

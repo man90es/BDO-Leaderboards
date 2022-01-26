@@ -119,21 +119,14 @@
 		grid-column: 1/3;
 
 		a {
-			text-decoration: none;
-			color: inherit;
+			opacity: 1;
 		}
 	}
 
 	.select-guild-link {
-		text-decoration: none;
 		color: inherit;
 		text-align: center;
 		grid-column: 1/3;
-		opacity: 0.7;
 		margin-bottom: 1em;
-
-		&:hover {
-			opacity: 1;
-		}
 	}
 </style>

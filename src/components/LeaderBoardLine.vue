@@ -15,7 +15,7 @@
 </script>
 
 <script>
-	const documentStyle = getComputedStyle(document.documentElement)
+	const documentStyle = getComputedStyle(document.body)
 
 	export default {
 		inheritAttrs: false,
@@ -84,7 +84,7 @@
 
 	.family-name {
 		a {
-			color: inherit;
+			opacity: 1;
 			text-decoration: none;
 		}
 
@@ -103,8 +103,6 @@
 	}
 
 	.character-name {
-		$spritesheet-x-offset: -0.3rem;
-
 		padding-left: 2rem !important;
 
 		&::before {
@@ -121,95 +119,95 @@
 		}
 
 		&.warrior::before {
-			background-position: $spritesheet-x-offset -0.3rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -0.3rem !important;
 		}
 
 		&.ranger::before {
-			background-position: $spritesheet-x-offset -2.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -2.0rem !important;
 		}
 
 		&.sorceress::before {
-			background-position: $spritesheet-x-offset -3.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -3.8rem !important;
 		}
 
 		&.berserker::before {
-			background-position: $spritesheet-x-offset -5.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -5.6rem !important;
 		}
 
 		&.tamer::before {
-			background-position: $spritesheet-x-offset -7.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -7.6rem !important;
 		}
 
 		&.ninja::before {
-			background-position: $spritesheet-x-offset -9.3rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -9.3rem !important;
 		}
 
 		&.kunoichi::before {
-			background-position: $spritesheet-x-offset -11.2rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -11.2rem !important;
 		}
 
 		&.witch::before {
-			background-position: $spritesheet-x-offset -13.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -13.0rem !important;
 		}
 
 		&.wizard::before {
-			background-position: $spritesheet-x-offset -14.9rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -14.9rem !important;
 		}
 
 		&.maehwa::before {
-			background-position: $spritesheet-x-offset -16.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -16.6rem !important;
 		}
 
 		&.valkyrie::before {
-			background-position: $spritesheet-x-offset -18.5rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -18.5rem !important;
 		}
 
 		&.musa::before {
-			background-position: $spritesheet-x-offset -20.4rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -20.4rem !important;
 		}
 
 		&.dark-knight::before {
-			background-position: $spritesheet-x-offset -22.1rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -22.1rem !important;
 		}
 
 		&.striker::before {
-			background-position: $spritesheet-x-offset -24.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -24.0rem !important;
 		}
 
 		&.mystic::before {
-			background-position: $spritesheet-x-offset -25.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -25.8rem !important;
 		}
 
 		&.lahn::before {
-			background-position: $spritesheet-x-offset -27.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -27.8rem !important;
 		}
 
 		&.archer::before {
-			background-position: $spritesheet-x-offset -29.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -29.6rem !important;
 		}
 
 		&.shai::before {
-			background-position: $spritesheet-x-offset -31.3rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -31.3rem !important;
 		}
 
 		&.guardian::before {
-			background-position: $spritesheet-x-offset -33.1rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -33.1rem !important;
 		}
 
 		&.hashashin::before {
-			background-position: $spritesheet-x-offset -35.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -35.0rem !important;
 		}
 
 		&.nova::before {
-			background-position: $spritesheet-x-offset -36.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -36.8rem !important;
 		}
 
 		&.sage::before {
-			background-position: $spritesheet-x-offset -38.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -38.6rem !important;
 		}
 
 		&.corsair::before {
-			background-position: $spritesheet-x-offset -40.5rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -40.5rem !important;
 		}
 	}
 

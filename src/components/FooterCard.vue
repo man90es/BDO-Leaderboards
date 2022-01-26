@@ -24,16 +24,12 @@
 
 	a {
 		color: var(--colour-black);
-		text-decoration: none;
-		opacity: 0.5;
 		padding-left: 1.25em;
 		background-repeat: no-repeat;
 		background-size: contain;
 		grid-column: 1/3;
 		font-size: 0.9em;
-	}
-
-	a:hover {
-		opacity: 0.8;
+		filter: var(--dark-theme-invert);
+		transition: 0.2s;
 	}
 </style>
