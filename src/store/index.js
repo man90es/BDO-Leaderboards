@@ -118,25 +118,22 @@ export default createStore({
 		},
 
 		requestMembers({ state, commit, dispatch }, { members, total }) {
+			if (members.length < 1 || state.shouldStopRequests) {
+				commit("updateLoading", { stage: 2, msg: "Complete" })
+				return
+			}
+
 			commit("updateLoading", { stage: 1, msg: "Requesting members' data", progress: total - members.length + 1, total: total + 1 })
 			const member = members.shift()
 
-			function next() {
-				if (members.length > 0 && !state.shouldStopRequests) {
-					dispatch("requestMembers", { members, total })
-				} else {
-					commit("updateLoading", { stage: 2, msg: "Complete" })
-				}
-			}
-
 			if (state.players[member.profileTarget]) {
-				next()
+				dispatch("requestMembers", { members, total })
 			} else {
 				fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer?profileTarget=${member.profileTarget}`)
 					.then(parseResponse)
 					.then(playerProfile => commit("pushPlayer", playerProfile))
 					.catch(err => commit("updateLoading", { stage: 3, msg: err }))
-					.finally(next)
+					.finally(() => dispatch("requestMembers", { members, total }))
 			}
 		}
 	},

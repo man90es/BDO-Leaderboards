@@ -48,7 +48,8 @@
 	// Request guild data if it wasn't requested before
 	store.commit("setShouldStopRequests", false)
 	if (route.name === "customLeaderboard") {
-		if (store.getters.customMembers.includes()) {
+		const members = store.getters.customMembers
+		if (members.length === 0 || members.includes()) {
 			store.dispatch("requestCustomList")
 		}
 	} else {
