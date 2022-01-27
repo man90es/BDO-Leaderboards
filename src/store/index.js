@@ -30,6 +30,7 @@ export default createStore({
 			region: null,
 		},
 		shouldStopRequests: false,
+		siteTheme: "dark",
 	},
 	plugins: [
 		Memento(
@@ -37,6 +38,7 @@ export default createStore({
 				addToCustomList:      "customList",
 				removeFromCustomList: "customList",
 				setLastGuild:         "lastGuild",
+				toggleSiteTheme:      "siteTheme",
 			},
 			"leaderboards-vuex"
 		)
@@ -74,6 +76,10 @@ export default createStore({
 
 		setShouldStopRequests(state, value) {
 			state.shouldStopRequests = value
+		},
+
+		toggleSiteTheme(state) {
+			state.siteTheme = state.siteTheme === "light" ? "dark" : "light"
 		},
 
 		import(state, backup) {

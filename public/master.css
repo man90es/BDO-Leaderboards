@@ -9,36 +9,38 @@ body {
 }
 
 body:not(.light-theme) {
-	--colour-black: #282c34;
-	--colour-red: #e06c75;
-	--colour-green: #98c379;
-	--colour-orange: #f1ac2c;
-	--colour-blue: #61afef;
-	--colour-grey: #cccccc;
+	--colour-black: #24272d;
+	--colour-red: #dc6069;
+	--colour-green: #8dbb6e;
+	--colour-orange: #e1b86f;
+	--colour-blue: #57a5ed;
 
 	--card-colour: #37393f;
 	--card-shadow-colour: #0005;
 	--text-colour: #f0f0f0;
 	--input-shadow-colour: #0005;
 	--button-text-colour: #f8f8f8;
+	--load-remaining-colour: #111;
+	--load-done-colour: #f0f0f0;
 
 	--dark-theme-invert: invert(1);
 	--class-icon-spritesheet-x-offset: -2rem;
 }
 
 body.light-theme {
-	--colour-black: #24272d;
-	--colour-red: #dc6069;
-	--colour-green: #8dbb6e;
-	--colour-orange: #e1b86f;
-	--colour-blue: #57a5ed;
-	--colour-grey: #a1a9b7;
+	--colour-black: #282c34;
+	--colour-red: #e06c75;
+	--colour-green: #98c379;
+	--colour-orange: #f1ac2c;
+	--colour-blue: #61afef;
 
 	--card-colour: #f0f0f0;
 	--card-shadow-colour: #0005;
 	--text-colour: #282c34;
 	--input-shadow-colour: #0005;
 	--button-text-colour: #f8f8f8;
+	--load-remaining-colour: #ccc;
+	--load-done-colour: #8dbb6e;
 
 	--dark-theme-invert: invert(0);
 	--class-icon-spritesheet-x-offset: -0.2rem;
