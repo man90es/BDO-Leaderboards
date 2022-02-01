@@ -1379,12 +1379,12 @@
     webpack "^5.54.0"
     yorkie "^2.0.0"
 
-"@vue/cli-plugin-router@^5.0.0-rc.1", "@vue/cli-plugin-router@~5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.0-rc.1.tgz#9452cc4bade70bd243f7ecbfdf7c80487293af14"
-  integrity sha512-eRMeUNY89PbyH/Gkt0IGfNT2qK4fZhTdBDKrR/hwyk57TBDse/h2jZ9inPqfSnrdIrMOqYsLU2ixzSzJVXXOVw==
+"@vue/cli-plugin-router@^5.0.0-rc.1", "@vue/cli-plugin-router@~5.0.0-rc.2":
+  version "5.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.0-rc.2.tgz#40c186f88d27fdac6ce8d741cb7f1ec50bccdd5c"
+  integrity sha512-RtbEJD2n6ADbuWB47GU8I6vQfiNZ54ovkWarNkPCcjj+5CC7YQ1tr39pJwAzlwM9eZdxtKHpOS8DkFDB9qJakQ==
   dependencies:
-    "@vue/cli-shared-utils" "^5.0.0-rc.1"
+    "@vue/cli-shared-utils" "^5.0.0-rc.2"
 
 "@vue/cli-plugin-vuex@^5.0.0-rc.1", "@vue/cli-plugin-vuex@~5.0.0-rc.1":
   version "5.0.0-rc.1"
@@ -1454,10 +1454,10 @@
     webpack-virtual-modules "^0.4.2"
     whatwg-fetch "^3.6.2"
 
-"@vue/cli-shared-utils@^5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.0-rc.1.tgz#0587c663775e666227d896ebbb365ea9909047d8"
-  integrity sha512-rZVTGfSQ0Sqw76BD/Z6iARfnO2r5ICSxt0iIpzjM8w9ohpRtI2B45NrngF0rILwy9d8we4A/n7gQQ0rqwkAX7g==
+"@vue/cli-shared-utils@^5.0.0-rc.1", "@vue/cli-shared-utils@^5.0.0-rc.2":
+  version "5.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.0-rc.2.tgz#6f21858524cdc78e645d848a5b7dacbb7c994a99"
+  integrity sha512-jzSZPj92T3i23XrbCW2HNmsI6LG4P5kmerneUtTF8uwMMi540PQePA+clxUmRyNnhVJN9KnWQc10Y2+jwfXkKA==
   dependencies:
     chalk "^4.1.2"
     execa "^1.0.0"
