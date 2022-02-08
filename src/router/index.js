@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router"
-import Home from "../views/Home.vue"
-import LeaderBoard from "../views/LeaderBoard.vue"
+const HomeView = () => import("../views/Home.vue")
+const LeaderboardView = () => import("../views/Leaderboard.vue")
 
 export default createRouter({
 	history: process.env.VUE_APP_USE_HASH_HISTORY === "true"
@@ -10,17 +10,17 @@ export default createRouter({
 		{
 			path: "/",
 			name: "home",
-			component: Home
+			component: HomeView
 		},
 		{
 			path: "/custom/:discipline?",
 			name: "customLeaderboard",
-			component: LeaderBoard
+			component: LeaderboardView
 		},
 		{
 			path: "/:region/:guildName/:discipline?",
 			name: "leaderboard",
-			component: LeaderBoard
+			component: LeaderboardView
 		},
 	]
 })
