@@ -76,10 +76,13 @@
 <style lang="scss" scoped>
 	#leaderboard > * {
 		padding: 0.5rem;
+		line-height: 1.2rem;
+		display: flex;
+		align-items: center;
 	}
 
 	.position, .score {
-		text-align: right;
+		justify-content: end;
 	}
 
 	.family-name {
@@ -103,118 +106,125 @@
 	}
 
 	.character-name {
-		padding-left: 2rem !important;
-
 		&::before {
 			content: '';
 			width: 1.5rem;
 			height: 1.5rem;
 			background-image: url(https://s1.pearlcdn.com/NAEU/contents/img/common/character/icn_class_symbol_spr.svg);
-			background-position: 10em 10em;
+			background-position: 10rem 10rem;
 			background-repeat: no-repeat;
 			background-size: 5.5rem auto;
-			transform: translate(-1.5rem, 0);
-			position: absolute;
+			margin-right: 0.25rem;
 			opacity: 0.8;
 		}
 
 		&.warrior::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -0.3rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -0.15rem !important;
 		}
 
 		&.ranger::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -2.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -1.98rem !important;
 		}
 
 		&.sorceress::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -3.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -3.82rem !important;
 		}
 
 		&.berserker::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -5.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -5.65rem !important;
 		}
 
 		&.tamer::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -7.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -7.48rem !important;
 		}
 
 		&.ninja::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -9.3rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -9.32rem !important;
 		}
 
 		&.kunoichi::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -11.2rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -11.15rem !important;
 		}
 
 		&.witch::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -13.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -12.98rem !important;
 		}
 
 		&.wizard::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -14.9rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -14.82rem !important;
 		}
 
 		&.maehwa::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -16.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -16.65rem !important;
 		}
 
 		&.valkyrie::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -18.5rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -18.48rem !important;
 		}
 
 		&.musa::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -20.4rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -20.32rem !important;
 		}
 
 		&.dark-knight::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -22.1rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -22.15rem !important;
 		}
 
 		&.striker::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -24.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -23.98rem !important;
 		}
 
 		&.mystic::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -25.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -25.82rem !important;
 		}
 
 		&.lahn::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -27.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -27.65rem !important;
 		}
 
 		&.archer::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -29.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -29.48rem !important;
 		}
 
 		&.shai::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -31.3rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -31.32rem !important;
 		}
 
 		&.guardian::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -33.1rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -33.15rem !important;
 		}
 
 		&.hashashin::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -35.0rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -34.98rem !important;
 		}
 
 		&.nova::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -36.8rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -36.82rem !important;
 		}
 
 		&.sage::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -38.6rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -38.65rem !important;
 		}
 
 		&.corsair::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -40.5rem !important;
+			background-position: var(--class-icon-spritesheet-x-offset) -40.48rem !important;
 		}
+
+		/*
+			The formula for y offset is 5.5 / 3 * 23 + 0.15
+			Where
+				5.5 is x from background-size property
+				3 is the number of horisontal images in the spritesheet
+				23 is the index of a character
+				0.15 is just a static offset
+			I should really try to automate this, but passing data from vue to css is a pain
+			Especially to ::before
+		*/
 	}
 
 	.mobile-layout {
 		.character-name::before {
-			zoom: 0.7;;
-			// background-size: 5.5rem auto;
+			zoom: 0.7;
 		}
 	}
 </style>

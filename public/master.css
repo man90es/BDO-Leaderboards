@@ -24,7 +24,7 @@ body:not(.light-theme) {
 	--load-done-colour: #f0f0f0;
 
 	--dark-theme-invert: invert(1);
-	--class-icon-spritesheet-x-offset: -2rem;
+	--class-icon-spritesheet-x-offset: -1.98rem;
 }
 
 body.light-theme {
@@ -43,7 +43,7 @@ body.light-theme {
 	--load-done-colour: #8dbb6e;
 
 	--dark-theme-invert: invert(0);
-	--class-icon-spritesheet-x-offset: -0.2rem;
+	--class-icon-spritesheet-x-offset: -0.15rem;
 }
 
 * {
