@@ -1379,12 +1379,12 @@
     webpack "^5.54.0"
     yorkie "^2.0.0"
 
-"@vue/cli-plugin-router@^5.0.0-rc.1", "@vue/cli-plugin-router@~5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.0-rc.1.tgz#9452cc4bade70bd243f7ecbfdf7c80487293af14"
-  integrity sha512-eRMeUNY89PbyH/Gkt0IGfNT2qK4fZhTdBDKrR/hwyk57TBDse/h2jZ9inPqfSnrdIrMOqYsLU2ixzSzJVXXOVw==
+"@vue/cli-plugin-router@^5.0.0-rc.1", "@vue/cli-plugin-router@~5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-router/-/cli-plugin-router-5.0.1.tgz#f512a2c882d3eb2c15ba387bb1e598be625ea2c4"
+  integrity sha512-Eu56AQUEK0uULgIQotZwi5eijYNBS3+znMc0u/kaI1puW3+f/qP3YCtffp5CeVcG2Kxwrx66XBI6PMHg8hPdmA==
   dependencies:
-    "@vue/cli-shared-utils" "^5.0.0-rc.1"
+    "@vue/cli-shared-utils" "^5.0.1"
 
 "@vue/cli-plugin-vuex@^5.0.0-rc.1", "@vue/cli-plugin-vuex@~5.0.0-rc.1":
   version "5.0.0-rc.1"
@@ -1454,17 +1454,17 @@
     webpack-virtual-modules "^0.4.2"
     whatwg-fetch "^3.6.2"
 
-"@vue/cli-shared-utils@^5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.0-rc.1.tgz#0587c663775e666227d896ebbb365ea9909047d8"
-  integrity sha512-rZVTGfSQ0Sqw76BD/Z6iARfnO2r5ICSxt0iIpzjM8w9ohpRtI2B45NrngF0rILwy9d8we4A/n7gQQ0rqwkAX7g==
+"@vue/cli-shared-utils@^5.0.0-rc.1", "@vue/cli-shared-utils@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@vue/cli-shared-utils/-/cli-shared-utils-5.0.1.tgz#9e33cacefad427bbf8939f953204373ad107fbee"
+  integrity sha512-oL164c3yDhdLHgiFvSkXuP7z0eEY8gqTYzHHbvQJCIBtRZ/0H9Q7xICpAeMZ63lJvS2+fA5bQfv+kPII/kcjmQ==
   dependencies:
     chalk "^4.1.2"
     execa "^1.0.0"
     joi "^17.4.0"
     launch-editor "^2.2.1"
     lru-cache "^6.0.0"
-    node-fetch "^2.6.1"
+    node-fetch "^2.6.7"
     node-ipc "^9.1.1"
     open "^8.0.2"
     ora "^5.3.0"
@@ -4312,10 +4312,10 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-node-fetch@^2.6.1:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.6.tgz#1751a7c01834e8e1697758732e9efb6eeadfaf89"
-  integrity sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==
+node-fetch@^2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
 
