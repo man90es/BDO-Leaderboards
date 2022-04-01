@@ -1386,10 +1386,10 @@
   dependencies:
     "@vue/cli-shared-utils" "^5.0.0-rc.1"
 
-"@vue/cli-plugin-vuex@^5.0.0-rc.1", "@vue/cli-plugin-vuex@~5.0.0-rc.1":
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-5.0.0-rc.1.tgz#2f4f04ae831ebca688acea5531658d1236baed23"
-  integrity sha512-ShfPIvuD+AFUtUcTw5okLUnBy8o4NrC0ICPpD7z+KG4gbfWzZMmT2TAkjqO9pp21cI+bYzigsBZ/FoXiU5+h7Q==
+"@vue/cli-plugin-vuex@^5.0.0-rc.1", "@vue/cli-plugin-vuex@~5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-5.0.4.tgz#80853992ac4f423e8e3e8d05a120c46a94a81b5e"
+  integrity sha512-dBwiD6mT9+V2HTHcwaWE8qFNgTk5I/NUvxYVeUN3Mmmpo4y/1RxXnr7BlKGnaQsTypb2RFk3KowqIJtg7s+E3Q==
 
 "@vue/cli-service@~5.0.0-rc.1":
   version "5.0.0-rc.1"
