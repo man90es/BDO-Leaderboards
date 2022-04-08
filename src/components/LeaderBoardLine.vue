@@ -210,12 +210,16 @@
 			background-position: var(--class-icon-spritesheet-x-offset) -40.48rem !important;
 		}
 
+		&.drakania::before {
+			background-position: var(--class-icon-spritesheet-x-offset) -42.31rem !important;
+		}
+
 		/*
-			The formula for y offset is 5.5 / 3 * 23 + 0.15
+			The formula for y offset is 5.5 / 3 * 24 + 0.15
 			Where
 				5.5 is x from background-size property
 				3 is the number of horisontal images in the spritesheet
-				23 is the index of a character
+				24 is the index of a character
 				0.15 is just a static offset
 			I should really try to automate this, but passing data from vue to css is a pain
 			Especially to ::before
