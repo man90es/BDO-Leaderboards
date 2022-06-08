@@ -27,10 +27,11 @@
 </template>
 
 <script setup>
+	import { capitalise } from "../utils/index.js"
 	import { computed } from "vue"
-	import { useStore } from "vuex"
+	import { useHead } from "@vueuse/head"
 	import { useRoute } from "vue-router"
-
+	import { useStore } from "vuex"
 	import AddToCustomCard from "@/components/AddToCustomCard.vue"
 	import CategoryLinks from "@/components/CategoryLinks.vue"
 	import ContentCard from "@/components/ContentCard.vue"
@@ -39,11 +40,24 @@
 	import LeaderBoardHeaderLine from "@/components/LeaderBoardHeaderLine.vue"
 	import LeaderBoardLine from "@/components/LeaderBoardLine.vue"
 	import LoadingCard from "@/components/LoadingCard.vue"
-
 	import useGenerateLeaderboardItems from "../hooks/generateLeaderboardItems.js"
 
 	const store = useStore()
 	const route = useRoute()
+	useHead({
+		title: computed(() => {
+			const guildName = capitalise(route.name === "customLeaderboard" ? "Custom" : route.params.guildName)
+			const discipline = ({
+				age: "account age",
+				characters: "number of characters",
+				combat: "combat fame",
+				contribution: "CP",
+				life: "life fame",
+			})[route.params.discipline] || route.params.discipline
+
+			return `${guildName} ${discipline} ranking | ${process.env.VUE_APP_SITE_NAME}`
+		})
+	})
 
 	// Request guild data if it wasn't requested before
 	store.commit("setShouldStopRequests", false)

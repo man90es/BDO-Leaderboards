@@ -6,6 +6,7 @@
 		"serve": "vue-cli-service serve"
 	},
 	"dependencies": {
+		"@vueuse/head": "^0.7.6",
 		"core-js": "^3.20.1",
 		"memento-vuex": "^0.1.0",
 		"vue": "^3.2.26",

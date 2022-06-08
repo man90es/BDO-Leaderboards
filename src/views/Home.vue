@@ -16,9 +16,9 @@
 
 <script setup>
 	import { ref } from "vue"
+	import { useHead } from "@vueuse/head"
 	import { useRouter } from "vue-router"
 	import { useStore } from "vuex"
-
 	import ContentCard from "@/components/ContentCard.vue"
 	import FooterCard from "@/components/FooterCard.vue"
 	import FormattedInput from "@/components/FormattedInput.vue"
@@ -26,7 +26,8 @@
 	import SeparatorLine from "@/components/SeparatorLine.vue"
 
 	const router = useRouter()
-	const store =  useStore()
+	const store = useStore()
+	useHead({ title: process.env.VUE_APP_SITE_NAME })
 
 	const guildName = ref("")
 	const shouldHightlightNameInput = ref(false)
