@@ -6,6 +6,7 @@
 		"serve": "vue-cli-service serve"
 	},
 	"dependencies": {
+		"@vueuse/head": "^0.7.6",
 		"core-js": "^3.20.1",
 		"memento-vuex": "^0.1.0",
 		"vue": "^3.2.26",
@@ -22,7 +23,7 @@
 		"@vue/cli-plugin-vuex": "~5.0.0-rc.1",
 		"@vue/cli-service": "~5.0.0-rc.1",
 		"@vue/compiler-sfc": "^3.2.26",
-		"eslint": "^7.32.0",
+		"eslint": "^8.17.0",
 		"eslint-plugin-vue": "^8.2.0",
 		"sass": "^1.45.2",
 		"sass-loader": "^12.4.0"
