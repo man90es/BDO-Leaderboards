@@ -11,9 +11,8 @@
 <script setup>
 	import { ref } from "vue"
 	import { useStore } from "vuex"
-
 	import ContentCard from "@/components/ContentCard.vue"
-	import FormattedInput from "./FormattedInput.vue"
+	import FormattedInput from "@/components/FormattedInput.vue"
 
 	const store = useStore()
 	const maxProfiles = 100
@@ -27,7 +26,13 @@
 			return
 		}
 
-		fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?region=${region}&query=${familyName.value}&searchType=familyName`)
+		const params = new URLSearchParams({
+			query: familyName.value,
+			region,
+			searchType: "familyName",
+		})
+
+		fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?${params}`)
 			.then((response) => {
 				if (response.ok) {
 					return response.json()

@@ -100,7 +100,9 @@ export default createStore({
 			if (state.guilds[guildId]) {
 				reqMembers(state.guilds[guildId])
 			} else {
-				fetch(`${process.env.VUE_APP_API_BASE}/v1/guild?guildName=${guildName}&region=${region}`)
+				const params = new URLSearchParams({ guildName, region })
+
+				fetch(`${process.env.VUE_APP_API_BASE}/v1/guild?${params}`)
 					.then(parseResponse)
 					.then((guildProfile) => {
 						commit("pushGuild", guildProfile)
@@ -124,12 +126,14 @@ export default createStore({
 			}
 
 			commit("updateLoading", { stage: 1, msg: "Requesting members' data", progress: total - members.length + 1, total: total + 1 })
-			const member = members.shift()
+			const profileTarget = members.shift().profileTarget
 
-			if (state.players[member.profileTarget]) {
+			if (state.players[profileTarget]) {
 				dispatch("requestMembers", { members, total })
 			} else {
-				fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer?profileTarget=${member.profileTarget}`)
+				const params = new URLSearchParams({ profileTarget })
+
+				fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer?${params}`)
 					.then(parseResponse)
 					.then(playerProfile => commit("pushPlayer", playerProfile))
 					.catch(err => commit("updateLoading", { stage: 3, msg: err }))
