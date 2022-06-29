@@ -3,9 +3,8 @@
 </template>
 
 <script setup>
-	import { ref, defineProps, defineEmits, watch } from "vue"
-
 	import { capitalise } from "../utils"
+	import { ref, watch } from "vue"
 
 	const props = defineProps(["modelValue"])
 	const emit = defineEmits(["update:modelValue"])
