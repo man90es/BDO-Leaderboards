@@ -13,19 +13,19 @@ While not a recommended approach for consumer experience, use these instructions
 
 -   GNU/Linux
 -   Node >=v14.0
--   Yarn
+-   pnpm (or Yarn, npm etc.)
 
 ### Installation
 
 1. Install and run [BDO-REST-API](https://github.com/octoman90/BDO-REST-API) (It will print out the port to which it listens to, note it down).
 2. Clone this repository.
-3. From within the main directory of this repository, run `yarn install` and `yarn create-config`.
+3. From within the main directory of this repository, run `pnpm install` and `pnpm create-config`.
 4. (Optional) If your instance of [BDO-REST-API](https://github.com/octoman90/BDO-REST-API) listens to another port than 8001 or is hosted on a remote machine, edit the `.env` file in the main directory of this repository specifying the correct API address.
-5. (Optional) Make a production build using `yarn build`.
+5. (Optional) Make a production build using `pnpm build`.
 
 ### Running
 
-Run `yarn serve` from within the main directory of this repository.
+Run `pnpm serve` from within the main directory of this repository.
 
 ## Contributing
 
