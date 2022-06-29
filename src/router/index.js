@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router"
-const HomeView = () => import("../views/Home.vue")
-const LeaderboardView = () => import("../views/Leaderboard.vue")
+const HomePage = () => import("../views/HomePage.vue")
+const LeaderboardPage = () => import("../views/LeaderboardPage.vue")
 
 export default createRouter({
 	history: process.env.VUE_APP_USE_HASH_HISTORY === "true"
@@ -8,19 +8,19 @@ export default createRouter({
 		: createWebHistory(process.env.BASE_URL),
 	routes: [
 		{
-			path: "/",
+			component: HomePage,
 			name: "home",
-			component: HomeView
+			path: "/",
 		},
 		{
-			path: "/custom/:discipline?",
+			component: LeaderboardPage,
 			name: "customLeaderboard",
-			component: LeaderboardView
+			path: "/custom/:discipline?",
 		},
 		{
-			path: "/:region/:guildName/:discipline?",
+			component: LeaderboardPage,
 			name: "leaderboard",
-			component: LeaderboardView
+			path: "/:region/:guildName/:discipline?",
 		},
 	]
 })
