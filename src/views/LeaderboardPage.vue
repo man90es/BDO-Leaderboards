@@ -5,7 +5,7 @@
 		<content-card>
 			<h2 id="guild-link">
 				<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
-					Guild: {{ $route.params.guildName }}
+					Guild: {{ data.guildName || $route.params.guildName }}
 				</a>
 				<span v-else>Custom Leaderboard</span>
 			</h2>
@@ -16,18 +16,18 @@
 
 		<footer-card id="footer" />
 
-		<content-card v-if="contentReady" id="leaderboard">
+		<content-card v-if="1 === data.progress" id="leaderboard">
 			<leader-board-header-line />
-			<leader-board-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" />
+			<leader-board-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" :refreshLeaderboard="refreshData" />
 		</content-card>
-		<loading-card v-else id="leaderboard"/>
+		<loading-card v-else id="leaderboard" :progress="data.progress" />
 
-		<add-to-custom-card v-if="$route.name === 'customLeaderboard'" id="add-to-custom" />
+		<add-to-custom-card v-if="$route.name === 'customLeaderboard'" id="add-to-custom" :refreshLeaderboard="refreshData" />
 	</div>
 </template>
 
 <script setup>
-	import { capitalise } from "../utils/index.js"
+	import { capitalise } from "../utils"
 	import { computed } from "vue"
 	import { useHead } from "@vueuse/head"
 	import { useRoute } from "vue-router"
@@ -36,11 +36,12 @@
 	import CategoryLinks from "@/components/CategoryLinks.vue"
 	import ContentCard from "@/components/ContentCard.vue"
 	import FooterCard from "@/components/FooterCard.vue"
+	import generateLeaderboardItems from "@/core/generateLeaderboardItems"
 	import HeaderCard from "@/components/HeaderCard.vue"
 	import LeaderBoardHeaderLine from "@/components/LeaderBoardHeaderLine.vue"
 	import LeaderBoardLine from "@/components/LeaderBoardLine.vue"
 	import LoadingCard from "@/components/LoadingCard.vue"
-	import useGenerateLeaderboardItems from "../hooks/generateLeaderboardItems.js"
+	import useGuild from "@/hooks/API"
 
 	const store = useStore()
 	const route = useRoute()
@@ -59,27 +60,47 @@
 		})
 	})
 
-	// Request guild data if it wasn't requested before
-	store.commit("setShouldStopRequests", false)
-	if (route.name === "customLeaderboard") {
-		const members = store.getters.customMembers
-		if (members.length === 0 || members.includes()) {
-			store.dispatch("requestCustomList")
-		}
-	} else {
-		if (!(route.params.guildName in store.state.guilds)) {
-			store.dispatch("requestGuild", {
+	const { result: data, refresh: refreshData } = useGuild(computed(() => (
+		route.name === "customLeaderboard"
+			? {
+				players: store.state.customList.map(profileTarget => ({ region: "EU", profileTarget }))
+			}
+			: {
 				guildName: route.params.guildName,
-				region:    route.params.region,
-			})
-		}
-	}
+				region: route.params.region,
+			}
+	)))
 
 	const guildLink = computed(() => {
 		return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${route.params.guildName}&region=${route.params.region}`
 	})
-	const contentReady = computed(() => store.state.loading.stage === 2)
-	const { leaderboardItems } = useGenerateLeaderboardItems()
+
+	const leaderboardItems = computed(() => {
+		if (data.progress < 1) {
+			return []
+		}
+
+		const players = route.name === "customLeaderboard"
+			? data.players
+			: data.players
+				.filter((player) => {
+					// The official website does not always update when someone leaves the guild; this should filter some ex-members out
+					// I have no idea how to filter out ex-members with private guild setting though
+
+					if (player.guild !== undefined && player.guild.name.toLowerCase() == data.guild.name.toLowerCase()) {
+						// They are probably in the guild: double checked
+						return true
+					} else if (player.privacy & 0b10) {
+						// The guild in the profile is set to private: can't double check
+						return true
+					} else {
+						// Either no guild or other guild
+						return false
+					}
+				})
+
+		return generateLeaderboardItems(route.params.discipline, players)
+	})
 </script>
 
 <style lang="scss" scoped>

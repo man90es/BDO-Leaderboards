@@ -20,6 +20,13 @@
 	const familyName = ref("")
 	const status = ref("")
 
+	const props = defineProps({
+		refreshLeaderboard: {
+			type: Function,
+			required: true,
+		}
+	})
+
 	function okHandler(region) {
 		if (store.state.customList.length >= maxProfiles) {
 			status.value = `Failed to add ${familyName.value}: You can't add more than ${maxProfiles} custom profiles`
@@ -40,18 +47,11 @@
 					throw response.statusText
 				}
 			})
-			.then(profiles => {
-				store.dispatch("requestMembers", {
-					members: [{ profileTarget: profiles[0].profileTarget }],
-					total:   1,
-				})
-
-				return profiles[0]
-			})
-			.then(profile => {
+			.then(([profile]) => {
 				store.commit("addToCustomList", profile.profileTarget)
 				status.value = `Added ${profile.familyName}`
 			})
+			.then(props.refreshLeaderboard)
 			.catch((err) => {
 				console.log(err)
 				status.value = `Failed to add ${familyName.value}: ${err}`

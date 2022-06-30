@@ -27,6 +27,7 @@
 			'place',
 			'colour',
 			'groupWPrev',
+			"refreshLeaderboard",
 		],
 		computed: {
 			cssVars() {
@@ -67,7 +68,8 @@
 
 		methods: {
 			removeFromCustom() {
-				this.$store.commit('removeFromCustomList', this.profile.profileTarget)
+				this.$store.commit('removeFromCustomList', this.profile.profileTarget) ||
+					this.refreshLeaderboard()
 			}
 		}
 	}
