@@ -34,8 +34,6 @@
 
 	const defaultDiscipline = "level"
 
-	store.commit("setShouldStopRequests", true)
-
 	if (store.state.lastGuild.name !== null) {
 		guildName.value = store.state.lastGuild.name
 	}
