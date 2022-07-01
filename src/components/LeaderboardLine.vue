@@ -2,77 +2,97 @@
 	<div :style="cssVars" class="position"><span v-if="!groupWPrev">#{{ place }}</span></div>
 	<div :style="cssVars" class="family-name">
 		<a :href="profileLink" target="_blank">{{ profile.familyName }}</a>
-		<button v-if="$route.name == 'customLeaderboard'" @click="removeFromCustom"><img :src="assets.remove" /></button>
+		<button v-if="$route.name == 'customLeaderboard'" @click="removeFromCustom">
+			<img :src="assets.remove" alt="x" />
+		</button>
 	</div>
-	<div :style="cssVars" class="character-name" :class="{ [(featuredCharacter?.class || '').toLowerCase().replace(' ', '-')]: true }" :title="featuredCharacter?.class">{{ featuredCharacter?.name }}</div>
+	<div :style="cssVars" class="character-name" :class="{ [classClass]: true }" :title="featuredCharacter?.class">
+		{{ featuredCharacter?.name }}
+	</div>
 	<div :style="cssVars" class="score">{{ displayScore || score }}</div>
 </template>
 
 <script setup>
+	import { computed } from "vue"
+	import { useStore } from "vuex"
+
 	const assets = {
 		remove: `${process.env.BASE_URL}assets/highlight_off_black_24dp.svg`,
 	}
-</script>
 
-<script>
-	const documentStyle = getComputedStyle(document.body)
-
-	export default {
-		inheritAttrs: false,
-		props: [
-			'profile',
-			'featuredCharacter',
-			'score',
-			'displayScore',
-			'place',
-			'colour',
-			'groupWPrev',
-			"refreshLeaderboard",
-		],
-		computed: {
-			cssVars() {
-				let vars = {
-					"background-color": this.place % 2 ? "transparent" : "#0001"
-				}
-
-				switch (this.colour) {
-					case 1:
-						return {
-							...vars,
-							"color":     documentStyle.getPropertyValue("--colour-red"),
-							"font-size": "1.3em",
-						}
-
-					case 2:
-						return {
-							...vars,
-							"color":     documentStyle.getPropertyValue("--colour-orange"),
-							"font-size": "1.2em",
-						}
-
-					case 3:
-						return {
-							...vars,
-							"color":     documentStyle.getPropertyValue("--colour-blue"),
-							"font-size": "1.1em",
-						}
-				}
-
-				return vars
-			},
-
-			profileLink() {
-				return `https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${this.profile.profileTarget}`
-			}
+	const store = useStore()
+	const props = defineProps({
+		profile: {
+			type: Object,
+			required: true,
 		},
-
-		methods: {
-			removeFromCustom() {
-				this.$store.commit('removeFromCustomList', this.profile.profileTarget) ||
-					this.refreshLeaderboard()
-			}
+		featuredCharacter: {
+			type: Object,
+		},
+		score: {
+			type: Number,
+			required: true,
+		},
+		displayScore: {
+			type: String,
+		},
+		place: {
+			type: Number,
+			required: true,
+		},
+		colour: {
+			type: Number,
+			required: true,
+		},
+		groupWPrev: {
+			type: Boolean,
+			default: false,
+		},
+		refreshLeaderboard: {
+			type: Function,
+			required: true,
 		}
+	})
+
+	const cssVars = computed(() => {
+		const documentStyle = window.getComputedStyle(document.body)
+		const vars = {
+			backgroundColor: props.place % 2 ? "transparent" : "#0001"
+		}
+
+		return ({
+			1: {
+				...vars,
+				color: documentStyle.getPropertyValue("--colour-red"),
+				fontSize: "1.3em",
+			},
+			2: {
+				...vars,
+				color: documentStyle.getPropertyValue("--colour-orange"),
+				fontSize: "1.2em",
+			},
+			3: {
+				...vars,
+				color: documentStyle.getPropertyValue("--colour-blue"),
+				fontSize: "1.1em",
+			}
+		})[props.colour] || vars
+	})
+
+	const profileLink = computed(() => (
+		`https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${props.profile.profileTarget}`
+	))
+
+	const classClass = computed(() => (
+		(props.featuredCharacter?.class || "").toLowerCase().replace(" ", "-")
+	))
+
+	function removeFromCustom() {
+		store.commit("removeFromCustomList", props.profile.profileTarget)
+		props.refreshLeaderboard()
 	}
+
+	// inheritAttrs: false,
 </script>
 
 <style lang="scss" scoped>

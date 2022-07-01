@@ -18,7 +18,7 @@
 
 		<content-card v-if="1 === data.progress" id="leaderboard">
 			<leader-board-header-line />
-			<leader-board-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" :refreshLeaderboard="refreshData" />
+			<leaderboard-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" :refreshLeaderboard="refreshData" />
 		</content-card>
 		<loading-card v-else id="leaderboard" :progress="data.progress" />
 
@@ -39,7 +39,7 @@
 	import generateLeaderboardItems from "@/core/generateLeaderboardItems"
 	import HeaderCard from "@/components/HeaderCard.vue"
 	import LeaderBoardHeaderLine from "@/components/LeaderBoardHeaderLine.vue"
-	import LeaderBoardLine from "@/components/LeaderBoardLine.vue"
+	import LeaderboardLine from "@/components/LeaderboardLine.vue"
 	import LoadingCard from "@/components/LoadingCard.vue"
 	import useGuild from "@/hooks/API"
 
