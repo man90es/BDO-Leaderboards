@@ -1,5 +1,5 @@
 <template>
-	<div id="leaderboard-page" :class="{ 'mobile-layout': $store.state.mobile }">
+	<div id="leaderboard-page" :class="{ 'mobile-layout': mobile }">
 		<header-card />
 
 		<content-card>
@@ -42,9 +42,11 @@
 	import LeaderboardLine from "@/components/LeaderboardLine.vue"
 	import LoadingCard from "@/components/LoadingCard.vue"
 	import useGuild from "@/hooks/API"
+	import useMobile from "@/hooks/mobile"
 
-	const store = useStore()
+	const mobile = useMobile()
 	const route = useRoute()
+	const store = useStore()
 	useHead({
 		title: computed(() => {
 			const guildName = capitalise(route.name === "customLeaderboard" ? "Custom" : route.params.guildName)

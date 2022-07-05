@@ -4,7 +4,6 @@ import Memento from "memento-vuex"
 export default createStore({
 	state: {
 		customList: [],
-		mobile: innerWidth < innerHeight,
 		lastGuild: {
 			name:   null,
 			region: null,
@@ -23,10 +22,6 @@ export default createStore({
 		)
 	],
 	mutations: {
-		setMobile(state, value) {
-			state.mobile = value
-		},
-
 		setLastGuild(state, value) {
 			state.lastGuild = value
 		},

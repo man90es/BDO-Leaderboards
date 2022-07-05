@@ -1,5 +1,5 @@
 <template>
-	<div id="home-page" :class="{ 'mobile-layout': $store.state.mobile }">
+	<div id="home-page" :class="{ 'mobile-layout': mobile }">
 		<header-card />
 
 		<content-card>
@@ -24,7 +24,9 @@
 	import FormattedInput from "@/components/FormattedInput.vue"
 	import HeaderCard from "@/components/HeaderCard.vue"
 	import SeparatorLine from "@/components/SeparatorLine.vue"
+	import useMobile from "@/hooks/mobile"
 
+	const mobile = useMobile()
 	const router = useRouter()
 	const store = useStore()
 	useHead({ title: process.env.VUE_APP_SITE_NAME })
