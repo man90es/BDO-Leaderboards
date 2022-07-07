@@ -17,8 +17,8 @@
 <script setup>
 	import { ref } from "vue"
 	import { useHead } from "@vueuse/head"
+	import { useMainStore } from "@/stores/main"
 	import { useRouter } from "vue-router"
-	import { useStore } from "vuex"
 	import ContentCard from "@/components/ContentCard.vue"
 	import FooterCard from "@/components/FooterCard.vue"
 	import FormattedInput from "@/components/FormattedInput.vue"
@@ -28,7 +28,7 @@
 
 	const mobile = useMobile()
 	const router = useRouter()
-	const store = useStore()
+	const store = useMainStore()
 	useHead({ title: process.env.VUE_APP_SITE_NAME })
 
 	const guildName = ref("")
@@ -36,8 +36,8 @@
 
 	const defaultDiscipline = "level"
 
-	if (store.state.lastGuild.name !== null) {
-		guildName.value = store.state.lastGuild.name
+	if (store.lastGuild.name !== null) {
+		guildName.value = store.lastGuild.name
 	}
 
 	function navigateToCustomLeaderboard() {
@@ -57,15 +57,18 @@
 		// If the region is not provided, fall back to the last one if possible
 		// Or exit if not
 		if (region === undefined) {
-			if (store.state.lastGuild.region !== null) {
-				region = store.state.lastGuild.region
-			} else {
+			if (!store.lastGuild.region) {
 				return
 			}
+
+			region = store.lastGuild.region
 		}
 
 		// Memorise the last guild
-		store.commit("setLastGuild", { name: guildName.value, region })
+		store.lastGuild = {
+			name: guildName.value,
+			region
+		}
 
 		// Navigate to the leaderboard
 		router.push({

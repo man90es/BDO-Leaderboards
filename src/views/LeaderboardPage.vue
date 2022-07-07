@@ -30,8 +30,8 @@
 	import { capitalise } from "../utils"
 	import { computed } from "vue"
 	import { useHead } from "@vueuse/head"
+	import { useMainStore } from "@/stores/main"
 	import { useRoute } from "vue-router"
-	import { useStore } from "vuex"
 	import AddToCustomCard from "@/components/AddToCustomCard.vue"
 	import CategoryLinks from "@/components/CategoryLinks.vue"
 	import ContentCard from "@/components/ContentCard.vue"
@@ -46,7 +46,7 @@
 
 	const mobile = useMobile()
 	const route = useRoute()
-	const store = useStore()
+	const store = useMainStore()
 	useHead({
 		title: computed(() => {
 			const guildName = capitalise(route.name === "customLeaderboard" ? "Custom" : route.params.guildName)
@@ -65,7 +65,7 @@
 	const { result: data, refresh: refreshData } = useGuild(computed(() => (
 		route.name === "customLeaderboard"
 			? {
-				players: store.state.customList.map(profileTarget => ({ region: "EU", profileTarget }))
+				players: store.customList
 			}
 			: {
 				guildName: route.params.guildName,

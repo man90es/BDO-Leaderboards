@@ -1,13 +1,17 @@
-import { watch } from "vue"
-import { useStore } from "vuex"
+import { useMainStore } from "@/stores/main"
 
 export default function() {
-	const store = useStore()
+	const store = useMainStore()
 
 	function setTheme(name) {
 		document.body.className = `${name}-theme`
 	}
 
-	watch(() => store.state.siteTheme, setTheme)
-	setTheme(store.state.siteTheme)
+	store.$subscribe((mutation) => {
+		if ("siteTheme" === mutation.events.key) {
+			setTheme(mutation.events.newValue)
+		}
+	})
+
+	setTheme(store.siteTheme)
 }

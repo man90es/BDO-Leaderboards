@@ -2,22 +2,17 @@
 	<content-card>
 		<h1>BDO Leaderboards</h1>
 		<span>We have Black Desert Online leaderboards for your guild!</span>
-		<div id="embellishment" @click="toggleTheme">
+		<div id="embellishment" @click="store.toggleSiteTheme">
 			<img src="../../public/assets/spiral.svg">
 		</div>
 	</content-card>
 </template>
 
 <script setup>
-	import { useStore } from "vuex";
-
+	import { useMainStore } from "@/stores/main"
 	import ContentCard from "@/components/ContentCard.vue"
 
-	const store = useStore();
-
-	function toggleTheme() {
-		store.commit("toggleSiteTheme")
-	}
+	const store = useMainStore()
 </script>
 
 <style lang="scss" scoped>

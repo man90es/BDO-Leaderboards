@@ -10,15 +10,14 @@
 
 <script setup>
 	import { ref } from "vue"
-	import { useStore } from "vuex"
+	import { useMainStore } from "@/stores/main"
 	import ContentCard from "@/components/ContentCard.vue"
 	import FormattedInput from "@/components/FormattedInput.vue"
 
-	const store = useStore()
-	const maxProfiles = 100
-
 	const familyName = ref("")
+	const maxProfiles = 100
 	const status = ref("")
+	const store = useMainStore()
 
 	const props = defineProps({
 		refreshLeaderboard: {
@@ -28,7 +27,7 @@
 	})
 
 	function okHandler(region) {
-		if (store.state.customList.length >= maxProfiles) {
+		if (store.customList.length >= maxProfiles) {
 			status.value = `Failed to add ${familyName.value}: You can't add more than ${maxProfiles} custom profiles`
 			return
 		}
@@ -41,15 +40,15 @@
 
 		fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer/search?${params}`)
 			.then((response) => {
-				if (response.ok) {
-					return response.json()
-				} else {
+				if (!response.ok) {
 					throw response.statusText
 				}
+
+				return response.json()
 			})
-			.then(([profile]) => {
-				store.commit("addToCustomList", profile.profileTarget)
-				status.value = `Added ${profile.familyName}`
+			.then(([{ profileTarget, familyName }]) => {
+				store.addToCustomList(profileTarget, region)
+				status.value = `Added ${familyName}`
 			})
 			.then(props.refreshLeaderboard)
 			.catch((err) => {

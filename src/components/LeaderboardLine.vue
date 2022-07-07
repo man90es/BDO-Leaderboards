@@ -14,13 +14,13 @@
 
 <script setup>
 	import { computed } from "vue"
-	import { useStore } from "vuex"
+	import { useMainStore } from "@/stores/main"
 
 	const assets = {
 		remove: `${process.env.BASE_URL}assets/highlight_off_black_24dp.svg`,
 	}
 
-	const store = useStore()
+	const store = useMainStore()
 	const props = defineProps({
 		profile: {
 			type: Object,
@@ -88,11 +88,9 @@
 	))
 
 	function removeFromCustom() {
-		store.commit("removeFromCustomList", props.profile.profileTarget)
+		store.removeFromCustomList(props.profile.profileTarget, props.profile.region)
 		props.refreshLeaderboard()
 	}
-
-	// inheritAttrs: false,
 </script>
 
 <style lang="scss" scoped>
