@@ -4,8 +4,8 @@
 
 		<content-card>
 			<h2 id="guild-link">
-				<a v-if="$route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
-					Guild: {{ data.guildName || $route.params.guildName }}
+				<a v-if="route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
+					Guild: {{ data.guildName || route.params.guildName }}
 				</a>
 				<span v-else>Custom Leaderboard</span>
 			</h2>
@@ -18,17 +18,27 @@
 
 		<content-card v-if="1 === data.progress" id="leaderboard">
 			<leader-board-header-line />
-			<leaderboard-line v-for="p in leaderboardItems" :key="p.profile.familyName" v-bind="p" :refreshLeaderboard="refreshData" />
+			<leaderboard-line
+				:key="p.profile.familyName"
+				:refreshLeaderboard="refreshData"
+				v-bind="p"
+				v-for="p in leaderboardItems"
+			/>
 		</content-card>
 		<loading-card v-else id="leaderboard" :progress="data.progress" />
 
-		<add-to-custom-card v-if="$route.name === 'customLeaderboard'" id="add-to-custom" :refreshLeaderboard="refreshData" />
+		<add-to-custom-card
+			:refreshLeaderboard="refreshData"
+			id="add-to-custom"
+			v-if="route.name === 'customLeaderboard'"
+		/>
 	</div>
 </template>
 
 <script setup>
 	import { capitalise } from "../utils"
 	import { computed } from "vue"
+	import { supportedServers } from "@/utils"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRoute } from "vue-router"
@@ -74,7 +84,10 @@
 	)))
 
 	const guildLink = computed(() => {
-		return `https://www.naeu.playblackdesert.com/en-US/Adventure/Guild/GuildProfile?guildName=${route.params.guildName}&region=${route.params.region}`
+		const server = [...supportedServers.values()]
+			.find(s => route.params.region === s.domain)
+
+		return server.getGuildLink(route.params.guildName)
 	})
 
 	const leaderboardItems = computed(() => {

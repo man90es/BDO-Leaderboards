@@ -80,18 +80,6 @@ h2 {
 	font-size: 1.4em;
 }
 
-.eu-colour {
-	background-color: var(--colour-blue);
-}
-
-.na-colour {
-	background-color: var(--colour-red);
-}
-
-.custom-colour {
-	background-color: var(--colour-green);
-}
-
 a {
 	color: inherit;
 	text-decoration: none;

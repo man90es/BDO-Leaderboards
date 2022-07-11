@@ -3,11 +3,28 @@
 		<header-card />
 
 		<content-card>
-			<formatted-input :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard()" />
-			<button class="eu-colour" @click="() => navigateToLeaderboard('EU')">Look it up in Europe</button>
-			<button class="na-colour" @click="() => navigateToLeaderboard('NA')">Look it up in North America</button>
+			<formatted-input
+				:class="{ highlighted: shouldHightlightNameInput }"
+				placeholder="Enter the guild's name here"
+				v-model="guildName"
+				v-on:keyup.enter="navigateToLeaderboard"
+			/>
+			<button
+				:key="server.domain"
+				:style="{ backgroundColor: server.colour }"
+				@click="() => navigateToLeaderboard(server.domain)"
+				v-for="server of supportedServers"
+			>
+				Look it up in {{server.name}}
+			</button>
 			<separator-line>OR</separator-line>
-			<button class="custom-colour wide-button" @click="() => navigateToCustomLeaderboard()">Create a leaderboard from scratch</button>
+			<button
+				:style="{ backgroundColor: 'var(--colour-green)' }"
+				@click="navigateToCustomLeaderboard"
+				class="wide-button"
+			>
+				Create a leaderboard from scratch
+			</button>
 		</content-card>
 
 		<footer-card />
@@ -16,6 +33,7 @@
 
 <script setup>
 	import { ref } from "vue"
+	import { supportedServers } from "@/utils"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRouter } from "vue-router"

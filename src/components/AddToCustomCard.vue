@@ -2,14 +2,21 @@
 	<content-card>
 		<label>Add a player to the leaderboard:</label>
 		<formatted-input placeholder="Enter his or her family name here" v-model="familyName" />
-		<button class="eu-colour" @click="() => okHandler('EU')">From Europe</button>
-		<button class="na-colour" @click="() => okHandler('NA')">From North America</button>
+		<button
+			:key="server.domain"
+			:style="{ backgroundColor: server.colour }"
+			@click="() => okHandler(server.domain)"
+			v-for="server of supportedServers"
+		>
+			From {{server.name}}
+		</button>
 		<span v-if="status" id="status">{{ status }}</span>
 	</content-card>
 </template>
 
 <script setup>
 	import { ref } from "vue"
+	import { supportedServers } from "@/utils"
 	import { useMainStore } from "@/stores/main"
 	import ContentCard from "@/components/ContentCard.vue"
 	import FormattedInput from "@/components/FormattedInput.vue"
