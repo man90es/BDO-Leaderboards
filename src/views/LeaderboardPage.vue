@@ -17,7 +17,10 @@
 		<footer-card id="footer" />
 
 		<content-card v-if="1 === data.progress" id="leaderboard">
-			<leader-board-header-line />
+			<leader-board-header-line v-if="data.players.length > 0" />
+			<span id="fetch-error" v-else>
+				{{data.errors[0]}}
+			</span>
 			<leaderboard-line
 				:key="p.profile.familyName"
 				:refreshLeaderboard="refreshData"
@@ -179,5 +182,10 @@
 		text-align: center;
 		grid-column: 1/3;
 		margin-bottom: 1em;
+	}
+
+	#fetch-error {
+		grid-column: 1/5;
+		text-align: center;
 	}
 </style>

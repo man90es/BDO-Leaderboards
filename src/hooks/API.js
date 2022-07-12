@@ -5,10 +5,14 @@ function parseResponse(response) {
 		return response.json()
 	}
 
+	const args = new URL(response.url).searchParams
+	const guildName = args.get("guildName")
+	const region = args.get("region")
+
 	throw ({
-		400: "A guild with this name doesn't exist",
-		404: "Couldn't find a guild with this name",
-		503: "BDO servers are currently under maintenance",
+		400: `Bad guild format «${guildName}».`,
+		404: `Couldn't find guild «${guildName}» on ${region} server.`,
+		503: "BDO servers are currently under maintenance. Please try again later.",
 	})[response.status] || response.statusText
 }
 
