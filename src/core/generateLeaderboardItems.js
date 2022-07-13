@@ -56,10 +56,11 @@ export default function(discipline, players) {
 				}
 
 				case "level": {
-					let memberRep = member.characters
-						.sort((characterA, characterB) => { // Choose member"s character with the highest level
-							return characterA.level > characterB.level ? -1 : 1
-						})[0]
+					const memberRep = [...member.characters]
+						.sort((characterA, characterB) => (
+							// Choose member's character with the highest level
+							characterA.level > characterB.level ? -1 : 1
+						))[0]
 
 					return new Participant(member, memberRep, memberRep.level)
 				}
@@ -92,10 +93,11 @@ export default function(discipline, players) {
 				}
 
 				default: {
-					let memberRep = member.characters
-						.sort((a, b) => { // Choose member"s rep with the highest spec level
-							return getNumericSpec(a.specLevels[discipline]) > getNumericSpec(b.specLevels[discipline]) ? -1 : 1
-						})[0]
+					const memberRep = [...member.characters]
+						.sort((a, b) => (
+							// Choose member"s rep with the highest spec level
+							getNumericSpec(a.specLevels[discipline]) > getNumericSpec(b.specLevels[discipline]) ? -1 : 1
+						))[0]
 
 					return new Participant(member, memberRep, getNumericSpec(memberRep.specLevels[discipline]), memberRep.specLevels[discipline])
 				}

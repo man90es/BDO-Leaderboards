@@ -1,4 +1,4 @@
-import { reactive } from "vue"
+import { reactive, readonly } from "vue"
 
 function parseResponse(response) {
 	if (response.ok) {
@@ -59,5 +59,5 @@ export default function (params) {
 
 	refresh()
 
-	return { result, refresh }
+	return { result: readonly(result), refresh }
 }
