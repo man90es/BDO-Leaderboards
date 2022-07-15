@@ -1,13 +1,13 @@
 import { readonly, ref } from "vue"
 
-export default function() {
-	const state = ref(false)
+function isMobile() {
+	return window.innerWidth <= window.innerHeight
+}
 
-	window.onresize = () => {
-		if (state.value !== innerWidth <= innerHeight) {
-			state.value = !state.value
-		}
-	}
+export default function() {
+	const state = ref(isMobile())
+
+	window.onresize = () => state.value = isMobile()
 
 	return readonly(state)
 }
