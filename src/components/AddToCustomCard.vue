@@ -65,13 +65,9 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	span, label, input {
 		grid-column: 1/3;
 		text-align: center;
-	}
-
-	.content-card {
-		margin-bottom: 0.5em;
 	}
 </style>

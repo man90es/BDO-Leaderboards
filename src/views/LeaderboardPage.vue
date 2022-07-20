@@ -16,25 +16,27 @@
 
 		<footer-card id="footer" />
 
-		<content-card v-if="1 === data.progress" id="leaderboard">
-			<leader-board-header-line v-if="data.players.length > 0" />
-			<span id="fetch-error" v-else>
-				{{data.errors[0]}}
-			</span>
-			<leaderboard-line
-				:key="p.profile.familyName"
-				:refreshLeaderboard="refreshData"
-				v-bind="p"
-				v-for="p in leaderboardItems"
-			/>
-		</content-card>
-		<loading-card v-else id="leaderboard" :progress="data.progress" />
+		<div id="leaderboard-wrapper">
+			<content-card v-if="1 === data.progress" id="leaderboard">
+				<leader-board-header-line v-if="data.players.length > 0" />
+				<span id="fetch-error" v-else>
+					{{data.errors[0]}}
+				</span>
+				<leaderboard-line
+					:key="p.profile.familyName"
+					:refreshLeaderboard="refreshData"
+					v-bind="p"
+					v-for="p in leaderboardItems"
+				/>
+			</content-card>
+			<loading-card v-else id="leaderboard" :progress="data.progress" />
 
-		<add-to-custom-card
-			:refreshLeaderboard="refreshData"
-			id="add-to-custom"
-			v-if="route.name === 'customLeaderboard'"
-		/>
+			<add-to-custom-card
+				:refreshLeaderboard="refreshData"
+				id="add-to-custom"
+				v-if="route.name === 'customLeaderboard'"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -127,20 +129,22 @@
 		display: grid;
 		gap: 0.5em;
 
+		#leaderboard-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: inherit;
+		}
+
 		&:not(.mobile-layout) {
 			grid-template-columns: 1fr 2fr 1fr;
 
-			.content-card:not(#leaderboard):not(#add-to-custom) {
+			& > .content-card {
 				grid-column: 1;
 			}
 
-			#add-to-custom {
+			#leaderboard-wrapper {
 				grid-column: 2;
-			}
-
-			#leaderboard {
 				grid-row: 1/5;
-				grid-column: 2;
 			}
 		}
 
