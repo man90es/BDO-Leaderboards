@@ -9,7 +9,7 @@
 		"@vueuse/head": "^0.7.6",
 		"core-js": "^3.23.3",
 		"pinia": "^2.0.14",
-		"pinia-plugin-persistedstate": "^1.6.1",
+		"pinia-plugin-persistedstate": "^2.0.1",
 		"vue": "^3.2.37",
 		"vue-router": "^4.0.16",
 		"vue3-radial-progress": "1.1.1"
