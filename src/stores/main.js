@@ -30,7 +30,9 @@ export const useMainStore = defineStore("main", {
 		},
 
 		toggleSiteTheme() {
-			this.siteTheme = this.siteTheme === "light" ? "dark" : "light"
+			this.$patch({
+				siteTheme: this.siteTheme === "light" ? "dark" : "light"
+			})
 		},
 	},
 	persist: {

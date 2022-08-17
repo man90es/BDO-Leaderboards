@@ -8,8 +8,8 @@ export default function() {
 	}
 
 	store.$subscribe((mutation) => {
-		if ("siteTheme" === mutation.events.key) {
-			setTheme(mutation.events.newValue)
+		if (undefined !== mutation.payload?.siteTheme) {
+			setTheme(mutation.payload.siteTheme)
 		}
 	})
 
