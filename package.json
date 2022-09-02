@@ -3,30 +3,28 @@
 		"build": "vue-cli-service build",
 		"create-config": "cp -nv .env.template .env",
 		"lint": "vue-cli-service lint",
-		"serve": "vue-cli-service serve"
-	},
-	"dependencies": {
-		"@vueuse/head": "^0.7.6",
-		"core-js": "^3.23.3",
-		"pinia": "^2.0.14",
-		"pinia-plugin-persistedstate": "^1.6.1",
-		"vue": "^3.2.37",
-		"vue-router": "^4.0.16",
-		"vue3-radial-progress": "1.1.1"
+		"dev": "vue-cli-service serve"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.6",
 		"@babel/eslint-parser": "^7.18.2",
-		"@vue/cli-plugin-babel": "~5.0.6",
-		"@vue/cli-plugin-eslint": "~5.0.6",
-		"@vue/cli-plugin-router": "~5.0.6",
-		"@vue/cli-plugin-vuex": "~5.0.6",
-		"@vue/cli-service": "~5.0.6",
+		"@vue/cli-plugin-babel": "^5.0.6",
+		"@vue/cli-plugin-eslint": "^5.0.6",
+		"@vue/cli-plugin-router": "^5.0.6",
+		"@vue/cli-plugin-vuex": "^5.0.6",
+		"@vue/cli-service": "^5.0.6",
 		"@vue/compiler-sfc": "^3.2.37",
-		"eslint": "^8.17.0",
+		"@vueuse/head": "^0.7.6",
+		"core-js": "^3.23.3",
 		"eslint-plugin-vue": "^9.1.1",
+		"eslint": "^8.17.0",
+		"pinia-plugin-persistedstate": "^1.6.1",
+		"pinia": "^2.0.14",
+		"sass-loader": "^13.0.2",
 		"sass": "^1.53.0",
-		"sass-loader": "^13.0.2"
+		"vue-router": "^4.0.16",
+		"vue": "^3.2.37",
+		"vue3-radial-progress": "^1.1.1"
 	},
 	"eslintConfig": {
 		"root": true,
