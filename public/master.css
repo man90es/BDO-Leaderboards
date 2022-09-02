@@ -24,7 +24,6 @@ body:not(.light-theme) {
 	--load-done-colour: #f0f0f0;
 
 	--dark-theme-invert: invert(1);
-	--class-icon-spritesheet-x-offset: -1.98rem;
 }
 
 body.light-theme {
@@ -43,7 +42,6 @@ body.light-theme {
 	--load-done-colour: #8dbb6e;
 
 	--dark-theme-invert: invert(0);
-	--class-icon-spritesheet-x-offset: -0.15rem;
 }
 
 * {
@@ -59,7 +57,8 @@ button:hover {
 	cursor: pointer;
 }
 
-input, button {
+input,
+button {
 	border: none;
 	border-radius: 0.1em;
 	padding: 0.5rem;
@@ -68,7 +67,8 @@ input, button {
 	transition: 0.2s;
 }
 
-input:hover, button:hover {
+input:hover,
+button:hover {
 	box-shadow: 0 0.1em 0.4em var(--input-shadow-colour);
 }
 

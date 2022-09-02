@@ -1,24 +1,27 @@
 <template>
-	<div :style="cssVars" class="position"><span v-if="!groupWPrev">#{{ place }}</span></div>
-	<div :style="cssVars" class="family-name">
+	<div class="position">
+		<span v-if="!groupWPrev">#{{ place }}</span>
+	</div>
+	<div class="family-name">
 		<a :href="profileLink" target="_blank">{{ profile.familyName }}</a>
-		<button v-if="$route.name == 'customLeaderboard'" @click="removeFromCustom">
-			<img :src="assets.remove" alt="x" />
+		<button
+			@click="removeFromCustom"
+			v-if="$route.name == 'customLeaderboard'"
+		>
+			<img :src="xIcon" alt="x" />
 		</button>
 	</div>
-	<div :style="cssVars" class="character-name" :class="{ [classClass]: true }" :title="featuredCharacter?.class">
+	<div :title="featuredCharacter?.class" class="character-name">
 		{{ featuredCharacter?.name }}
 	</div>
-	<div :style="cssVars" class="score">{{ displayScore || score }}</div>
+	<div class="score">{{ displayScore || score }}</div>
 </template>
 
 <script setup>
 	import { computed } from "vue"
 	import { useMainStore } from "@/stores/main"
 
-	const assets = {
-		remove: `${process.env.BASE_URL}assets/highlight_off_black_24dp.svg`,
-	}
+	const xIcon = process.env.BASE_URL + "assets/highlight_off_black_24dp.svg"
 
 	const store = useMainStore()
 	const props = defineProps({
@@ -51,57 +54,84 @@
 		refreshLeaderboard: {
 			type: Function,
 			required: true,
-		}
+		},
 	})
-
-	const cssVars = computed(() => {
-		const documentStyle = window.getComputedStyle(document.body)
-		const vars = {
-			backgroundColor: props.place % 2 ? "transparent" : "#0001"
-		}
-
-		return ({
-			1: {
-				...vars,
-				color: documentStyle.getPropertyValue("--colour-red"),
-				fontSize: "1.3em",
-			},
-			2: {
-				...vars,
-				color: documentStyle.getPropertyValue("--colour-orange"),
-				fontSize: "1.2em",
-			},
-			3: {
-				...vars,
-				color: documentStyle.getPropertyValue("--colour-blue"),
-				fontSize: "1.1em",
-			}
-		})[props.colour] || vars
-	})
-
-	const profileLink = computed(() => (
-		`https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=${props.profile.profileTarget}`
-	))
-
-	const classClass = computed(() => (
-		(props.featuredCharacter?.class || "").toLowerCase().replace(" ", "-")
-	))
 
 	function removeFromCustom() {
-		store.removeFromCustomList(props.profile.profileTarget, props.profile.region)
+		store.removeFromCustomList(
+			props.profile.profileTarget,
+			props.profile.region
+		)
 		props.refreshLeaderboard()
 	}
+
+	const profileLink =
+		"https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=" +
+		props.profile.profileTarget
+
+	const backgroundColour = computed(() =>
+		props.place % 2 ? "transparent" : "#0001"
+	)
+
+	const fontSize = computed(
+		() => ["1.3em", "1.2em", "1.1em"][props.colour - 1] || "1em"
+	)
+
+	const colour = computed(
+		() =>
+			`var(--colour-${
+				["red", "orange", "blue"][props.colour - 1] || "default"
+			})`
+	)
+
+	const iconOffset = computed(() => {
+		const i = [
+			"Warrior",
+			"Ranger",
+			"Sorceress",
+			"Berserker",
+			"Tamer",
+			"Ninja",
+			"Kunoichi",
+			"Witch",
+			"Wizard",
+			"Maehwa",
+			"Valkyrie",
+			"Musa",
+			"Dark Knight",
+			"Striker",
+			"Mystic",
+			"Lahn",
+			"Archer",
+			"Shai",
+			"Guardian",
+			"Hashashin",
+			"Nova",
+			"Sage",
+			"Corsair",
+			"Drakania",
+		].indexOf(props.featuredCharacter?.class)
+
+		return [
+			"dark" === store.siteTheme ? "-1.98rem" : "-0.15rem",
+			-((5.5 / 3) * i + 0.3) + "rem",
+		].join(" ")
+	})
 </script>
 
 <style lang="scss" scoped>
 	#leaderboard > * {
-		padding: 0.5rem;
-		line-height: 1.2rem;
-		display: flex;
 		align-items: center;
+		background-color: v-bind(backgroundColour);
+		color: v-bind(colour);
+		display: flex;
+		font-size: v-bind(fontSize);
+		line-height: 1.2rem;
+		padding: 0.5rem;
 	}
 
-	.position, .score {
+	.position,
+	.score {
 		justify-content: end;
 	}
 
@@ -125,130 +155,19 @@
 		}
 	}
 
-	.character-name {
-		&::before {
-			content: '';
-			width: 1.5rem;
-			height: 1.5rem;
-			background-image: url(https://s1.pearlcdn.com/NAEU/contents/img/common/character/icn_class_symbol_spr.svg);
-			background-position: 10rem 10rem;
-			background-repeat: no-repeat;
-			background-size: 5.5rem auto;
-			margin-right: 0.25rem;
-			opacity: 0.8;
-		}
-
-		&.warrior::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -0.15rem !important;
-		}
-
-		&.ranger::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -1.98rem !important;
-		}
-
-		&.sorceress::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -3.82rem !important;
-		}
-
-		&.berserker::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -5.65rem !important;
-		}
-
-		&.tamer::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -7.48rem !important;
-		}
-
-		&.ninja::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -9.32rem !important;
-		}
-
-		&.kunoichi::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -11.15rem !important;
-		}
-
-		&.witch::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -12.98rem !important;
-		}
-
-		&.wizard::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -14.82rem !important;
-		}
-
-		&.maehwa::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -16.65rem !important;
-		}
-
-		&.valkyrie::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -18.48rem !important;
-		}
-
-		&.musa::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -20.32rem !important;
-		}
-
-		&.dark-knight::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -22.15rem !important;
-		}
-
-		&.striker::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -23.98rem !important;
-		}
-
-		&.mystic::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -25.82rem !important;
-		}
-
-		&.lahn::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -27.65rem !important;
-		}
-
-		&.archer::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -29.48rem !important;
-		}
-
-		&.shai::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -31.32rem !important;
-		}
-
-		&.guardian::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -33.15rem !important;
-		}
-
-		&.hashashin::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -34.98rem !important;
-		}
-
-		&.nova::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -36.82rem !important;
-		}
-
-		&.sage::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -38.65rem !important;
-		}
-
-		&.corsair::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -40.48rem !important;
-		}
-
-		&.drakania::before {
-			background-position: var(--class-icon-spritesheet-x-offset) -42.31rem !important;
-		}
-
-		/*
-			The formula for y offset is 5.5 / 3 * 24 + 0.15
-			Where
-				5.5 is x from background-size property
-				3 is the number of horisontal images in the spritesheet
-				24 is the index of a character
-				0.15 is just a static offset
-			I should really try to automate this, but passing data from vue to css is a pain
-			Especially to ::before
-		*/
+	.character-name::before {
+		background-image: url(https://s1.pearlcdn.com/NAEU/contents/img/common/character/icn_class_symbol_spr.svg);
+		background-position: v-bind(iconOffset);
+		background-repeat: no-repeat;
+		background-size: 5.5rem auto;
+		content: "";
+		height: 1.5rem;
+		margin-right: 0.25rem;
+		opacity: 0.8;
+		width: 1.5rem;
 	}
 
-	.mobile-layout {
-		.character-name::before {
-			zoom: 0.7;
-		}
+	.mobile-layout .character-name::before {
+		zoom: 0.7;
 	}
 </style>
