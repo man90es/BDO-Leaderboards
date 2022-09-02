@@ -18,7 +18,7 @@
 		"core-js": "^3.23.3",
 		"eslint-plugin-vue": "^9.1.1",
 		"eslint": "^8.17.0",
-		"pinia-plugin-persistedstate": "^1.6.1",
+		"pinia-plugin-persistedstate": "^2.1.1",
 		"pinia": "^2.0.14",
 		"sass-loader": "^13.0.2",
 		"sass": "^1.53.0",
