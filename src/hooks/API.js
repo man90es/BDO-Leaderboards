@@ -9,14 +9,16 @@ function parseResponse(response) {
 	const guildName = args.get("guildName")
 	const region = args.get("region")
 
-	throw ({
+	const message = ({
 		400: `Bad guild format «${guildName}».`,
 		404: `Couldn't find guild «${guildName}» on ${region} server.`,
 		503: "BDO servers are currently under maintenance. Please try again later.",
 	})[response.status] || response.statusText
+
+	throw { code: response.status, message }
 }
 
-export default function (params) {
+export default function(params) {
 	const result = reactive({})
 
 	async function refresh() {
@@ -30,7 +32,13 @@ export default function (params) {
 			await fetch(`${process.env.VUE_APP_API_BASE}/v1/guild?${query}`)
 				.then(parseResponse)
 				.then(profile => result.guild = profile)
-				.catch(err => result.errors.push(err))
+				.catch((err) => {
+					err.code
+						? result.errors.push(err)
+						: result.errors.push({
+							message: `${err.message}: Please check your internet connection`
+						})
+				})
 				.finally(() => {
 					result.progress = 1 / (result.guild.population + 1)
 				})
@@ -47,7 +55,13 @@ export default function (params) {
 				await fetch(`${process.env.VUE_APP_API_BASE}/v1/adventurer?${query}`)
 					.then(parseResponse)
 					.then(profile => result.players.push(profile))
-					.catch(err => result.errors.push(err))
+					.catch((err) => {
+						err.code
+							? result.errors.push(err)
+							: result.errors.push({
+								message: `${err.message}: Please check your internet connection`
+							})
+					})
 					.finally(() => {
 						result.progress = (result.players.length + result.errors.length) / playerRequestList.length
 					})

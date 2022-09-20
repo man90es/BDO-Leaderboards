@@ -1,37 +1,34 @@
 <template>
 	<div id="leaderboard-page" :class="{ 'mobile-layout': mobile }">
-		<header-card />
-
-		<content-card>
+		<HeaderCard />
+		<ContentCard>
 			<h2 id="guild-link">
-				<a v-if="route.name !== 'customLeaderboard'" :href="guildLink" target="_blank">
+				<a :href="guildLink" target="_blank" v-if="route.name !== 'customLeaderboard'">
 					Guild: {{ data.guildName || route.params.guildName }}
 				</a>
 				<span v-else>Custom Leaderboard</span>
 			</h2>
-			<router-link to="/" class="select-guild-link">Select another</router-link>
-
-			<category-links />
-		</content-card>
-
-		<footer-card id="footer" />
-
+			<RouterLink to="/" class="select-guild-link">
+				Select another
+			</RouterLink>
+			<CategoryLinks />
+		</ContentCard>
+		<FooterCard id="footer" />
 		<div id="leaderboard-wrapper">
-			<content-card v-if="1 === data.progress" id="leaderboard">
-				<leader-board-header-line v-if="data.players.length > 0" />
+			<ContentCard v-if="1 === data.progress" id="leaderboard">
+				<LeaderBoardHeaderLine v-if="data.players.length > 0" />
 				<span id="fetch-error" v-else>
-					{{data.errors[0]}}
+					{{ data.errors[0]?.message }}
 				</span>
-				<leaderboard-line
+				<LeaderboardLine
 					:key="p.profile.familyName"
 					:refreshLeaderboard="refreshData"
 					v-bind="p"
 					v-for="p in leaderboardItems"
 				/>
-			</content-card>
-			<loading-card v-else id="leaderboard" :progress="data.progress" />
-
-			<add-to-custom-card
+			</ContentCard>
+			<LoadingCard v-else id="leaderboard" :progress="data.progress" />
+			<AddToCustomCard
 				:refreshLeaderboard="refreshData"
 				id="add-to-custom"
 				v-if="route.name === 'customLeaderboard'"
@@ -102,22 +99,21 @@
 
 		const players = route.name === "customLeaderboard"
 			? data.players
-			: data.players
-				.filter((player) => {
-					// The official website does not always update when someone leaves the guild; this should filter some ex-members out
-					// I have no idea how to filter out ex-members with private guild setting though
+			: data.players.filter((player) => {
+				// The official website does not always update when someone leaves the guild; this should filter some ex-members out
+				// I have no idea how to filter out ex-members with private guild setting though
 
-					if (player.guild !== undefined && player.guild.name.toLowerCase() == data.guild.name.toLowerCase()) {
-						// They are probably in the guild: double checked
-						return true
-					} else if (player.privacy & 0b10) {
-						// The guild in the profile is set to private: can't double check
-						return true
-					} else {
-						// Either no guild or other guild
-						return false
-					}
-				})
+				if (player.guild !== undefined && player.guild.name.toLowerCase() == data.guild.name.toLowerCase()) {
+					// They are probably in the guild: double checked
+					return true
+				} else if (player.privacy & 0b10) {
+					// The guild in the profile is set to private: can't double check
+					return true
+				} else {
+					// Either no guild or other guild
+					return false
+				}
+			})
 
 		return generateLeaderboardItems(route.params.discipline, players)
 	})
