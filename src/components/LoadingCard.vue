@@ -1,30 +1,37 @@
 <template>
-	<content-card>
-		<radial-progress :completed-steps="progress" :total-steps="1" :innerStrokeColor="innerColour" :stopColor="injectColour" :startColor="injectColour">
-			Loading...
-		</radial-progress>
-	</content-card>
+	<ContentCard>
+		<div>
+			This may take a while...
+		</div>
+		<div>
+			{{ Math.round(progress * 100) }}%
+			<meter :value="progress" min="0" max="1" />
+		</div>
+	</ContentCard>
 </template>
 
 <script setup>
-	import ContentCard from "@/components/ContentCard.vue"
-	import RadialProgress from "vue3-radial-progress"
+	import ContentCard from "@/components/ContentCard"
 
 	defineProps({
-		progress: {
-			required: true,
-			type: Number,
-		}
+		progress: { required: true, type: Number }
 	})
-
-	const innerColour = getComputedStyle(document.body).getPropertyValue("--load-remaining-colour")
-	const injectColour = getComputedStyle(document.body).getPropertyValue("--load-done-colour")
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 	.content-card {
 		display: flex !important;
+		flex-direction: column;
 		justify-content: center;
-		text-align: center;
+
+		div {
+			display: flex;
+			gap: 1em;
+			justify-content: center;
+		}
+	}
+
+	meter {
+		width: 50%;
 	}
 </style>

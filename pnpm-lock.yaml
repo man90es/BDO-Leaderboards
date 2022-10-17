@@ -19,7 +19,6 @@ specifiers:
   sass-loader: ^13.0.2
   vue: ^3.2.37
   vue-router: ^4.0.16
-  vue3-radial-progress: ^1.1.1
 
 devDependencies:
   '@babel/core': 7.18.6
@@ -40,7 +39,6 @@ devDependencies:
   sass-loader: 13.0.2_sass@1.53.0+webpack@5.73.0
   vue: 3.2.37
   vue-router: 4.0.16_vue@3.2.37
-  vue3-radial-progress: 1.1.1_vue@3.2.37
 
 packages:
 
@@ -6602,15 +6600,6 @@ packages:
       '@vue/runtime-dom': 3.2.37
       '@vue/server-renderer': 3.2.37_vue@3.2.37
       '@vue/shared': 3.2.37
-    dev: true
-
-  /vue3-radial-progress/1.1.1_vue@3.2.37:
-    resolution: {integrity: sha512-2S7N2njsH9ud2+lfZxDGz+JRRk1NV+5apoSJp+2tdM8TnZrwFcrAVMHti+XhfnNgbHKF3M2qYZm7jDQqbzW4cQ==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      vue: ^3.0.5
-    dependencies:
-      vue: 3.2.37
     dev: true
 
   /watchpack/2.4.0:
