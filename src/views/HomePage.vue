@@ -1,13 +1,12 @@
 <template>
 	<div id="home-page" :class="{ 'mobile-layout': mobile }">
-		<header-card />
-
-		<content-card>
-			<formatted-input
+		<HeaderCard />
+		<ContentCard>
+			<FormattedInput
 				:class="{ highlighted: shouldHightlightNameInput }"
 				placeholder="Enter the guild's name here"
 				v-model="guildName"
-				v-on:keyup.enter="navigateToLeaderboard"
+				v-on:keyup.enter="() => navigateToLeaderboard()"
 			/>
 			<button
 				:key="server.domain"
@@ -17,7 +16,7 @@
 			>
 				Look it up in {{server.name}}
 			</button>
-			<separator-line>OR</separator-line>
+			<SeparatorLine>OR</SeparatorLine>
 			<button
 				:style="{ backgroundColor: 'var(--colour-green)' }"
 				@click="navigateToCustomLeaderboard"
@@ -25,9 +24,8 @@
 			>
 				Create a leaderboard from scratch
 			</button>
-		</content-card>
-
-		<footer-card />
+		</ContentCard>
+		<FooterCard />
 	</div>
 </template>
 
