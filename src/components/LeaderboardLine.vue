@@ -111,6 +111,7 @@
 			"Corsair",
 			"Drakania",
 			"Woosa",
+			"Maegu",
 		].indexOf(props.featuredCharacter?.class)
 
 		return [
