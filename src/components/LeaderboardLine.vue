@@ -65,9 +65,12 @@
 		props.refreshLeaderboard()
 	}
 
-	const profileLink =
-		"https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?profileTarget=" +
-		props.profile.profileTarget
+	const profileLink = (
+		"https://www.naeu.playblackdesert.com/en-US/Adventure/Profile?" +
+		(new URLSearchParams({
+			profileTarget: props.profile.profileTarget
+		}))
+	)
 
 	const backgroundColour = computed(() =>
 		props.place % 2 ? "transparent" : "#0001"
