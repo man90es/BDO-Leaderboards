@@ -2,26 +2,12 @@
 	<div id="home-page" :class="{ 'mobile-layout': mobile }">
 		<HeaderCard />
 		<ContentCard>
-			<FormattedInput
-				:class="{ highlighted: shouldHightlightNameInput }"
-				placeholder="Enter the guild's name here"
-				v-model="guildName"
-				v-on:keyup.enter="() => navigateToLeaderboard()"
-			/>
-			<button
-				:key="server.domain"
-				:style="{ backgroundColor: server.colour }"
-				@click="() => navigateToLeaderboard(server.domain)"
-				v-for="server of supportedServers"
-			>
+			<input autocapitalize="on" type="text" :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard()" />
+			<button :key="server.domain" :style="{ backgroundColor: server.colour }" @click="() => navigateToLeaderboard(server.domain)" v-for="server of supportedServers">
 				Look it up in {{server.name}}
 			</button>
 			<SeparatorLine>OR</SeparatorLine>
-			<button
-				:style="{ backgroundColor: 'var(--colour-green)' }"
-				@click="navigateToCustomLeaderboard"
-				class="wide-button"
-			>
+			<button :style="{ backgroundColor: 'var(--colour-green)' }" @click="navigateToCustomLeaderboard" class="wide-button">
 				Create a leaderboard from scratch
 			</button>
 		</ContentCard>
@@ -37,7 +23,6 @@
 	import { useRouter } from "vue-router"
 	import ContentCard from "@/components/ContentCard.vue"
 	import FooterCard from "@/components/FooterCard.vue"
-	import FormattedInput from "@/components/FormattedInput.vue"
 	import HeaderCard from "@/components/HeaderCard.vue"
 	import SeparatorLine from "@/components/SeparatorLine.vue"
 	import useMobile from "@/hooks/mobile"
@@ -58,7 +43,7 @@
 
 	function navigateToCustomLeaderboard() {
 		router.push({
-			name:   "customLeaderboard",
+			name: "customLeaderboard",
 			params: { discipline: defaultDiscipline }
 		})
 	}
@@ -91,7 +76,7 @@
 			name: "leaderboard",
 			params: {
 				region,
-				guildName:  guildName.value,
+				guildName: guildName.value,
 				discipline: defaultDiscipline,
 			}
 		})
@@ -128,8 +113,13 @@
 
 		input {
 			grid-column: 1/3;
-			text-align: center;
 			margin: 0;
+			text-align: center;
+			text-transform: capitalize;
+
+			&::placeholder {
+				text-transform: none;
+			}
 		}
 
 		.wide-button {

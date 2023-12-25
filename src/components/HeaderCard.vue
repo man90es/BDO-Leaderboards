@@ -30,17 +30,16 @@
 	}
 
 	#embellishment {
-		height: 4em;
-		width: 4em;
-		transform: rotate3d(0.5, 0.5, 0.3, -45deg);
-		position: absolute;
-		top: -1.5em;
-		right: -3em;
-		padding: 0.2em;
 		background-color: #111;
 		box-shadow: 0 0 0.5em #000f;
 		cursor: pointer;
+		height: 4em;
+		inset: -1.5em -3em auto auto;
+		padding: 0.2em;
+		position: absolute;
+		transform: rotate3d(0.5, 0.5, 0.3, -45deg);
 		transition: 0.3s;
+		width: 4em;
 
 		&:hover {
 			height: 4.1em;
@@ -54,7 +53,8 @@
 		filter: brightness(5);
 	}
 
-	.mobile-layout #embellishment, #leaderboard-page #embellishment {
+	.mobile-layout #embellishment,
+	#leaderboard-page #embellishment {
 		display: none;
 	}
 </style>

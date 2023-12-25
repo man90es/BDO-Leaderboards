@@ -20,27 +20,17 @@
 				<span id="fetch-error" v-else>
 					{{ data.errors[0]?.message }}
 				</span>
-				<LeaderboardLine
-					:key="p.profile.familyName"
-					:refreshLeaderboard="refreshData"
-					v-bind="p"
-					v-for="p in leaderboardItems"
-				/>
+				<LeaderboardLine :key="p.profile.familyName" :refreshLeaderboard="refreshData" v-bind="p" v-for="p in leaderboardItems" />
 			</ContentCard>
 			<LoadingCard v-else id="leaderboard" :progress="data.progress" />
-			<AddToCustomCard
-				:refreshLeaderboard="refreshData"
-				id="add-to-custom"
-				v-if="route.name === 'customLeaderboard'"
-			/>
+			<AddToCustomCard :refreshLeaderboard="refreshData" id="add-to-custom" v-if="route.name === 'customLeaderboard'" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import { capitalise } from "../utils"
+	import { capitalise, supportedServers } from "@/utils"
 	import { computed } from "vue"
-	import { supportedServers } from "@/utils"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRoute } from "vue-router"
@@ -168,9 +158,10 @@
 	}
 
 	#guild-link {
+		grid-column: 1/3;
 		margin: 0;
 		text-align: center;
-		grid-column: 1/3;
+		text-transform: capitalize;
 
 		a {
 			opacity: 1;

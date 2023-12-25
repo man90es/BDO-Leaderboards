@@ -1,13 +1,8 @@
 <template>
 	<content-card>
 		<label>Add a player to the leaderboard:</label>
-		<formatted-input placeholder="Enter his or her family name here" v-model="familyName" />
-		<button
-			:key="server.domain"
-			:style="{ backgroundColor: server.colour }"
-			@click="() => okHandler(server.domain)"
-			v-for="server of supportedServers"
-		>
+		<input autocapitalize="on" placeholder="Enter his or her family name here" v-model="familyName" />
+		<button :key="server.domain" :style="{ backgroundColor: server.colour }" @click="() => okHandler(server.domain)" v-for="server of supportedServers">
 			From {{server.name}}
 		</button>
 		<span v-if="status" id="status">{{ status }}</span>
@@ -19,7 +14,6 @@
 	import { supportedServers } from "@/utils"
 	import { useMainStore } from "@/stores/main"
 	import ContentCard from "@/components/ContentCard.vue"
-	import FormattedInput from "@/components/FormattedInput.vue"
 
 	const familyName = ref("")
 	const maxProfiles = 100
@@ -66,7 +60,9 @@
 </script>
 
 <style scoped>
-	span, label, input {
+	span,
+	label,
+	input {
 		grid-column: 1/3;
 		text-align: center;
 	}
