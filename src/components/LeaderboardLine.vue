@@ -16,7 +16,7 @@
 
 <script setup>
 	import { computed } from "vue"
-	import { useMainStore } from "@/stores/main"
+	import { useMainStore } from "@/stores"
 
 	const xIcon = process.env.BASE_URL + "assets/highlight_off_black_24dp.svg"
 
@@ -113,10 +113,7 @@
 			"Scholar",
 		].indexOf(props.featuredCharacter?.class)
 
-		return [
-			"dark" === store.siteTheme ? "-1.98rem" : "-0.15rem",
-			-((5.5 / 3) * i + 0.3) + "rem",
-		].join(" ")
+		return `-1.98rem ${-((5.5 / 3) * i + 0.3)}rem`
 	})
 </script>
 

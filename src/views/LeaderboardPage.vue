@@ -34,7 +34,7 @@
 	import { computed } from "vue"
 	import { siteName, supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
-	import { useMainStore } from "@/stores/main"
+	import { useMainStore } from "@/stores"
 	import { useRoute } from "vue-router"
 	import generateLeaderboardItems from "@/core/generateLeaderboardItems"
 	import useGuild from "@/hooks/API"

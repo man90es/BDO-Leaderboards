@@ -1,2 +1,2 @@
 export { default as siteName } from "./siteName"
-export { default as supportedServers } from "./supportedServers"
+export { default as supportedServers, RegionEnum } from "./supportedServers"

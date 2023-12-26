@@ -1,19 +1,29 @@
-import { Participant } from "@/models"
+class Participant {
+	constructor(profile, featuredCharacter, score, displayScore) {
+		this.colour = 0
+		this.displayScore = displayScore
+		this.featuredCharacter = featuredCharacter
+		this.groupWPrev = false
+		this.place = 1
+		this.profile = profile
+		this.score = score
+	}
+}
 
-const PRIVATE_LEVEL   = 0b1
+const PRIVATE_LEVEL = 0b1
 const PRIVATE_CONTRIB = 0b100
-const PRIVATE_SPECS   = 0b1000
+const PRIVATE_SPECS = 0b1000
 
 function getNumericSpec(specText) {
 	const parts = specText.split(" ")
 	const offset = {
-		"Beginner":     0,
-		"Apprentice":   10,
-		"Skilled":      20,
+		"Beginner": 0,
+		"Apprentice": 10,
+		"Skilled": 20,
 		"Professional": 30,
-		"Artisan":      40,
-		"Master":       50,
-		"Guru":         80,
+		"Artisan": 40,
+		"Master": 50,
+		"Guru": 80,
 	}[parts[0]]
 
 	return offset + parseInt(parts[1])

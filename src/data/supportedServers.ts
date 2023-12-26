@@ -1,6 +1,10 @@
-type RegionId =  "EU" | "NA" | "SA"
+export enum RegionEnum {
+  EU = "EU",
+  NA = "NA",
+  SA = "SA",
+}
 
-function composeGuildLink(subdomain: string, locale: string, guildName: string, region: RegionId) {
+function composeGuildLink(subdomain: string, locale: string, guildName: string, region: RegionEnum) {
     const query = new URLSearchParams({ guildName, region })
 
     return `https://www.${subdomain}.playblackdesert.com/${locale}/Adventure/Guild/GuildProfile?` + query
@@ -8,26 +12,26 @@ function composeGuildLink(subdomain: string, locale: string, guildName: string, 
 
 const supportedServers: Set<{
     colour: string
-    domain: RegionId
+    domain: RegionEnum
     getGuildLink: (arg0: string) => string
     name: string
 }> = new Set([
     {
         colour: "var(--colour-blue)",
-        domain: "EU",
-        getGuildLink: guildName => composeGuildLink("naeu", "en-US", guildName, "EU"),
+        domain: RegionEnum.EU,
+        getGuildLink: guildName => composeGuildLink("naeu", "en-US", guildName, RegionEnum.EU),
         name: "Europe",
     },
     {
         colour: "var(--colour-red)",
-        domain: "NA",
-        getGuildLink: guildName => composeGuildLink("naeu", "en-US", guildName, "NA"),
+        domain: RegionEnum.NA,
+        getGuildLink: guildName => composeGuildLink("naeu", "en-US", guildName, RegionEnum.NA),
         name: "North America",
     },
     {
         colour: "var(--colour-orange)",
-        domain: "SA",
-        getGuildLink: guildName => composeGuildLink("sa", "pt-BR", guildName, "SA"),
+        domain: RegionEnum.SA,
+        getGuildLink: guildName => composeGuildLink("sa", "pt-BR", guildName, RegionEnum.SA),
         name: "South America",
     },
 ])

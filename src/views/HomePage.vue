@@ -4,7 +4,7 @@
 		<ContentCard>
 			<input autocapitalize="on" type="text" :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard()" />
 			<button :key="server.domain" :style="{ backgroundColor: server.colour }" @click="() => navigateToLeaderboard(server.domain)" v-for="server of supportedServers">
-				Look it up in {{server.name}}
+				Look it up in {{ server.name }}
 			</button>
 			<SeparatorLine>OR</SeparatorLine>
 			<button :style="{ backgroundColor: 'var(--colour-green)' }" @click="navigateToCustomLeaderboard" class="wide-button">
@@ -20,7 +20,7 @@
 	import { ref } from "vue"
 	import { siteName, supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
-	import { useMainStore } from "@/stores/main"
+	import { useMainStore } from "@/stores"
 	import { useRouter } from "vue-router"
 	import useMobile from "@/hooks/mobile"
 
@@ -126,5 +126,6 @@
 
 	input.highlighted {
 		box-shadow: 0 0 0.5em var(--colour-red) !important;
+		outline: 1px solid var(--colour-red);
 	}
 </style>

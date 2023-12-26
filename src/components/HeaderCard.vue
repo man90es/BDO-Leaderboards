@@ -1,18 +1,13 @@
 <template>
 	<ContentCard>
 		<h1>BDO Leaderboards</h1>
-		<span>We have Black Desert Online leaderboards for your guild!</span>
-		<div id="embellishment" @click="store.toggleSiteTheme">
-			<img src="../../public/assets/spiral.svg">
-		</div>
+		<span>Your Black Desert Online guild's leaderboard is already here!</span>
+		<img id="embellishment" src="../../public/assets/spiral.svg">
 	</ContentCard>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 	import { ContentCard } from "@/components"
-	import { useMainStore } from "@/stores/main"
-
-	const store = useMainStore()
 </script>
 
 <style scoped>
@@ -32,25 +27,13 @@
 	#embellishment {
 		background-color: #111;
 		box-shadow: 0 0 0.5em #000f;
-		cursor: pointer;
 		height: 4em;
 		inset: -1.5em -3em auto auto;
 		padding: 0.2em;
+		pointer-events: none;
 		position: absolute;
 		transform: rotate3d(0.5, 0.5, 0.3, -45deg);
-		transition: 0.3s;
 		width: 4em;
-
-		&:hover {
-			height: 4.1em;
-			width: 4.1em;
-			transform: rotate3d(0.5, 0.5, 0.3, -30deg);
-			box-shadow: 0 0 1em #0008;
-		}
-	}
-
-	.light-theme #embellishment img {
-		filter: brightness(5);
 	}
 
 	.mobile-layout #embellishment,

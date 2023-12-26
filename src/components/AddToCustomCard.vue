@@ -13,7 +13,7 @@
 	import { ContentCard } from "@/components"
 	import { ref } from "vue"
 	import { supportedServers } from "@/data"
-	import { useMainStore } from "@/stores/main"
+	import { useMainStore } from "@/stores"
 
 	const familyName = ref("")
 	const maxProfiles = 100
