@@ -18,7 +18,7 @@
 <script setup>
 	import { ContentCard, FooterCard, HeaderCard, SeparatorLine } from "@/components"
 	import { ref } from "vue"
-	import { supportedServers } from "@/data"
+	import { siteName, supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRouter } from "vue-router"
@@ -27,7 +27,7 @@
 	const mobile = useMobile()
 	const router = useRouter()
 	const store = useMainStore()
-	useHead({ title: process.env.VUE_APP_SITE_NAME })
+	useHead({ title: siteName })
 
 	const guildName = ref("")
 	const shouldHightlightNameInput = ref(false)

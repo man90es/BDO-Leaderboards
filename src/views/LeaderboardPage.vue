@@ -32,7 +32,7 @@
 	import { AddToCustomCard, CategoryLinks, ContentCard, FooterCard, HeaderCard, LeaderboardHeaderLine, LeaderboardLine, LoadingCard } from "@/components"
 	import { capitalize } from "lodash"
 	import { computed } from "vue"
-	import { supportedServers } from "@/data"
+	import { siteName, supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRoute } from "vue-router"
@@ -54,7 +54,7 @@
 				life: "life fame",
 			})[route.params.discipline] || route.params.discipline
 
-			return `${guildName} ${discipline} ranking | ${process.env.VUE_APP_SITE_NAME}`
+			return `${guildName} ${discipline} ranking | ${siteName}`
 		})
 	})
 
