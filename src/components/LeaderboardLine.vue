@@ -4,10 +4,7 @@
 	</div>
 	<div class="family-name">
 		<a :href="profileLink" target="_blank">{{ profile.familyName }}</a>
-		<button
-			@click="removeFromCustom"
-			v-if="$route.name == 'customLeaderboard'"
-		>
+		<button @click="removeFromCustom" v-if="$route.name == 'customLeaderboard'">
 			<img :src="xIcon" alt="x" />
 		</button>
 	</div>
@@ -72,20 +69,18 @@
 		}))
 	)
 
-	const backgroundColour = computed(() =>
-		props.place % 2 ? "transparent" : "#0001"
-	)
+	const backgroundColour = computed(() => {
+		return props.place % 2 ? "transparent" : "#0001"
+	})
 
-	const fontSize = computed(
-		() => ["1.3em", "1.2em", "1.1em"][props.colour - 1] || "1em"
-	)
+	const fontSize = computed(() => {
+		return ["1.3em", "1.2em", "1.1em"][props.colour - 1] || "1em"
+	})
 
-	const colour = computed(
-		() =>
-			`var(--colour-${
-				["red", "orange", "blue"][props.colour - 1] || "default"
-			})`
-	)
+	const colour = computed(() => {
+		const c = ["red", "orange", "blue"][props.colour - 1] || "default"
+		return `var(--colour-${c})`
+	})
 
 	const iconOffset = computed(() => {
 		const i = [
@@ -115,6 +110,7 @@
 			"Drakania",
 			"Woosa",
 			"Maegu",
+			"Scholar",
 		].indexOf(props.featuredCharacter?.class)
 
 		return [
@@ -124,7 +120,7 @@
 	})
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	#leaderboard > * {
 		align-items: center;
 		background-color: v-bind(backgroundColour);
@@ -141,17 +137,17 @@
 	}
 
 	.family-name {
-		a {
+		& a {
 			opacity: 1;
 			text-decoration: none;
 		}
 
-		img {
+		& img {
 			height: 1rem;
 			opacity: 0.75;
 		}
 
-		button {
+		& button {
 			background: none;
 			box-shadow: none;
 			font-size: 1rem;
