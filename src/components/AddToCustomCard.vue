@@ -10,10 +10,10 @@
 </template>
 
 <script setup>
+	import { ContentCard } from "@/components"
 	import { ref } from "vue"
 	import { supportedServers } from "@/utils"
 	import { useMainStore } from "@/stores/main"
-	import ContentCard from "@/components/ContentCard.vue"
 
 	const familyName = ref("")
 	const maxProfiles = 100

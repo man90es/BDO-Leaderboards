@@ -1,8 +1,10 @@
 <template>
-	<div><slot /></div>
+	<div>
+		<slot />
+	</div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 	div {
 		--or-margin: 2em;
 
@@ -15,7 +17,8 @@
 		text-align: center;
 		user-select: none;
 
-		&::before, &::after {
+		&::before,
+		&::after {
 			content: "";
 			display: block;
 

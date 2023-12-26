@@ -16,15 +16,12 @@
 </template>
 
 <script setup>
+	import { ContentCard, FooterCard, HeaderCard, SeparatorLine } from "@/components"
 	import { ref } from "vue"
 	import { supportedServers } from "@/utils"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRouter } from "vue-router"
-	import ContentCard from "@/components/ContentCard.vue"
-	import FooterCard from "@/components/FooterCard.vue"
-	import HeaderCard from "@/components/HeaderCard.vue"
-	import SeparatorLine from "@/components/SeparatorLine.vue"
 	import useMobile from "@/hooks/mobile"
 
 	const mobile = useMobile()

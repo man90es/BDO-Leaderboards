@@ -16,7 +16,7 @@
 		<FooterCard id="footer" />
 		<div id="leaderboard-wrapper">
 			<ContentCard v-if="1 === data.progress" id="leaderboard">
-				<LeaderBoardHeaderLine v-if="data.players.length > 0" />
+				<LeaderboardHeaderLine v-if="data.players.length > 0" />
 				<span id="fetch-error" v-else>
 					{{ data.errors[0]?.message }}
 				</span>
@@ -29,20 +29,13 @@
 </template>
 
 <script setup>
+	import { AddToCustomCard, CategoryLinks, ContentCard, FooterCard, HeaderCard, LeaderboardHeaderLine, LeaderboardLine, LoadingCard } from "@/components"
 	import { capitalise, supportedServers } from "@/utils"
 	import { computed } from "vue"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRoute } from "vue-router"
-	import AddToCustomCard from "@/components/AddToCustomCard.vue"
-	import CategoryLinks from "@/components/CategoryLinks.vue"
-	import ContentCard from "@/components/ContentCard.vue"
-	import FooterCard from "@/components/FooterCard.vue"
 	import generateLeaderboardItems from "@/core/generateLeaderboardItems"
-	import HeaderCard from "@/components/HeaderCard.vue"
-	import LeaderBoardHeaderLine from "@/components/LeaderBoardHeaderLine.vue"
-	import LeaderboardLine from "@/components/LeaderboardLine.vue"
-	import LoadingCard from "@/components/LoadingCard.vue"
 	import useGuild from "@/hooks/API"
 	import useMobile from "@/hooks/mobile"
 

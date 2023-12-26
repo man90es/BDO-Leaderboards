@@ -4,7 +4,7 @@
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 	.content-card {
 		padding: 2em;
 		background-color: var(--card-colour);

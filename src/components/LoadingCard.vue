@@ -11,20 +11,20 @@
 </template>
 
 <script setup>
-	import ContentCard from "@/components/ContentCard"
+	import { ContentCard } from "@/components"
 
 	defineProps({
 		progress: { required: true, type: Number }
 	})
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	.content-card {
 		display: flex !important;
 		flex-direction: column;
 		justify-content: center;
 
-		div {
+		& div {
 			display: flex;
 			gap: 1em;
 			justify-content: center;

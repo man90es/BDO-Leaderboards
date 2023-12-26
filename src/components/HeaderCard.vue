@@ -1,21 +1,21 @@
 <template>
-	<content-card>
+	<ContentCard>
 		<h1>BDO Leaderboards</h1>
 		<span>We have Black Desert Online leaderboards for your guild!</span>
 		<div id="embellishment" @click="store.toggleSiteTheme">
 			<img src="../../public/assets/spiral.svg">
 		</div>
-	</content-card>
+	</ContentCard>
 </template>
 
 <script setup>
+	import { ContentCard } from "@/components"
 	import { useMainStore } from "@/stores/main"
-	import ContentCard from "@/components/ContentCard.vue"
 
 	const store = useMainStore()
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	.content-card > * {
 		grid-column: 1/3;
 		text-align: center;

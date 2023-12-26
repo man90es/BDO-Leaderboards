@@ -1,13 +1,13 @@
 <template>
-	<content-card>
+	<ContentCard>
 		<a href="https://github.com/man90es/BDO-Leaderboards" target="_blank" :style="{ backgroundImage: assets.star }">Give BDO Leaderboards a star on GitHub!</a>
 		<a href="https://github.com/man90es/BDO-REST-API" target="_blank" :style="{ backgroundImage: assets.construction }">Curious about the API?</a>
 		<a href="https://www.hemlo.cc/finances" target="_blank" :style="{ backgroundImage: assets.donate }">Support the service</a>
-	</content-card>
+	</ContentCard>
 </template>
 
 <script setup>
-	import ContentCard from "@/components/ContentCard.vue"
+	import { ContentCard } from "@/components"
 
 	const assets = {
 		construction: `url(${process.env.BASE_URL}assets/construction_black_24dp.svg)`,
