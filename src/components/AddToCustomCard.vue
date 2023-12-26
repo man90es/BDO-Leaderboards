@@ -12,7 +12,7 @@
 <script setup>
 	import { ContentCard } from "@/components"
 	import { ref } from "vue"
-	import { supportedServers } from "@/utils"
+	import { supportedServers } from "@/data"
 	import { useMainStore } from "@/stores/main"
 
 	const familyName = ref("")

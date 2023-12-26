@@ -18,7 +18,7 @@
 <script setup>
 	import { ContentCard, FooterCard, HeaderCard, SeparatorLine } from "@/components"
 	import { ref } from "vue"
-	import { supportedServers } from "@/utils"
+	import { supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRouter } from "vue-router"

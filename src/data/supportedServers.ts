@@ -1,16 +1,17 @@
-export function capitalise(string) {
-    return string ? string[0].toUpperCase() + string.slice(1) : ""
-}
+type RegionId =  "EU" | "NA" | "SA"
 
-function composeGuildLink(subdomain, locale, guildName, region) {
+function composeGuildLink(subdomain: string, locale: string, guildName: string, region: RegionId) {
     const query = new URLSearchParams({ guildName, region })
 
-    return (
-        `https://www.${subdomain}.playblackdesert.com/${locale}/Adventure/Guild/GuildProfile?${query}`
-    )
+    return `https://www.${subdomain}.playblackdesert.com/${locale}/Adventure/Guild/GuildProfile?` + query
 }
 
-export const supportedServers = new Set([
+const supportedServers: Set<{
+    colour: string
+    domain: RegionId
+    getGuildLink: (arg0: string) => string
+    name: string
+}> = new Set([
     {
         colour: "var(--colour-blue)",
         domain: "EU",
@@ -30,3 +31,5 @@ export const supportedServers = new Set([
         name: "South America",
     },
 ])
+
+export default supportedServers

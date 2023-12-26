@@ -30,8 +30,9 @@
 
 <script setup>
 	import { AddToCustomCard, CategoryLinks, ContentCard, FooterCard, HeaderCard, LeaderboardHeaderLine, LeaderboardLine, LoadingCard } from "@/components"
-	import { capitalise, supportedServers } from "@/utils"
+	import { capitalize } from "lodash"
 	import { computed } from "vue"
+	import { supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
 	import { useMainStore } from "@/stores/main"
 	import { useRoute } from "vue-router"
@@ -44,7 +45,7 @@
 	const store = useMainStore()
 	useHead({
 		title: computed(() => {
-			const guildName = capitalise(route.name === "customLeaderboard" ? "Custom" : route.params.guildName)
+			const guildName = capitalize(route.name === "customLeaderboard" ? "Custom" : route.params.guildName)
 			const discipline = ({
 				age: "account age",
 				characters: "number of characters",
