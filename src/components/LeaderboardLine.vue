@@ -4,7 +4,7 @@
 	</div>
 	<div class="family-name">
 		<a :href="profileLink" target="_blank">{{ profile.familyName }}</a>
-		<button @click="removeFromCustom" v-if="$route.name == 'customLeaderboard'">
+		<button @click="removeFromCustom" v-if="$route.name == routeNameEnum.CUSTOM_LEADERBOARD">
 			<img :src="xIcon" alt="x" />
 		</button>
 	</div>
@@ -16,6 +16,7 @@
 
 <script setup>
 	import { computed } from "vue"
+	import { routeNameEnum } from "@/router"
 	import { useMainStore } from "@/stores"
 
 	const xIcon = process.env.BASE_URL + "assets/highlight_off_black_24dp.svg"

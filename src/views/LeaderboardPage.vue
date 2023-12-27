@@ -1,18 +1,7 @@
 <template>
-	<div id="leaderboard-page" :class="{ 'mobile-layout': mobile }">
+	<div id="leaderboard-page" :class="{ 'mobile-layout': isMobile }">
 		<HeaderCard />
-		<ContentCard>
-			<h2 id="guild-link">
-				<a :href="guildLink" target="_blank" v-if="route.name !== 'customLeaderboard'">
-					Guild: {{ data.guildName || route.params.guildName }}
-				</a>
-				<span v-else>Custom Leaderboard</span>
-			</h2>
-			<RouterLink to="/" class="select-guild-link">
-				Select another
-			</RouterLink>
-			<CategoryLinks />
-		</ContentCard>
+		<NavCard :guildName="data.guild.name" />
 		<FooterCard id="footer" />
 		<div id="leaderboard-wrapper">
 			<ContentCard v-if="1 === data.progress" id="leaderboard">
@@ -23,29 +12,30 @@
 				<LeaderboardLine :key="p.profile.familyName" :refreshLeaderboard="refreshData" v-bind="p" v-for="p in leaderboardItems" />
 			</ContentCard>
 			<LoadingCard v-else id="leaderboard" :progress="data.progress" />
-			<AddToCustomCard :refreshLeaderboard="refreshData" id="add-to-custom" v-if="route.name === 'customLeaderboard'" />
+			<AddToCustomCard :refreshLeaderboard="refreshData" v-if="route.name === routeNameEnum.CUSTOM_LEADERBOARD" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import { AddToCustomCard, CategoryLinks, ContentCard, FooterCard, HeaderCard, LeaderboardHeaderLine, LeaderboardLine, LoadingCard } from "@/components"
+	import { AddToCustomCard, ContentCard, FooterCard, HeaderCard, LeaderboardHeaderLine, LeaderboardLine, LoadingCard, NavCard } from "@/components"
 	import { capitalize } from "lodash"
 	import { computed } from "vue"
-	import { siteName, supportedServers } from "@/data"
+	import { routeNameEnum } from "@/router"
+	import { siteName } from "@/data"
 	import { useHead } from "@vueuse/head"
+	import { useIsMobile } from "@/hooks"
 	import { useMainStore } from "@/stores"
 	import { useRoute } from "vue-router"
 	import generateLeaderboardItems from "@/core/generateLeaderboardItems"
 	import useGuild from "@/hooks/API"
-	import useMobile from "@/hooks/mobile"
 
-	const mobile = useMobile()
+	const isMobile = useIsMobile()
 	const route = useRoute()
 	const store = useMainStore()
 	useHead({
 		title: computed(() => {
-			const guildName = capitalize(route.name === "customLeaderboard" ? "Custom" : route.params.guildName)
+			const guildName = capitalize(route.name === routeNameEnum.CUSTOM_LEADERBOARD ? "Custom" : route.params.guildName)
 			const discipline = ({
 				age: "account age",
 				characters: "number of characters",
@@ -59,7 +49,7 @@
 	})
 
 	const { result: data, refresh: refreshData } = useGuild(computed(() => (
-		route.name === "customLeaderboard"
+		route.name === routeNameEnum.CUSTOM_LEADERBOARD
 			? {
 				players: store.customList
 			}
@@ -69,19 +59,12 @@
 			}
 	)))
 
-	const guildLink = computed(() => {
-		const server = [...supportedServers.values()]
-			.find(s => route.params.region === s.domain)
-
-		return server.getGuildLink(route.params.guildName)
-	})
-
 	const leaderboardItems = computed(() => {
 		if (data.progress < 1) {
 			return []
 		}
 
-		const players = route.name === "customLeaderboard"
+		const players = route.name === routeNameEnum.CUSTOM_LEADERBOARD
 			? data.players
 			: data.players.filter((player) => {
 				// The official website does not always update when someone leaves the guild; this should filter some ex-members out
@@ -149,24 +132,6 @@
 		grid-template-rows: repeat(auto-fit, 2.5em);
 		padding: 1em 0;
 		height: fit-content;
-	}
-
-	#guild-link {
-		grid-column: 1/3;
-		margin: 0;
-		text-align: center;
-		text-transform: capitalize;
-
-		a {
-			opacity: 1;
-		}
-	}
-
-	.select-guild-link {
-		color: inherit;
-		text-align: center;
-		grid-column: 1/3;
-		margin-bottom: 1em;
 	}
 
 	#fetch-error {

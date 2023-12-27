@@ -4,7 +4,7 @@ function isMobile() {
 	return window.innerWidth <= window.innerHeight
 }
 
-export default function() {
+export default function useIsMobile() {
 	const state = ref(isMobile())
 
 	window.onresize = () => state.value = isMobile()

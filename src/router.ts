@@ -1,5 +1,11 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router"
 
+export enum routeNameEnum {
+	CUSTOM_LEADERBOARD = "customLeaderboard",
+	HOME = "home",
+	LEADERBOARD = "leaderboard",
+}
+
 const HomePage = () => import("@/views/HomePage.vue")
 const LeaderboardPage = () => import("@/views/LeaderboardPage.vue")
 
@@ -10,17 +16,17 @@ export default createRouter({
 	routes: [
 		{
 			component: HomePage,
-			name: "home",
+			name: routeNameEnum.HOME,
 			path: "/",
 		},
 		{
 			component: LeaderboardPage,
-			name: "customLeaderboard",
+			name: routeNameEnum.CUSTOM_LEADERBOARD,
 			path: "/custom/:discipline?",
 		},
 		{
 			component: LeaderboardPage,
-			name: "leaderboard",
+			name: routeNameEnum.LEADERBOARD,
 			path: "/:region/:guildName/:discipline?",
 		},
 	]

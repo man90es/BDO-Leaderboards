@@ -1,10 +1,10 @@
 <template>
-	<div id="home-page" :class="{ 'mobile-layout': mobile }">
+	<div id="home-page" :class="{ 'mobile-layout': isMobile }">
 		<HeaderCard />
 		<ContentCard>
-			<input autocapitalize="on" type="text" :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard()" />
-			<button :key="server.domain" :style="{ backgroundColor: server.colour }" @click="() => navigateToLeaderboard(server.domain)" v-for="server of supportedServers">
-				Look it up in {{ server.name }}
+			<input autocapitalize="on" :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard(undefined)" />
+			<button :key="s.domain" :style="{ backgroundColor: s.colour }" @click="() => navigateToLeaderboard(s.domain)" v-for="s of supportedServers">
+				Look it up in {{ s.name }}
 			</button>
 			<SeparatorLine>OR</SeparatorLine>
 			<button :style="{ backgroundColor: 'var(--colour-green)' }" @click="navigateToCustomLeaderboard" class="wide-button">
@@ -15,37 +15,27 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 	import { ContentCard, FooterCard, HeaderCard, SeparatorLine } from "@/components"
 	import { ref } from "vue"
-	import { siteName, supportedServers } from "@/data"
+	import { RegionEnum, siteName, supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
+	import { useIsMobile, useNavigation } from "@/hooks"
 	import { useMainStore } from "@/stores"
-	import { useRouter } from "vue-router"
-	import useMobile from "@/hooks/mobile"
 
-	const mobile = useMobile()
-	const router = useRouter()
+	const { navigateToCustomLeaderboard, navigateToGuildLeaderboard } = useNavigation()
+	const isMobile = useIsMobile()
 	const store = useMainStore()
 	useHead({ title: siteName })
 
 	const guildName = ref("")
 	const shouldHightlightNameInput = ref(false)
 
-	const defaultDiscipline = "level"
-
-	if (store.lastGuild.name !== null) {
+	if (store.lastGuild.name) {
 		guildName.value = store.lastGuild.name
 	}
 
-	function navigateToCustomLeaderboard() {
-		router.push({
-			name: "customLeaderboard",
-			params: { discipline: defaultDiscipline }
-		})
-	}
-
-	function navigateToLeaderboard(region) {
+	function navigateToLeaderboard(region?: RegionEnum) {
 		// If guild name input is empty, highlight it and exit
 		if (guildName.value.length < 1) {
 			shouldHightlightNameInput.value = true
@@ -68,25 +58,17 @@
 			region
 		}
 
-		// Navigate to the leaderboard
-		router.push({
-			name: "leaderboard",
-			params: {
-				region,
-				guildName: guildName.value,
-				discipline: defaultDiscipline,
-			}
-		})
+		navigateToGuildLeaderboard(region, guildName.value)
 	}
 </script>
 
 <style lang="scss" scoped>
 	#home-page {
-		display: flex;
 		align-items: center;
-		justify-content: center;
+		display: flex;
 		flex-direction: column;
 		gap: 0.5em;
+		justify-content: center;
 		min-height: 100vh;
 
 		&.mobile-layout {
