@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import { RegionEnum } from "@/data"
+import { take } from "lodash"
 
 const useMainStore = defineStore("main", {
 	state: (): {
@@ -7,16 +8,14 @@ const useMainStore = defineStore("main", {
 			profileTarget: string
 			region: RegionEnum
 		}>
-		lastGuild: {
-			name?: string
-			region?: RegionEnum
-		}
+		history: Array<{
+			name: string
+			region: RegionEnum
+			ts: number
+		}>
 	} => ({
 		customList: [],
-		lastGuild: {
-			name: undefined,
-			region: undefined,
-		},
+		history: [],
 	}),
 	actions: {
 		addToCustomList(profileTarget: string, region: RegionEnum) {
@@ -36,6 +35,19 @@ const useMainStore = defineStore("main", {
 				!(onList.profileTarget === profileTarget && onList.region === region)
 			))
 		},
+		addGuildToHistory(region: RegionEnum, name: string) {
+			const ts = +new Date()
+			const i = this.history.findIndex((h) => h.name === name && h.region === region)
+
+			if (i >= 0) {
+				this.history[i].ts = ts
+			} else {
+				this.history.unshift({ ts, name, region })
+			}
+
+			const sortedHistory = this.history.toSorted((a, b) => a.ts < b.ts ? 1 : -1)
+			this.history = take(sortedHistory, 5)
+		}
 	},
 	persist: { key: "leaderboards-vuex" },
 })

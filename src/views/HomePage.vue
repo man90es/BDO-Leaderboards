@@ -1,22 +1,30 @@
 <template>
-	<div id="home-page" :class="{ 'mobile-layout': isMobile }">
+	<main :class="{ 'mobile-layout': isMobile }">
 		<HeaderCard />
 		<ContentCard>
-			<input autocapitalize="on" :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild's name here" v-model="guildName" v-on:keyup.enter="() => navigateToLeaderboard(undefined)" />
+			<input autocapitalize="on" :class="{ highlighted: shouldHightlightNameInput }" placeholder="Enter the guild name" v-model="guildName" />
 			<button :key="s.domain" :style="{ backgroundColor: s.colour }" @click="() => navigateToLeaderboard(s.domain)" v-for="s of supportedServers">
 				Look it up in {{ s.name }}
 			</button>
 			<SeparatorLine>OR</SeparatorLine>
-			<button :style="{ backgroundColor: 'var(--colour-green)' }" @click="navigateToCustomLeaderboard" class="wide-button">
-				Create a leaderboard from scratch
+			<button @click="navigateToCustomLeaderboard" :class="$style.wideButton" :style="{ backgroundColor: 'var(--colour-green)' }">
+				{{ store.customList.length > 0 ? "Open" : "Create a" }} custom leaderboard
+			</button>
+		</ContentCard>
+		<ContentCard v-if="store.history.length > 0">
+			<button :class="$style.wideButton" :key="h.ts" @click="() => navigateToLeaderboard(h.region, h.name)" v-for=" h of store.history">
+				{{ h.region }}
+				<span :class="$style.guildName">{{ h.name }}</span>
+				({{ formatDistanceToNow(h.ts) }} ago)
 			</button>
 		</ContentCard>
 		<FooterCard />
-	</div>
+	</main>
 </template>
 
 <script lang="ts" setup>
 	import { ContentCard, FooterCard, HeaderCard, SeparatorLine } from "@/components"
+	import { formatDistanceToNow } from "date-fns"
 	import { ref } from "vue"
 	import { RegionEnum, siteName, supportedServers } from "@/data"
 	import { useHead } from "@vueuse/head"
@@ -31,39 +39,22 @@
 	const guildName = ref("")
 	const shouldHightlightNameInput = ref(false)
 
-	if (store.lastGuild.name) {
-		guildName.value = store.lastGuild.name
-	}
+	function navigateToLeaderboard(region: RegionEnum, name?: string) {
+		name ??= guildName.value
 
-	function navigateToLeaderboard(region?: RegionEnum) {
 		// If guild name input is empty, highlight it and exit
-		if (guildName.value.length < 1) {
+		if (name.length < 1) {
 			shouldHightlightNameInput.value = true
 			return
 		}
 
-		// If the region is not provided, fall back to the last one if possible
-		// Or exit if not
-		if (region === undefined) {
-			if (!store.lastGuild.region) {
-				return
-			}
-
-			region = store.lastGuild.region
-		}
-
-		// Memorise the last guild
-		store.lastGuild = {
-			name: guildName.value,
-			region
-		}
-
-		navigateToGuildLeaderboard(region, guildName.value)
+		store.addGuildToHistory(region, name)
+		navigateToGuildLeaderboard(region, name)
 	}
 </script>
 
-<style lang="scss" scoped>
-	#home-page {
+<style scoped>
+	main {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
@@ -89,25 +80,32 @@
 
 	.content-card {
 		width: 25vw;
+	}
 
-		input {
-			grid-column: 1/3;
-			margin: 0;
-			text-align: center;
-			text-transform: capitalize;
+	input {
+		grid-column: 1/3;
+		margin: 0;
+		text-align: center;
+		text-transform: capitalize;
 
-			&::placeholder {
-				text-transform: none;
-			}
-		}
-
-		.wide-button {
-			grid-column: 1/3;
+		&.highlighted {
+			box-shadow: 0 0 0.5em var(--colour-red) !important;
+			outline: 1px solid var(--colour-red);
 		}
 	}
 
-	input.highlighted {
-		box-shadow: 0 0 0.5em var(--colour-red) !important;
-		outline: 1px solid var(--colour-red);
+	input::placeholder {
+		text-transform: none !important;
+	}
+</style>
+
+<style scoped module>
+	.wideButton {
+		background-color: var(--colour-teal);
+		grid-column: 1/3;
+	}
+
+	.guildName {
+		text-transform: capitalize;
 	}
 </style>
