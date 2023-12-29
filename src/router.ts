@@ -6,7 +6,7 @@ export enum routeNameEnum {
 	LEADERBOARD = "leaderboard",
 }
 
-const HomePage = () => import("@/views/HomePage.vue")
+const HomePage = () => import("@/pages/home/HomePage.vue")
 const LeaderboardPage = () => import("@/views/LeaderboardPage.vue")
 
 export default createRouter({
