@@ -7,7 +7,7 @@ export enum routeNameEnum {
 }
 
 const HomePage = () => import("@/pages/home/HomePage.vue")
-const LeaderboardPage = () => import("@/views/LeaderboardPage.vue")
+const LeaderboardPage = () => import("@/pages/leaderboard/LeaderboardPage.vue")
 
 export default createRouter({
 	history: process.env.VUE_APP_USE_HASH_HISTORY === "true"

@@ -10,12 +10,10 @@
 	</ContentCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ContentCard } from "@/components"
 
-	defineProps({
-		progress: { required: true, type: Number }
-	})
+	defineProps<{ progress: number }>()
 </script>
 
 <style scoped>

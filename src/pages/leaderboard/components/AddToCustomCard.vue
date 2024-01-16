@@ -1,33 +1,28 @@
 <template>
-	<content-card>
+	<ContentCard>
 		<label>Add a player to the leaderboard:</label>
 		<input autocapitalize="on" placeholder="Enter his or her family name here" v-model="familyName" />
 		<button :key="server.domain" :style="{ backgroundColor: server.colour }" @click="() => okHandler(server.domain)" v-for="server of supportedServers">
-			From {{server.name}}
+			From {{ server.name }}
 		</button>
 		<span v-if="status" id="status">{{ status }}</span>
-	</content-card>
+	</ContentCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { ContentCard } from "@/components"
 	import { ref } from "vue"
-	import { supportedServers } from "@/data"
+	import { RegionEnum, supportedServers } from "@/data"
 	import { useMainStore } from "@/stores"
+
+	const props = defineProps<{ refreshLeaderboard: () => void }>()
 
 	const familyName = ref("")
 	const maxProfiles = 100
 	const status = ref("")
 	const store = useMainStore()
 
-	const props = defineProps({
-		refreshLeaderboard: {
-			type: Function,
-			required: true,
-		}
-	})
-
-	function okHandler(region) {
+	function okHandler(region: RegionEnum) {
 		if (store.customList.length >= maxProfiles) {
 			status.value = `Failed to add ${familyName.value}: You can't add more than ${maxProfiles} custom profiles`
 			return
@@ -53,7 +48,6 @@
 			})
 			.then(props.refreshLeaderboard)
 			.catch((err) => {
-				console.log(err)
 				status.value = `Failed to add ${familyName.value}: ${err}`
 			})
 	}

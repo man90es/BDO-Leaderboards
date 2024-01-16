@@ -29,16 +29,14 @@
 	</ContentCard>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 	import { computed } from "vue"
 	import { ContentCard } from "@/components"
 	import { routeNameEnum } from "@/router"
 	import { supportedServers } from "@/data"
 	import { useRoute } from "vue-router"
 
-	const props = defineProps({
-		guildName: { type: String },
-	})
+	const props = defineProps<{ guildName: string }>()
 	const route = useRoute()
 
 	const guildLink = computed(() => {
