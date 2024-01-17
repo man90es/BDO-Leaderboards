@@ -9,25 +9,23 @@
 	<LoadingCard v-else id="leaderboard" :progress="data.progress" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import { computed } from "vue"
 	import { ContentCard } from "@/components"
+	import { generateLeaderboardItems } from "../logic"
 	import { LeaderboardHeaderLine, LeaderboardLine, LoadingCard } from "."
+	import { PrivacyLevelEnum } from "@/data"
 	import { routeNameEnum } from "@/router"
+	import { useDiscipline } from "../hooks"
 	import { useRoute } from "vue-router"
-	import generateLeaderboardItems from "@/core/generateLeaderboardItems"
+	import type { APIResult } from "@/hooks/API"
 
 	const route = useRoute()
-	const props = defineProps({
-		data: {
-			type: Object,
-			required: true,
-		},
-		refreshData: {
-			type: Function,
-			required: true,
-		},
-	})
+	const props = defineProps<{
+		data: APIResult
+		refreshData: () => void
+	}>()
+	const discipline = useDiscipline()
 
 	const leaderboardItems = computed(() => {
 		if (props.data.progress < 1) {
@@ -43,7 +41,7 @@
 				if (player.guild !== undefined && player.guild.name.toLowerCase() == props.data.guild.name.toLowerCase()) {
 					// They are probably in the guild: double checked
 					return true
-				} else if (player.privacy & 0b10) {
+				} else if (player.privacy & PrivacyLevelEnum.GUILD) {
 					// The guild in the profile is set to private: can't double check
 					return true
 				} else {
@@ -52,7 +50,7 @@
 				}
 			})
 
-		return generateLeaderboardItems(route.params.discipline, players)
+		return generateLeaderboardItems(discipline.value, players)
 	})
 </script>
 

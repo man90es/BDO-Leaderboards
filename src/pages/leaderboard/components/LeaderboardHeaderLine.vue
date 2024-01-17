@@ -4,16 +4,12 @@
 
 <script setup lang="ts">
 	import { computed } from "vue"
-	import { useRoute } from "vue-router"
+	import { useDiscipline } from "../hooks"
 
-	const route = useRoute()
+	const discipline = useDiscipline()
 
 	const headers = computed(() => {
-		const discipline = Array.isArray(route.params.discipline)
-			? route.params.discipline[0]
-			: route.params.discipline
-
-		const thrirdCol = ["contribution", "combat", "life", "characters", "age"].includes(discipline)
+		const thrirdCol = ["contribution", "combat", "life", "characters", "age"].includes(discipline.value)
 			? null
 			: "Character"
 
@@ -24,7 +20,7 @@
 			life: "Life Fame",
 			characters: "Characters",
 			age: "Age",
-		}[discipline] ?? "Rank"
+		}[discipline.value] ?? "Rank"
 
 		return ["#", "Family Name", thrirdCol, fourthCol]
 	})

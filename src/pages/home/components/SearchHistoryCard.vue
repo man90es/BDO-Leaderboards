@@ -14,7 +14,7 @@
 	import { formatDistanceToNow } from "date-fns"
 	import { type RegionEnum } from "@/data"
 	import { useMainStore } from "@/stores"
-	import { useNavigation } from "@/hooks"
+	import { useNavigation } from "../hooks"
 
 	const { navigateToGuildLeaderboard } = useNavigation()
 	const store = useMainStore()

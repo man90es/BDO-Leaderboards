@@ -17,7 +17,7 @@
 	import { ref } from "vue"
 	import { type RegionEnum, supportedServers } from "@/data"
 	import { useMainStore } from "@/stores"
-	import { useNavigation } from "@/hooks"
+	import { useNavigation } from "../hooks"
 
 	const { navigateToCustomLeaderboard, navigateToGuildLeaderboard } = useNavigation()
 	const store = useMainStore()

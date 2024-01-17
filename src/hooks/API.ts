@@ -1,22 +1,13 @@
 import { ComputedRef, reactive, readonly } from "vue"
 import { RegionEnum } from "@/data"
-
-type Player = {
-	profileTarget: string
-	region: RegionEnum
-}
-
-type Guild = {
-	population: number
-	members: Player[]
-}
+import type { Guild, Player } from "@/types"
 
 type Err = {
 	code?: number
 	message: string
 }
 
-type APIResult = {
+export type APIResult = {
 	errors: Err[]
 	guild: Guild
 	players: Player[]
@@ -46,12 +37,14 @@ function parseResponse<T>(response: Response): Promise<T> {
 }
 
 // Custom hook to fetch guild and player data
-export default function useGuild(params: ComputedRef<{ guildName?: string, region?: RegionEnum, players?: Player[] }>) {
+export default function useGuild(params: ComputedRef<{ guildName?: Guild["name"], region?: Guild["region"], players?: Player[] }>) {
 	const result = reactive<APIResult>({
 		errors: [],
 		guild: {
 			members: [],
+			name: "",
 			population: 0,
+			region: RegionEnum.EU,
 		},
 		players: [],
 		progress: 0
@@ -63,7 +56,9 @@ export default function useGuild(params: ComputedRef<{ guildName?: string, regio
 		result.errors = []
 		result.guild = {
 			members: [],
+			name: "",
 			population: 0,
+			region: RegionEnum.EU,
 		}
 		result.players = []
 		result.progress = 0
