@@ -12,7 +12,7 @@
 
 <script setup>
 	import { AddToCustomCard, LeaderboardCard, NavCard } from "./components"
-	import { capitalize } from "lodash"
+	import { capitalise } from "@/utils"
 	import { computed } from "vue"
 	import { FooterCard, HeaderCard } from "@/components"
 	import { routeNameEnum } from "@/router"
@@ -28,7 +28,7 @@
 	const store = useMainStore()
 	useHead({
 		title: computed(() => {
-			const guildName = capitalize(route.name === routeNameEnum.CUSTOM_LEADERBOARD ? "Custom" : route.params.guildName)
+			const guildName = capitalise(route.name === routeNameEnum.CUSTOM_LEADERBOARD ? "Custom" : route.params.guildName)
 			const discipline = ({
 				age: "account age",
 				characters: "number of characters",

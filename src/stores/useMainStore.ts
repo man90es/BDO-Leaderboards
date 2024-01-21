@@ -1,6 +1,5 @@
 import { defineStore } from "pinia"
 import { RegionEnum } from "@/data"
-import { take } from "lodash"
 
 const useMainStore = defineStore("main", {
 	state: (): {
@@ -45,8 +44,7 @@ const useMainStore = defineStore("main", {
 				this.history.unshift({ ts, name, region })
 			}
 
-			const sortedHistory = this.history.toSorted((a, b) => a.ts < b.ts ? 1 : -1)
-			this.history = take(sortedHistory, 5)
+			this.history = this.history.toSorted((a, b) => a.ts < b.ts ? 1 : -1).slice(0, 5)
 		}
 	},
 	persist: { key: "leaderboards-vuex" },

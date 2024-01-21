@@ -2,14 +2,14 @@
 	<ContentCard v-if="store.history.length > 0">
 		<button :class="$style.button" :key="h.ts" @click="() => navigateToLeaderboard(h.region, h.name)" v-for="h of store.history">
 			{{ h.region }}
-			{{ capitalize(h.name) }}
+			{{ capitalise(h.name) }}
 			({{ formatDistanceToNow(h.ts) }} ago)
 		</button>
 	</ContentCard>
 </template>
 
 <script lang="ts" setup>
-	import { capitalize } from "lodash"
+	import { capitalise } from "@/utils"
 	import { ContentCard } from "@/components"
 	import { formatDistanceToNow } from "date-fns"
 	import { type RegionEnum } from "@/data"
