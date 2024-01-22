@@ -53,7 +53,7 @@
 	)))
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	#leaderboard-page {
 		margin: 0.5em 0.5em;
 		display: grid;
