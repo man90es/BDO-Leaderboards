@@ -3,7 +3,7 @@
 		<button :class="$style.button" :key="h.ts" @click="() => navigateToLeaderboard(h.region, h.name)" v-for="h of store.history">
 			{{ h.region }}
 			{{ capitalise(h.name) }}
-			({{ formatDistanceToNow(h.ts) }} ago)
+			({{ formatDistanceToNow(h.ts, { addSuffix: true }) }})
 		</button>
 	</ContentCard>
 </template>
