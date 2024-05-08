@@ -9,9 +9,7 @@
 	const discipline = useDiscipline()
 
 	const headers = computed(() => {
-		const thrirdCol = ["contribution", "combat", "life", "characters", "age"].includes(discipline.value)
-			? null
-			: "Character"
+		const thrirdCol = "level" === discipline.value ? "Character" : null
 
 		const fourthCol = {
 			contribution: "CP",

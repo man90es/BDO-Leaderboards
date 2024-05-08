@@ -4,10 +4,13 @@ import type { RegionEnum } from "@/data"
 
 export type Player = {
 	characters: Character[]
+	combatFame: number
 	contributionPoints: number
 	createdOn: string
 	guild: Guild
+	lifeFame: number
 	privacy: number
 	profileTarget: string
 	region: RegionEnum
+	specLevels: Record<string, string>
 }

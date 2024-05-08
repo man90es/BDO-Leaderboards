@@ -65,40 +65,15 @@ export default function generateLeaderboardItems(discipline: string, players: Pl
 			}
 
 			case "combat": {
-				const combatFame = member.characters
-					.reduce((fame, character) => {
-						if (character.level < 56) {
-							return fame + character.level
-						} else if (character.level < 60) {
-							return fame + character.level * 2
-						} else {
-							return fame + character.level * 5
-						}
-					}, 1)
-
-				return new Participant(member, null, combatFame, "")
+				return new Participant(member, null, member.combatFame, "")
 			}
 
 			case "life": {
-				const lifeFame = member.characters
-					.reduce((fame, character) => {
-						return fame + Object.values(character.specLevels).reduce((cFame, specLevel) => {
-							const numericSpec = getNumericSpec(specLevel)
-							return cFame + (numericSpec > 30 ? numericSpec / 2 : 0) + (numericSpec > 80 ? numericSpec : 0)
-						}, 0)
-					}, 1)
-
-				return new Participant(member, null, Math.floor(lifeFame), "")
+				return new Participant(member, null, member.lifeFame, "")
 			}
 
 			default: {
-				const memberRep = [...member.characters]
-					.sort((a, b) => (
-						// Choose member's rep with the highest spec level
-						getNumericSpec(a.specLevels[discipline]) > getNumericSpec(b.specLevels[discipline]) ? -1 : 1
-					))[0]
-
-				return new Participant(member, memberRep, getNumericSpec(memberRep.specLevels[discipline]), memberRep.specLevels[discipline])
+				return new Participant(member, null, getNumericSpec(member.specLevels[discipline]), member.specLevels[discipline])
 			}
 		}
 
