@@ -119,7 +119,11 @@
 </script>
 
 <style scoped>
-	#leaderboard > * {
+
+	.position,
+	.family-name,
+	.character-name,
+	.score {
 		align-items: center;
 		background-color: v-bind(backgroundColour);
 		color: v-bind(colour);
@@ -164,9 +168,5 @@
 		margin-right: 0.25rem;
 		opacity: 0.8;
 		width: 1.5rem;
-	}
-
-	.mobile-layout .character-name::before {
-		zoom: 0.7;
 	}
 </style>

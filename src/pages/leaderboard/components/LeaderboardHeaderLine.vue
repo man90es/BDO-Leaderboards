@@ -1,5 +1,7 @@
-<template>
-	<div v-for="header of headers" :key="header ?? ''">{{ header }}</div>
+<template module>
+	<div :class="$style.root" v-for="header of headers" :key="header ?? ''">
+		{{ header }}
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -24,17 +26,14 @@
 	})
 </script>
 
-<style scoped>
-	#leaderboard > * {
+<style module>
+	.root {
 		padding: 0.5rem;
-	}
-
-	div {
 		font-weight: bold;
 	}
 
-	div:first-child,
-	div:nth-child(4) {
+	.root:first-child,
+	.root:nth-child(4) {
 		text-align: right;
 	}
 </style>
