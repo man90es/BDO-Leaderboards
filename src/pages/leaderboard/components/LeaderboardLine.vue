@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+	import { classIconOffsets } from "@/constants"
 	import { computed } from "vue"
 	import { routeNameEnum } from "@/router"
 	import { useMainStore } from "@/stores"
@@ -98,37 +99,7 @@
 	})
 
 	const iconOffset = computed(() => {
-		const i = [
-			"Warrior",
-			"Ranger",
-			"Sorceress",
-			"Berserker",
-			"Tamer",
-			"Ninja",
-			"Kunoichi",
-			"Witch",
-			"Wizard",
-			"Maehwa",
-			"Valkyrie",
-			"Musa",
-			"Dark Knight",
-			"Striker",
-			"Mystic",
-			"Lahn",
-			"Archer",
-			"Shai",
-			"Guardian",
-			"Hashashin",
-			"Nova",
-			"Sage",
-			"Corsair",
-			"Drakania",
-			"Woosa",
-			"Maegu",
-			"Scholar",
-		].indexOf(props.featuredCharacter?.class)
-
-		return `-1.98rem ${-((5.5 / 3) * i + 0.3)}rem`
+		return classIconOffsets[props.featuredCharacter?.class] ?? "-10rem"
 	})
 </script>
 
