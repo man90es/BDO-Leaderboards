@@ -1,16 +1,30 @@
 <template>
-	<ContentCard>
+	<div class="bs-card">
 		<label>Add a player to the leaderboard:</label>
-		<input autocapitalize="on" placeholder="Enter his or her family name here" v-model="familyName" />
-		<button :key="server.domain" :style="{ backgroundColor: server.colour }" @click="() => okHandler(server.domain)" v-for="server of supportedServers">
-			From {{ server.name }}
+		<input
+			autocapitalize="on"
+			class="bs-input"
+			placeholder="Enter family name"
+			v-model="familyName"
+		/>
+		<button
+			:class="className"
+			:key="domain"
+			@click="() => okHandler(domain)"
+			v-for="{ className, domain, name } of supportedServers"
+		>
+			From {{ name }}
 		</button>
-		<span v-if="status" id="status">{{ status }}</span>
-	</ContentCard>
+		<span
+			v-if="status"
+			id="status"
+		>
+			{{ status }}
+		</span>
+	</div>
 </template>
 
 <script setup lang="ts">
-	import { ContentCard } from "@/components"
 	import { ref } from "vue"
 	import { RegionEnum, supportedServers } from "@/data"
 	import { useMainStore } from "@/stores"
@@ -54,10 +68,11 @@
 </script>
 
 <style scoped>
+
 	span,
 	label,
 	input {
-		grid-column: 1/3;
 		text-align: center;
+		grid-column: 1/3;
 	}
 </style>

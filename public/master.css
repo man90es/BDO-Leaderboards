@@ -1,72 +1,8 @@
-:root {
-	--colour-black: #24272d;
-	--colour-blue: #61afef;
-	--colour-green: #98c379;
-	--colour-orange: #e5c07b;
-	--colour-red: #e06c75;
-	--colour-teal: #56b6c2;
-
-	--button-text-colour: #f8f8f8;
-	--card-colour: #37393f;
-	--card-shadow-colour: #0005;
-	--input-shadow-colour: #0005;
-	--load-done-colour: #f0f0f0;
-	--load-remaining-colour: #111;
-	--text-colour: #f0f0f0;
-}
-
 body {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #111;
+	-webkit-font-smoothing: antialiased;
 	background-attachment: fixed;
+	background-color: #111;
+	font-family: Helvetica, Arial, sans-serif;
 	margin: 0;
-}
-
-* {
-	box-sizing: border-box;
-}
-
-button {
-	font-weight: bold;
-	color: var(--button-text-colour);
-}
-
-button:hover {
-	cursor: pointer;
-}
-
-input,
-button {
-	border: none;
-	border-radius: 0.1em;
-	padding: 0.5rem;
-	box-shadow: 0 0 0.2em var(--input-shadow-colour);
-	font-size: 0.9rem;
-	transition: 0.2s;
-}
-
-input:hover,
-button:hover {
-	box-shadow: 0 0.1em 0.4em var(--input-shadow-colour);
-}
-
-h1 {
-	font-size: 1.6em;
-}
-
-h2 {
-	font-size: 1.4em;
-}
-
-a {
-	color: inherit;
-	text-decoration: none;
-	opacity: 0.7;
-	transition: opacity 0.2s;
-}
-
-a:hover {
-	opacity: 1;
 }

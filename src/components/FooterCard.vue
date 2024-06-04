@@ -1,31 +1,50 @@
 <template>
-	<ContentCard>
-		<a href="https://github.com/man90es/BDO-Leaderboards" target="_blank" :style="{ backgroundImage: assets.star }">GitHub</a>
-		<a href="https://github.com/man90es/BDO-REST-API" target="_blank" :style="{ backgroundImage: assets.construction }">API</a>
-		<a href="https://www.hemlo.cc/finances" target="_blank" :style="{ backgroundImage: assets.donate }">Donate</a>
-		<a href="https://github.com/man90es" target="_blank">man90 © {{ (new Date()).getFullYear() }}</a>
-	</ContentCard>
+	<div class="bs-card">
+		<a
+			:href
+			:key="href"
+			:style="{ backgroundImage: icon }"
+			class="bs-link"
+			target="_blank"
+			v-for="{ href, icon, name } of links"
+		>
+			{{ name }}
+		</a>
+	</div>
 </template>
 
 <script lang="ts" setup>
-	import { ContentCard } from "@/components"
-
-	const assets = {
-		construction: `url(${process.env.BASE_URL}assets/construction_black_24dp.svg)`,
-		donate: `url(${process.env.BASE_URL}assets/paid_black_24dp.svg)`,
-		star: `url(${process.env.BASE_URL}assets/star_black_24dp.svg)`,
-	}
+	const links = [
+		{
+			href: "https://github.com/man90es/BDO-Leaderboards",
+			icon: `url(${process.env.BASE_URL}assets/star_black_24dp.svg)`,
+			name: "GitHub",
+		},
+		{
+			href: "https://github.com/man90es/BDO-REST-API",
+			icon: `url(${process.env.BASE_URL}assets/construction_black_24dp.svg)`,
+			name: "API",
+		},
+		{
+			href: "https://www.hemlo.cc/finances",
+			icon: `url(${process.env.BASE_URL}assets/paid_black_24dp.svg)`,
+			name: "Donate",
+		},
+		{
+			href: "https://github.com/man90es",
+			name: `man90 © ${(new Date()).getFullYear()}`,
+		},
+	]
 </script>
 
 <style scoped>
-	a {
+	.bs-link {
 		background-repeat: no-repeat;
 		background-size: contain;
-		color: var(--colour-black);
+		color: #24272d;
 		filter: invert(1);
 		font-size: 0.9em;
 		padding-left: 1.5em;
-		transition: 0.2s;
 
 		&:last-child {
 			padding-left: 0;

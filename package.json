@@ -43,5 +43,8 @@
 	},
 	"browserslist": [
 		"defaults"
-	]
+	],
+	"dependencies": {
+		"blackstone.css": "^0.1.2"
+	}
 }

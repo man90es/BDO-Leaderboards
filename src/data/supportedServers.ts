@@ -11,25 +11,25 @@ function composeGuildLink(subdomain: string, locale: string, guildName: string, 
 }
 
 const supportedServers: Set<{
-    colour: string
+    className: string
     domain: RegionEnum
     getGuildLink: (arg0: string) => string
     name: string
 }> = new Set([
     {
-        colour: "var(--colour-blue)",
+        className: "bs-button-blue",
         domain: RegionEnum.EU,
         getGuildLink: guildName => composeGuildLink("naeu", "en-US", guildName, RegionEnum.EU),
         name: "Europe",
     },
     {
-        colour: "var(--colour-red)",
+        className: "bs-button-red",
         domain: RegionEnum.NA,
         getGuildLink: guildName => composeGuildLink("naeu", "en-US", guildName, RegionEnum.NA),
         name: "North America",
     },
     {
-        colour: "var(--colour-orange)",
+        className: "bs-button-orange",
         domain: RegionEnum.SA,
         getGuildLink: guildName => composeGuildLink("sa", "pt-BR", guildName, RegionEnum.SA),
         name: "South America",

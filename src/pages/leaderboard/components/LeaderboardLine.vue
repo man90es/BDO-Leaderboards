@@ -1,17 +1,32 @@
 <template>
-	<div class="position">
+	<div :class="['position', colourClass]">
 		<span v-if="!groupWPrev">#{{ place }}</span>
 	</div>
-	<div class="family-name">
-		<a :href="profileLink" target="_blank">{{ profile.familyName }}</a>
-		<button @click="removeFromCustom" v-if="$route.name == routeNameEnum.CUSTOM_LEADERBOARD">
-			<img :src="xIcon" alt="x" />
+	<div :class="['family-name', colourClass]">
+		<a
+			:href="profileLink"
+			class="bs-link"
+			target="_blank"
+		>
+			{{ profile.familyName }}
+		</a>
+		<button
+			@click="removeFromCustom"
+			v-if="$route.name == routeNameEnum.CUSTOM_LEADERBOARD"
+		>
+			<img
+				:src="xIcon"
+				alt="x"
+			/>
 		</button>
 	</div>
-	<div :title="featuredCharacter?.class" class="character-name">
+	<div
+		:class="['character-name', colourClass]"
+		:title="featuredCharacter?.class"
+	>
 		{{ featuredCharacter?.name }}
 	</div>
-	<div class="score">{{ displayScore || score }}</div>
+	<div :class="['score', colourClass]">{{ displayScore || score }}</div>
 </template>
 
 <script setup>
@@ -78,9 +93,8 @@
 		return ["1.3em", "1.2em", "1.1em"][props.colour - 1] || "1em"
 	})
 
-	const colour = computed(() => {
-		const c = ["red", "orange", "blue"][props.colour - 1] || "default"
-		return `var(--colour-${c})`
+	const colourClass = computed(() => {
+		return `bs-text-${["red", "orange", "blue"][props.colour - 1] ?? "white"}`
 	})
 
 	const iconOffset = computed(() => {
@@ -119,6 +133,9 @@
 </script>
 
 <style scoped>
+	.bs-text-white {
+		opacity: 0.9;
+	}
 
 	.position,
 	.family-name,
@@ -126,7 +143,6 @@
 	.score {
 		align-items: center;
 		background-color: v-bind(backgroundColour);
-		color: v-bind(colour);
 		display: flex;
 		font-size: v-bind(fontSize);
 		line-height: 1.2rem;
@@ -141,19 +157,16 @@
 	.family-name {
 		& a {
 			opacity: 1;
-			text-decoration: none;
-		}
-
-		& img {
-			height: 1rem;
-			opacity: 0.75;
 		}
 
 		& button {
 			background: none;
-			box-shadow: none;
+			border: 0;
+			cursor: pointer;
+			filter: invert(1);
 			font-size: 1rem;
 			margin-left: 0.25rem;
+			opacity: 0.75;
 			padding: 0;
 		}
 	}
@@ -166,7 +179,6 @@
 		content: "";
 		height: 1.5rem;
 		margin-right: 0.25rem;
-		opacity: 0.8;
 		width: 1.5rem;
 	}
 </style>

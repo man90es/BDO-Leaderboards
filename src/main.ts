@@ -1,3 +1,4 @@
+import "blackstone.css"
 import { createApp } from "vue"
 import { createHead } from "@vueuse/head"
 import { createPinia } from "pinia"

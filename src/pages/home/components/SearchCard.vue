@@ -1,19 +1,29 @@
 <template>
-	<ContentCard>
-		<input autocapitalize="on" :class="{ [$style.input]: true, [$style.highlighted]: isError }" placeholder="Enter the guild name" v-model="guildName" />
-		<button :key="s.domain" :style="{ backgroundColor: s.colour }" @click="() => navigateToLeaderboard(s.domain)" v-for="s of supportedServers">
-			Look it up in {{ s.name }}
+	<div class="bs-card">
+		<input
+			class="bs-input"
+			placeholder="Enter guild name"
+			v-model="guildName"
+		/>
+		<button
+			:class="className"
+			:key="domain"
+			@click="() => navigateToLeaderboard(domain)"
+			v-for="{ className, domain, name } of supportedServers"
+		>
+			Look it up in {{ name }}
 		</button>
-		<DividerLine>OR</DividerLine>
-		<button @click="navigateToCustomLeaderboard" :class="$style.customLeaderboardButton">
+		<div class="bs-divider-line">OR</div>
+		<button
+			@click="navigateToCustomLeaderboard"
+			class="bs-button-green"
+		>
 			{{ store.customList.length > 0 ? "Open" : "Create a" }} custom leaderboard
 		</button>
-	</ContentCard>
+	</div>
 </template>
 
 <script lang="ts" setup>
-	import { ContentCard } from "@/components"
-	import { DividerLine } from "."
 	import { ref } from "vue"
 	import { type RegionEnum, supportedServers } from "@/data"
 	import { useMainStore } from "@/stores"
@@ -37,25 +47,11 @@
 	}
 </script>
 
-<style module>
-	.input {
-		grid-column: 1/3;
-		margin: 0;
-		text-align: center;
-		text-transform: capitalize;
+<style scoped>
 
-		&.highlighted {
-			box-shadow: 0 0 0.5em var(--colour-red);
-			outline: 1px solid var(--colour-red);
-		}
-	}
-
-	.input::placeholder {
-		text-transform: none;
-	}
-
-	.customLeaderboardButton {
-		background-color: var(--colour-green);
+	.bs-divider-line,
+	.bs-input,
+	.bs-button-green {
 		grid-column: 1/3;
 	}
 </style>

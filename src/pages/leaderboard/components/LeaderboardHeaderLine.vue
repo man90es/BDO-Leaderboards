@@ -1,5 +1,9 @@
 <template module>
-	<div :class="$style.root" v-for="header of headers" :key="header ?? ''">
+	<div
+		:class="$style.root"
+		:key="header ?? ''"
+		v-for="header of headers"
+	>
 		{{ header }}
 	</div>
 </template>
