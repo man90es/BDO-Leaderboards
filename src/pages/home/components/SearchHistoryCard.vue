@@ -1,20 +1,27 @@
 <template>
-	<ContentCard v-if="store.history.length > 0">
-		<button :class="$style.button" :key="h.ts" @click="() => navigateToLeaderboard(h.region, h.name)" v-for="h of store.history">
-			{{ h.region }}
-			{{ capitalise(h.name) }}
-			({{ formatDistanceToNow(h.ts, { addSuffix: true }) }})
+	<div
+		class="bs-card"
+		v-if="store.history.length > 0"
+	>
+		<button
+			class="bs-button-teal"
+			:key="ts"
+			@click="() => navigateToLeaderboard(region, name)"
+			v-for="{ region, name, ts } of store.history"
+		>
+			{{ region }}
+			{{ capitalise(name) }}
+			({{ formatDistanceToNow(ts, { addSuffix: true }) }})
 		</button>
-	</ContentCard>
+	</div>
 </template>
 
 <script lang="ts" setup>
 	import { capitalise } from "@/utils"
-	import { ContentCard } from "@/components"
 	import { formatDistanceToNow } from "date-fns"
-	import { type RegionEnum } from "@/data"
 	import { useMainStore } from "@/stores"
 	import { useNavigation } from "../hooks"
+	import type { RegionEnum } from "@/data"
 
 	const { navigateToGuildLeaderboard } = useNavigation()
 	const store = useMainStore()
@@ -25,9 +32,8 @@
 	}
 </script>
 
-<style module>
-	.button {
-		background-color: var(--colour-teal);
+<style scoped>
+	.bs-button-teal {
 		grid-column: 1/3;
 	}
 </style>

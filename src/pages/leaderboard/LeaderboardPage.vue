@@ -1,11 +1,20 @@
 <template>
-	<div id="leaderboard-page" :class="{ 'mobile-layout': isMobile }">
+	<div
+		id="leaderboard-page"
+		:class="{ 'mobile-layout': isMobile }"
+	>
 		<HeaderCard />
 		<NavCard :guildName="data.guild.name" />
 		<FooterCard id="footer" />
 		<div id="leaderboard-wrapper">
-			<LeaderboardCard :refreshData :data />
-			<AddToCustomCard :refreshLeaderboard="refreshData" v-if="route.name === routeNameEnum.CUSTOM_LEADERBOARD" />
+			<LeaderboardCard
+				:refreshData
+				:data
+			/>
+			<AddToCustomCard
+				:refreshLeaderboard="refreshData"
+				v-if="route.name === routeNameEnum.CUSTOM_LEADERBOARD"
+			/>
 		</div>
 	</div>
 </template>
@@ -68,7 +77,7 @@
 		&:not(.mobile-layout) {
 			grid-template-columns: 1fr 2fr 1fr;
 
-			& > .content-card {
+			&>.bs-card {
 				grid-column: 1;
 			}
 

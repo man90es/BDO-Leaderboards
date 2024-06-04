@@ -1,17 +1,32 @@
 <template>
-	<ContentCard v-if="1 === data.progress" id="leaderboard">
+	<div
+		class="bs-card"
+		id="leaderboard"
+		v-if="1 === data.progress"
+	>
 		<LeaderboardHeaderLine v-if="data.players.length > 0" />
-		<span :class="$style.fetchError" v-else>
+		<span
+			:class="$style.fetchError"
+			v-else
+		>
 			{{ data.errors[0]?.message }}
 		</span>
-		<LeaderboardLine :key="p.profile.familyName" :refreshLeaderboard="refreshData" v-bind="p" v-for="p in leaderboardItems" />
-	</ContentCard>
-	<LoadingCard v-else id="leaderboard" :progress="data.progress" />
+		<LeaderboardLine
+			:key="player.profile.familyName"
+			:refreshLeaderboard="refreshData"
+			v-bind="player"
+			v-for="player in leaderboardItems"
+		/>
+	</div>
+	<LoadingCard
+		:progress="data.progress"
+		id="leaderboard"
+		v-else
+	/>
 </template>
 
 <script setup lang="ts">
 	import { computed } from "vue"
-	import { ContentCard } from "@/components"
 	import { generateLeaderboardItems } from "../logic"
 	import { LeaderboardHeaderLine, LeaderboardLine, LoadingCard } from "."
 	import { PrivacyLevelEnum } from "@/data"

@@ -1,5 +1,5 @@
 <template>
-	<ContentCard>
+	<div class="bs-card">
 		<div>
 			This may take a while...
 		</div>
@@ -7,17 +7,15 @@
 			{{ Math.round(progress * 100) }}%
 			<meter :value="progress" min="0" max="1" />
 		</div>
-	</ContentCard>
+	</div>
 </template>
 
 <script setup lang="ts">
-	import { ContentCard } from "@/components"
-
 	defineProps<{ progress: number }>()
 </script>
 
 <style scoped>
-	.content-card {
+	.bs-card {
 		display: flex !important;
 		flex-direction: column;
 		justify-content: center;

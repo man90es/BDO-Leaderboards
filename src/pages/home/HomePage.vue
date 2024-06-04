@@ -23,27 +23,22 @@
 		align-items: center;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5em;
+		gap: 0.5rem;
 		justify-content: center;
 		min-height: 100vh;
 
+		&>* {
+			box-sizing: border-box;
+			width: 25vw;
+		}
+
 		&.mobile-layout {
 			justify-content: flex-start;
-			margin-top: 0.5em;
+			margin-top: 0.5rem;
 
-			.content-card {
-				width: calc(100vw - 1em);
+			.bs-card {
+				width: calc(100vw - 1rem);
 			}
 		}
-
-		&:not(.mobile-layout) {
-			.content-card {
-				min-width: 25em;
-			}
-		}
-	}
-
-	.content-card {
-		width: 25vw;
 	}
 </style>
