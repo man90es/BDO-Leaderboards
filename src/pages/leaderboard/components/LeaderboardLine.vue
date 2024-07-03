@@ -126,6 +126,7 @@
 			"Woosa",
 			"Maegu",
 			"Scholar",
+			"Dosa",
 		].indexOf(props.featuredCharacter?.class)
 
 		return `-1.98rem ${-((5.5 / 3) * i + 0.3)}rem`
