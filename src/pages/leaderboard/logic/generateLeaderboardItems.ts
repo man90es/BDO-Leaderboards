@@ -1,3 +1,4 @@
+import { differenceInCalendarMonths } from "date-fns"
 import { getNumericSpec } from "./getNumericSpec"
 import { PrivacyLevelEnum } from "@/data"
 import type { Player } from "@/types"
@@ -11,7 +12,7 @@ class Participant {
 		public profile: any,
 		public featuredCharacter: any,
 		public score: number,
-		public displayScore: string
+		public displayScore?: string,
 	) {
 		this.colour = 0
 		this.groupWPrev = false
@@ -26,32 +27,29 @@ export default function generateLeaderboardItems(discipline: string, players: Pl
 			(member.privacy & PrivacyLevelEnum.LEVEL && ["level", "combat"].includes(discipline)) ||
 			(member.privacy & PrivacyLevelEnum.SPECS && !["contribution", "level", "combat", "characters", "age"].includes(discipline))
 		) {
-			return new Participant(member, null, -1, "Private")
+			return new Participant(member, null, -1)
 		}
 
 		switch (discipline) {
 			case "contribution": {
-				return new Participant(member, null, member.contributionPoints || 0, "")
+				return new Participant(member, null, member.contributionPoints || 0)
 			}
 
 			case "characters": {
-				return new Participant(member, null, member.characters.length, "")
+				return new Participant(member, null, member.characters.length)
 			}
 
 			case "age": {
-				const age = (+new Date() - +new Date(member.createdOn))
-				const months = Math.floor(age / 2.628e9)
-				let shouldPluralise = true
+				const months = differenceInCalendarMonths(new Date(), member.createdOn)
 
-				if (months === 0) {
-					return new Participant(member, null, months, "<1 month")
-				}
-
-				if (`${months}`.charAt(-1) === "1" && months !== 11) {
-					shouldPluralise = false
-				}
-
-				return new Participant(member, null, months, `${months} month${shouldPluralise ? "s" : ""}`)
+				return new Participant(
+					member,
+					null,
+					months,
+					months === 0
+						? "<1 month"
+						: `${months} month${months === 1 ? "" : "s"}`,
+				)
 			}
 
 			case "level": {
@@ -61,15 +59,15 @@ export default function generateLeaderboardItems(discipline: string, players: Pl
 						characterA.level > characterB.level ? -1 : 1
 					))[0]
 
-				return new Participant(member, memberRep, memberRep.level, "")
+				return new Participant(member, memberRep, memberRep.level)
 			}
 
 			case "combat": {
-				return new Participant(member, null, member.combatFame, "")
+				return new Participant(member, null, member.combatFame)
 			}
 
 			case "life": {
-				return new Participant(member, null, member.lifeFame, "")
+				return new Participant(member, null, member.lifeFame)
 			}
 
 			default: {

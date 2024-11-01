@@ -3,38 +3,30 @@
 		<span v-if="!groupWPrev">#{{ place }}</span>
 	</div>
 	<div :class="['family-name', colourClass]">
-		<a
-			:href="profileLink"
-			class="bs-link"
-			target="_blank"
-		>
+		<a :href="profileLink" class="bs-link" target="_blank">
 			{{ profile.familyName }}
 		</a>
-		<button
-			@click="removeFromCustom"
-			v-if="$route.name == routeNameEnum.CUSTOM_LEADERBOARD"
-		>
-			<img
-				:src="xIcon"
-				alt="x"
-			/>
+		<button @click="removeFromCustom" v-if="$route.name == routeNameEnum.CUSTOM_LEADERBOARD">
+			<DeleteOutlined />
 		</button>
 	</div>
-	<div
-		:class="['character-name', colourClass]"
-		:title="featuredCharacter?.class"
-	>
+	<div :class="['character-name', colourClass]" :title="featuredCharacter?.class">
 		{{ featuredCharacter?.name }}
 	</div>
-	<div :class="['score', colourClass]">{{ displayScore || score }}</div>
+	<div :class="['score', colourClass]">
+		<template v-if="score !== -1">
+			{{ displayScore || score }}
+		</template>
+		<LockOutlined v-else />
+	</div>
 </template>
 
 <script setup>
 	import { computed } from "vue"
+	import { DeleteOutlined } from "@ant-design/icons-vue"
+	import { LockOutlined } from "@ant-design/icons-vue"
 	import { routeNameEnum } from "@/router"
 	import { useMainStore } from "@/stores"
-
-	const xIcon = process.env.BASE_URL + "assets/highlight_off_black_24dp.svg"
 
 	const store = useMainStore()
 	const props = defineProps({
