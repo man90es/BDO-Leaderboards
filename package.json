@@ -45,6 +45,7 @@
 		"defaults"
 	],
 	"dependencies": {
+		"@ant-design/icons-vue": "^7.0.1",
 		"blackstone.css": "^0.1.2"
 	}
 }
