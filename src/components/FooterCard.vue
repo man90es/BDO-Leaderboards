@@ -17,11 +17,6 @@
 			name: "Donate",
 		},
 		{
-			href: "https://discord.gg/VUaEmBVKjG",
-			icon: MessageFilled,
-			name: `Discord`,
-		},
-		{
 			href: "https://github.com/man90es/BDO-Leaderboards",
 			icon: GithubFilled,
 			name: "GitHub",
