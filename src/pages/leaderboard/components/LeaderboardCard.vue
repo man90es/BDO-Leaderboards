@@ -4,6 +4,13 @@
 		id="leaderboard"
 		v-if="1 === data.progress"
 	>
+		<div :class="$style.announcement">
+			<div :class="$style.announcementTitle">Leaderboards are moving to Cute Papus!</div>
+			<span>
+				The current app is deprecated as a new app is in active development now. Try it early:
+				<a class="bs-link" href="https://cutepap.us/leaderboards">https://cutepap.us/leaderboards</a>
+			</span>
+		</div>
 		<LeaderboardHeaderLine v-if="data.players.length > 0" />
 		<span
 			:class="$style.fetchError"
@@ -74,7 +81,7 @@
 		display: grid;
 		gap: 0;
 		grid-template-columns: 2.5rem 1fr 1fr 1fr;
-		grid-template-rows: repeat(auto-fit, 2.5em);
+		grid-template-rows: 1fr repeat(auto-fit, 2.5em);
 		padding: 1em 0;
 		height: fit-content;
 	}
@@ -84,5 +91,17 @@
 	.fetchError {
 		grid-column: 1/5;
 		text-align: center;
+	}
+
+	.announcement {
+		grid-column: 1/5;
+		margin: 0 0.5em 0.5em 0.5em;
+		padding-bottom: 0.5em;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	.announcementTitle {
+		font-weight: 600;
+		margin-bottom: 0.5em;
 	}
 </style>

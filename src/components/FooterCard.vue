@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-	import { CopyrightCircleOutlined, GithubFilled, MessageFilled, MoneyCollectFilled, ToolFilled } from "@ant-design/icons-vue"
+	import { CopyrightCircleOutlined, GithubFilled, MoneyCollectFilled, ToolFilled } from "@ant-design/icons-vue"
 
 	const links = [
 		{
